@@ -1,0 +1,14 @@
+.app {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  padding-bottom: 56.25%;
+
+  &-activate {
+    position: absolute;
+    left: 50%;
+    top: 70%;
+    transform: translateX(-60%);
+  }
+}
