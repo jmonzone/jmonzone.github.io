@@ -14,7 +14,7 @@ module.exports = {
     historyApiFallback: true,
   },
   plugins: [
-    new CleanWebpackPlugin(['dist']),
+    new CleanWebpackPlugin(['docs']),
     new HtmlWebpackPlugin({ template: 'client/index-template.html' }),
     new CopyWebpackPlugin([{ from: 'client/assets/', to: 'assets/' }]),
     new webpack.DefinePlugin({ PRODUCTION: JSON.stringify(false) }),
@@ -42,7 +42,7 @@ module.exports = {
   },
   output: {
     filename: '[name].bundle.js',
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'docs'),
   },
   node: {
     fs: 'empty',
