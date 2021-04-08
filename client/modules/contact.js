@@ -5,16 +5,16 @@ export default class Contact {
   constructor() {
     autoBind(this);
 
-    this.el = createEl('div', { className: 'contact hidden', innerText: 'Johnnan Monzon' }); 
+    this.el = createEl('div', { className: 'contact hidden' }); 
 
-    // add header
-    this.name = createEl('div', {className: 'contact-name'});
-    addEl(this.el, this.name);
+    this.content = createEl('dive', {className: 'contact-content', innerText: 'LinkedIn: jmonzone'});
+    addEl(this.el, this.content);
+
   }
-  
+
   show() {
-      this.el.classList.remove('hidden');
-    }
+    this.el.classList.remove('hidden');
+  }
 
   hide() {
     this.el.classList.add('hidden');

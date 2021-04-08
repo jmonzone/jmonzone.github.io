@@ -63,7 +63,7 @@
 /******/
 /******/ 	var hotApplyOnUpdate = true;
 /******/ 	// eslint-disable-next-line no-unused-vars
-/******/ 	var hotCurrentHash = "e00433269ae79fe81a3b";
+/******/ 	var hotCurrentHash = "a0dfce55ec36dca41ca2";
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule;
@@ -960,11 +960,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var auto_bind__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(auto_bind__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var on_change__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! on-change */ "./node_modules/on-change/index.js");
 /* harmony import */ var on_change__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(on_change__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _chess__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./chess */ "./client/modules/chess.js");
-/* harmony import */ var _game__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./game */ "./client/modules/game.js");
-/* harmony import */ var _navigation__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./navigation */ "./client/modules/navigation.js");
-/* harmony import */ var _contact__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./contact */ "./client/modules/contact.js");
-
+/* harmony import */ var _game__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./game */ "./client/modules/game.js");
+/* harmony import */ var _menu__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./menu */ "./client/modules/menu.js");
+/* harmony import */ var _inventory__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./inventory */ "./client/modules/inventory.js");
 
 
 
@@ -977,7 +975,7 @@ class App {
     auto_bind__WEBPACK_IMPORTED_MODULE_1___default()(this);
 
     const state = {
-      flow: null,
+      menu: null,
     };
     this.state = on_change__WEBPACK_IMPORTED_MODULE_2___default()(state, this.update);
 
@@ -986,154 +984,132 @@ class App {
     // add header
     this.header = Object(lmnt__WEBPACK_IMPORTED_MODULE_0__["createEl"])('div', { className: 'header' });
     this.headerTitle = Object(lmnt__WEBPACK_IMPORTED_MODULE_0__["createEl"])('div', { className: 'header-title', innerText: 'Johnnan Monzon'});
-    this.headerSubtitle = Object(lmnt__WEBPACK_IMPORTED_MODULE_0__["createEl"])('div', { className: 'header-subtitle', innerText: 'Developer'});
+    this.headerSubtitle = Object(lmnt__WEBPACK_IMPORTED_MODULE_0__["createEl"])('div', { className: 'header-subtitle', innerText: 'Experiential Developer'});
     Object(lmnt__WEBPACK_IMPORTED_MODULE_0__["addEl"])(this.header, this.headerTitle, this.headerSubtitle);
 
-    this.navigation = new _navigation__WEBPACK_IMPORTED_MODULE_5__["default"](this.state);
-    this.contact = new _contact__WEBPACK_IMPORTED_MODULE_6__["default"]();
-    // this.chess = new Chess();
-    this.game = new _game__WEBPACK_IMPORTED_MODULE_4__["default"]();
+    this.menu = new _menu__WEBPACK_IMPORTED_MODULE_4__["default"](this.state);
+    this.game = new _game__WEBPACK_IMPORTED_MODULE_3__["default"]();
+    this.inventory = new _inventory__WEBPACK_IMPORTED_MODULE_5__["default"](this.game);
 
-    Object(lmnt__WEBPACK_IMPORTED_MODULE_0__["addEl"])(this.el, this.header, this.navigation.el, this.game.el, this.contact.el);
+    Object(lmnt__WEBPACK_IMPORTED_MODULE_0__["addEl"])(this.el, this.header, this.menu.el, this.game.el, this.inventory.el);
+
+    window.addEventListener('popstate', this.route);
+    // if (window.location.search === '') this.state.menu = 'null';
+    this.route();
+  }
+
+  route(e) {
+    console.log('popstate', e);
+    const stateString = e ? e.state : window.location.search.substring(1);
+    const newState = {};
+    stateString.split('&').forEach((item) => { newState[item.split('=')[0]] = item.split('=')[1]; });
+    Object.assign(this.state, newState);
   }
 
   update(path, current, previous) {
     console.log(path, ':', previous, ' -> ', current);
 
-    if (path == 'flow') {
-      // if (current == 'Contact') this.contact.show();
-      // else this.contact.hide();
+    if (path == 'menu') {
+      if (current) {
+        this.inventory.show(current, previous);
+        this.game.unlisten();
+      }
+      else if (previous) {
+        this.inventory.hide(previous);
+      }
+
+      if (!current || current == 'play') this.game.listen();
+      
+      
     }
+
+    let stateString = '';
+      Object.keys(this.state).forEach((key) => {
+        if (this.state[key] !== null) {
+          stateString += `${key}=${this.state[key]}&`;
+        }
+      });
+      window.history.pushState(`${stateString.slice(0, -1)}`, null, [`?${stateString.slice(0, -1)}`]);
   }
 }
 
 
 /***/ }),
 
-/***/ "./client/modules/chess.js":
-/*!*********************************!*\
-  !*** ./client/modules/chess.js ***!
-  \*********************************/
+/***/ "./client/modules/avatar.js":
+/*!**********************************!*\
+  !*** ./client/modules/avatar.js ***!
+  \**********************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Chess; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Avatar; });
 /* harmony import */ var lmnt__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lmnt */ "./node_modules/lmnt/index.js");
 /* harmony import */ var lmnt__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lmnt__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var auto_bind__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! auto-bind */ "./node_modules/auto-bind/index.js");
 /* harmony import */ var auto_bind__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(auto_bind__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var three__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! three */ "./node_modules/three/build/three.module.js");
-/* harmony import */ var three_examples_jsm_loaders_GLTFLoader_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! three/examples/jsm/loaders/GLTFLoader.js */ "./node_modules/three/examples/jsm/loaders/GLTFLoader.js");
-/* harmony import */ var three_examples_jsm_controls_OrbitControls_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! three/examples/jsm/controls/OrbitControls.js */ "./node_modules/three/examples/jsm/controls/OrbitControls.js");
-/* harmony import */ var _tweenjs_tween_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @tweenjs/tween.js */ "./node_modules/@tweenjs/tween.js/dist/tween.esm.js");
+/* harmony import */ var three_examples_jsm_controls_OrbitControls_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! three/examples/jsm/controls/OrbitControls.js */ "./node_modules/three/examples/jsm/controls/OrbitControls.js");
 
 
 
 
 
-
-
-class Chess {
-  constructor() {
+class Avatar {
+  constructor(game) {
     auto_bind__WEBPACK_IMPORTED_MODULE_1___default()(this);
-    this.el = Object(lmnt__WEBPACK_IMPORTED_MODULE_0__["createEl"])('div', { className: 'chess' }); 
+    this.el = Object(lmnt__WEBPACK_IMPORTED_MODULE_0__["createEl"])('div', { className: 'about-avatar' }); 
 
     // create scene
-    this.scene = new three__WEBPACK_IMPORTED_MODULE_2__["Scene"]();
-    const backgroundColor = '#8FBC8F';
-    this.scene.background = new three__WEBPACK_IMPORTED_MODULE_2__["Color"](backgroundColor);
-    this.scene.fog = new three__WEBPACK_IMPORTED_MODULE_2__["Fog"](backgroundColor, 7, 7);
-
+    this.scene = game.scene;
+    this.game = game;
 
     // add camera
-    this.camera = new three__WEBPACK_IMPORTED_MODULE_2__["PerspectiveCamera"]( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
-    this.camera.position.set(0, 0, 6);
-
-    this.duration = 2000;
-    new _tweenjs_tween_js__WEBPACK_IMPORTED_MODULE_5__["Tween"](this.camera.position).to({ x: 0, y: 3.5, z: 0.5}, this.duration).easing(_tweenjs_tween_js__WEBPACK_IMPORTED_MODULE_5__["Easing"].Quadratic.InOut).start();
-
+    this.camera = new three__WEBPACK_IMPORTED_MODULE_2__["OrthographicCamera"](-1, 1, 1, -1, 0.1, 10 );
+    this.camera.position.set(0, 0.75, 2);
 
     // add rendererer
     this.renderer = new three__WEBPACK_IMPORTED_MODULE_2__["WebGLRenderer"]({powerPreference: 'low-power'});
-    this.renderer.setSize( window.innerWidth, window.innerHeight );
+    this.renderer.setSize( this.el.clientWidth, this.el.clientHeight );
     this.renderer.setPixelRatio(window.devicePixelRatio);
     this.renderer.outputEncoding = three__WEBPACK_IMPORTED_MODULE_2__["sRGBEncoding"];
     Object(lmnt__WEBPACK_IMPORTED_MODULE_0__["addEl"])(this.el, this.renderer.domElement);
 
-    // add lights
-    this.light = new three__WEBPACK_IMPORTED_MODULE_2__["PointLight"]( 0xffffff, 1, 100 );
-    this.light.position.set( 0, 2.5, 2.5 );
-    this.scene.add( this.light );
+    this.clock = new three__WEBPACK_IMPORTED_MODULE_2__["Clock"]();
 
-    // add controls
-    this.controls = new three_examples_jsm_controls_OrbitControls_js__WEBPACK_IMPORTED_MODULE_4__["OrbitControls"]( this.camera, this.renderer.domElement );
+    this.controls = new three_examples_jsm_controls_OrbitControls_js__WEBPACK_IMPORTED_MODULE_3__["OrbitControls"](this.camera, this.renderer.domElement);
     this.controls.enabled = false;
     this.controls.autoRotate = true;
     this.controls.autoRotateSpeed = 0.5;
 
-    // init objects
-    this.initChessboard();
-    
+    // events
+    window.addEventListener( 'resize', this.onWindowResize, false );
+
     // init animate
     this.animate();
-
-    window.addEventListener( 'resize', this.onWindowResize, false );
   }
   
   animate() {
     requestAnimationFrame( this.animate );
     this.renderer.render( this.scene, this.camera );
+    if(this.game.pidgeon) {
+        const target = new three__WEBPACK_IMPORTED_MODULE_2__["Vector3"](this.game.pidgeon.position.x, this.game.pidgeon.position.y + 0.75, this.game.pidgeon.position.z);
+        this.controls.target = target;
+    }
     this.controls.update();
-    Object(_tweenjs_tween_js__WEBPACK_IMPORTED_MODULE_5__["update"])();
   }
-  
+
   onWindowResize(){
-    this.camera.aspect = window.innerWidth / window.innerHeight;
+    this.camera.aspect = this.el.clientWidth / this.el.clientHeight;
     this.camera.updateProjectionMatrix();
 
-    this.renderer.setSize( window.innerWidth, window.innerHeight );
+    this.renderer.setSize( this.el.clientWidth, this.el.clientHeight );
+  }
 
-}
-
-  initChessboard() {
-
-    const textureLoader = new three__WEBPACK_IMPORTED_MODULE_2__["TextureLoader"]();
-    const texture = textureLoader.load( 'assets/models/chessboard/chess_board.jpg' );
-    texture.encoding = three__WEBPACK_IMPORTED_MODULE_2__["sRGBEncoding"];
-    texture.flipY = false;
-
-    const gltfloader = new three_examples_jsm_loaders_GLTFLoader_js__WEBPACK_IMPORTED_MODULE_3__["GLTFLoader"]();
-
-    const onLoad = (gltf) => {
-      this.chessboard = gltf.scene;
-      this.chessboard.scale.setScalar(0.1);
-      this.chessboard.position.y += 1;
-      // new Tween(this.chessboard.rotation).to({x: 0, y: Math.PI, z: 0}, this.duration).easing(Easing.Quadratic.InOut).start();
-
-      this.chessboard .traverse ( ( o ) => {
-        if ( o.isMesh ) {
-          o.material.map = texture;
-        }
-      } );
-
-      this.scene.add( this.chessboard );
-
-
-    }
-
-    // Load a glTF resource
-    gltfloader.load('assets/models/chessboard/chessboard.gltf', onLoad,
-      // called while loading is progressing
-      function ( xhr ) {
-        console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
-      },
-      // called when loading has errors
-      function ( error ) {
-        console.log( 'An error happened' );
-      }
-    );
+  show() {
+      this.onWindowResize();
   }
 }
 
@@ -1161,22 +1137,32 @@ class Contact {
   constructor() {
     auto_bind__WEBPACK_IMPORTED_MODULE_1___default()(this);
 
-    this.el = Object(lmnt__WEBPACK_IMPORTED_MODULE_0__["createEl"])('div', { className: 'contact hidden', innerText: 'Johnnan Monzon' }); 
+    this.el = Object(lmnt__WEBPACK_IMPORTED_MODULE_0__["createEl"])('div', { className: 'contact hidden' }); 
 
-    // add header
-    this.name = Object(lmnt__WEBPACK_IMPORTED_MODULE_0__["createEl"])('div', {className: 'contact-name'});
-    Object(lmnt__WEBPACK_IMPORTED_MODULE_0__["addEl"])(this.el, this.name);
+    this.content = Object(lmnt__WEBPACK_IMPORTED_MODULE_0__["createEl"])('dive', {className: 'contact-content', innerText: 'LinkedIn: jmonzone'});
+    Object(lmnt__WEBPACK_IMPORTED_MODULE_0__["addEl"])(this.el, this.content);
+
   }
-  
+
   show() {
-      this.el.classList.remove('hidden');
-    }
+    this.el.classList.remove('hidden');
+  }
 
   hide() {
     this.el.classList.add('hidden');
   }
 }
 
+/***/ }),
+
+/***/ "./client/modules/content.json":
+/*!*************************************!*\
+  !*** ./client/modules/content.json ***!
+  \*************************************/
+/*! exports provided: menu, about, default */
+/***/ (function(module) {
+
+module.exports = JSON.parse("{\"menu\":{\"play\":{\"label\":\"Play\",\"hasPage\":false},\"about\":{\"label\":\"About\",\"hasPage\":true},\"projects\":{\"label\":\"Projects\",\"hasPage\":true},\"resume\":{\"label\":\"Resume\",\"hasPage\":true}},\"about\":{\"text\":\"Hey there I'm Johnnan, a developer who likes to create games, VR/AR experiences, and interactive websites<br><br><b>Origin:</b> Staten Island, NY <br><br><b>Class:</b> Experiential Developer <br><br><b>Passive Abilities</b>: Chess, Boardgames, Pokemon Go, Longboarding\"}}");
 
 /***/ }),
 
@@ -1196,9 +1182,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var auto_bind__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(auto_bind__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var three__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! three */ "./node_modules/three/build/three.module.js");
 /* harmony import */ var three_examples_jsm_loaders_GLTFLoader_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! three/examples/jsm/loaders/GLTFLoader.js */ "./node_modules/three/examples/jsm/loaders/GLTFLoader.js");
-/* harmony import */ var three_examples_jsm_controls_OrbitControls_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! three/examples/jsm/controls/OrbitControls.js */ "./node_modules/three/examples/jsm/controls/OrbitControls.js");
-/* harmony import */ var _tweenjs_tween_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @tweenjs/tween.js */ "./node_modules/@tweenjs/tween.js/dist/tween.esm.js");
-
+/* harmony import */ var _tweenjs_tween_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @tweenjs/tween.js */ "./node_modules/@tweenjs/tween.js/dist/tween.esm.js");
 
 
 
@@ -1245,18 +1229,28 @@ class Game {
     this.raycaster = new three__WEBPACK_IMPORTED_MODULE_2__["Raycaster"]();
 
     // events
-    window.addEventListener( 'resize', this.onWindowResize, false );
-    window.addEventListener( 'mousemove', this.onMouseMove);
-    window.addEventListener( 'click', this.onMouseClick);
+    this.listen();
 
     // init animate
     this.animate();
   }
+
+  listen() {
+    window.addEventListener( 'resize', this.onWindowResize, false );
+    window.addEventListener( 'mousemove', this.onMouseMove);
+    window.addEventListener( 'click', this.onMouseClick);
+  }
   
+  unlisten() {
+    window.removeEventListener( 'resize', this.onWindowResize, false );
+    window.removeEventListener( 'mousemove', this.onMouseMove);
+    window.removeEventListener( 'click', this.onMouseClick);
+  }
+
   animate() {
     requestAnimationFrame( this.animate );
     this.renderer.render( this.scene, this.camera );
-    Object(_tweenjs_tween_js__WEBPACK_IMPORTED_MODULE_5__["update"])();
+    Object(_tweenjs_tween_js__WEBPACK_IMPORTED_MODULE_4__["update"])();
 
     if (this.pidgeon) {
       const xDir = this.target.x - this.pidgeon.position.x;
@@ -1332,37 +1326,141 @@ class Game {
 
 /***/ }),
 
-/***/ "./client/modules/navigation.js":
-/*!**************************************!*\
-  !*** ./client/modules/navigation.js ***!
-  \**************************************/
+/***/ "./client/modules/inventory.js":
+/*!*************************************!*\
+  !*** ./client/modules/inventory.js ***!
+  \*************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Navigation; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Inventory; });
 /* harmony import */ var lmnt__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lmnt */ "./node_modules/lmnt/index.js");
 /* harmony import */ var lmnt__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lmnt__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var auto_bind__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! auto-bind */ "./node_modules/auto-bind/index.js");
 /* harmony import */ var auto_bind__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(auto_bind__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _content_json__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./content.json */ "./client/modules/content.json");
+var _content_json__WEBPACK_IMPORTED_MODULE_2___namespace = /*#__PURE__*/__webpack_require__.t(/*! ./content.json */ "./client/modules/content.json", 1);
+/* harmony import */ var _contact__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./contact */ "./client/modules/contact.js");
+/* harmony import */ var _avatar__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./avatar */ "./client/modules/avatar.js");
 
 
 
-class Navigation {
-  constructor(state) {
+
+
+
+class Inventory {
+  constructor(game) {
     auto_bind__WEBPACK_IMPORTED_MODULE_1___default()(this);
 
-    this.el = Object(lmnt__WEBPACK_IMPORTED_MODULE_0__["createEl"])('div', { className: 'navigation' }); 
-
-    // add header
-    const navButtons = ['Play', 'About', 'Projects', 'Resume', 'Contact' ];
-
-    navButtons.forEach((button) => {
-        const navButton = Object(lmnt__WEBPACK_IMPORTED_MODULE_0__["createEl"])('div', { className: 'navigation-button', innerText:  button }, {}, { click: () => state.flow = button});
-        Object(lmnt__WEBPACK_IMPORTED_MODULE_0__["addEl"])(this.el, navButton);
-    })
+    this.el = Object(lmnt__WEBPACK_IMPORTED_MODULE_0__["createEl"])('div', { className: 'inventory hidden' }); 
     
+    this.label = Object(lmnt__WEBPACK_IMPORTED_MODULE_0__["createEl"])('div', {className: 'inventory-label', innerText: 'Resume'});
+    this.content = Object(lmnt__WEBPACK_IMPORTED_MODULE_0__["createEl"])('div', {className: 'inventory-content'});
+    Object(lmnt__WEBPACK_IMPORTED_MODULE_0__["addEl"])(this.el, this.label, this.content);
+
+
+    // add pages
+    this.pages = {}
+
+    // add contact page
+    // this.contact = createEl('div', {className: 'inventory-contact'});
+    // this.contact = new Contact();
+    // this.pages['contact'] = this.contact;
+
+    // add about page
+    this.about = Object(lmnt__WEBPACK_IMPORTED_MODULE_0__["createEl"])('div', { className: 'about hidden' }); 
+    this.aboutAvatar = new _avatar__WEBPACK_IMPORTED_MODULE_4__["default"](game);
+    this.aboutBody = Object(lmnt__WEBPACK_IMPORTED_MODULE_0__["createEl"])('div', {className: 'about-body', innerHTML: _content_json__WEBPACK_IMPORTED_MODULE_2__["about"].text});
+    Object(lmnt__WEBPACK_IMPORTED_MODULE_0__["addEl"])(this.about, this.aboutAvatar.el, this.aboutBody);
+
+    // add projects page
+    this.projects = Object(lmnt__WEBPACK_IMPORTED_MODULE_0__["createEl"])('div', { className: 'projects hidden' }); 
+    this.projectsContent = Object(lmnt__WEBPACK_IMPORTED_MODULE_0__["createEl"])('div', {className: 'projects-body', innerText: ''});
+    Object(lmnt__WEBPACK_IMPORTED_MODULE_0__["addEl"])(this.projects, this.projectsContent);
+
+    // add resume page
+    this.resume = Object(lmnt__WEBPACK_IMPORTED_MODULE_0__["createEl"])('div', { className: 'resume hidden' }); 
+    this.resumeContent = Object(lmnt__WEBPACK_IMPORTED_MODULE_0__["createEl"])('div', {className: 'resume-body', innerHTML: 'Open <a href=\'./assets/resume.pdf\' target="blank">Resume.pdf</a> in new tab'});
+    this.resumeSkills = Object(lmnt__WEBPACK_IMPORTED_MODULE_0__["createEl"])('div', { className: 'resume-skills' });
+
+    const skills = ['js', 'html', 'css', 'sass', 'csharp', 'python', 'java', 'swift', 'webpack', 'react', 'node', 'mongo'];
+    // const skills = ['js', 'html', 'css', 'sass', 'csharp', 'python'];
+
+
+    skills.forEach((skill) => {
+      const resumeSlot = Object(lmnt__WEBPACK_IMPORTED_MODULE_0__["createEl"])('div', {className: 'resume-slot'});
+      const resumeSkill = Object(lmnt__WEBPACK_IMPORTED_MODULE_0__["createEl"])('img', {className: 'resume-skill', src: `assets/images/skills/${skill}.svg`});
+
+      Object(lmnt__WEBPACK_IMPORTED_MODULE_0__["addEl"])(resumeSlot, resumeSkill)
+      Object(lmnt__WEBPACK_IMPORTED_MODULE_0__["addEl"])(this.resumeSkills, resumeSlot);
+    })
+
+    this.pages['about'] = this.about;
+    this.pages['projects'] = this.projects;
+    this.pages['resume'] = this.resume;
+
+    Object(lmnt__WEBPACK_IMPORTED_MODULE_0__["addEl"])(this.resume, this.resumeContent, this.resumeSkills);
+
+    Object(lmnt__WEBPACK_IMPORTED_MODULE_0__["addEl"])(this.content, this.about, this.projects, this.resume);
+
+
+  }
+
+  show(current, previous) {
+
+    this.label.innerText = _content_json__WEBPACK_IMPORTED_MODULE_2__["menu"][current].label;
+    this.el.classList.remove('hidden');
+    this.pages[current].classList.remove('hidden');
+    if (current == 'about') this.aboutAvatar.show();
+
+    if (previous) this.pages[previous].classList.add('hidden');
+  }
+
+  hide(previous) {
+    this.el.classList.add('hidden');
+    this.pages[previous].classList.add('hidden');
+  }
+}
+
+
+/***/ }),
+
+/***/ "./client/modules/menu.js":
+/*!********************************!*\
+  !*** ./client/modules/menu.js ***!
+  \********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Menu; });
+/* harmony import */ var lmnt__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lmnt */ "./node_modules/lmnt/index.js");
+/* harmony import */ var lmnt__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lmnt__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var auto_bind__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! auto-bind */ "./node_modules/auto-bind/index.js");
+/* harmony import */ var auto_bind__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(auto_bind__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _content_json__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./content.json */ "./client/modules/content.json");
+var _content_json__WEBPACK_IMPORTED_MODULE_2___namespace = /*#__PURE__*/__webpack_require__.t(/*! ./content.json */ "./client/modules/content.json", 1);
+
+
+
+
+class Menu {
+  constructor(state) {
+    auto_bind__WEBPACK_IMPORTED_MODULE_1___default()(this);
+    this.state = state;
+
+    this.el = Object(lmnt__WEBPACK_IMPORTED_MODULE_0__["createEl"])('div', { className: 'menu' }); 
+
+    Object.keys(_content_json__WEBPACK_IMPORTED_MODULE_2__["menu"]).forEach((key) => {
+      const navButton = Object(lmnt__WEBPACK_IMPORTED_MODULE_0__["createEl"])('div', { className: 'menu-button', innerText:  _content_json__WEBPACK_IMPORTED_MODULE_2__["menu"][key].label }, {}, { click: () => {
+        if (_content_json__WEBPACK_IMPORTED_MODULE_2__["menu"][key].hasPage) this.state.menu = this.state.menu == key ? null : key;
+        else this.state.menu = null;
+      }});
+      Object(lmnt__WEBPACK_IMPORTED_MODULE_0__["addEl"])(this.el, navButton);
+    });
   }
 }
 
@@ -2266,7 +2364,7 @@ exports = module.exports = __webpack_require__(/*! ../node_modules/css-loader/li
 
 
 // module
-exports.push([module.i, "html,\nbody {\n  margin: 0;\n  padding: 0;\n  width: 100%;\n  height: 100%;\n  background: transparent;\n  overflow-x: hidden;\n  font-family: 'Courier New', Courier;\n  font-style: oblique; }\n  html::-webkit-scrollbar,\n  body::-webkit-scrollbar {\n    -webkit-appearance: none;\n    width: 0; }\n\n.hidden {\n  visibility: hidden;\n  opacity: 0;\n  pointer-events: none; }\n\n.app {\n  position: absolute;\n  width: 100%; }\n\n.game {\n  width: 100%; }\n\n.header {\n  position: absolute;\n  top: 20px;\n  left: 20px; }\n  .header-title {\n    font-size: x-large; }\n  .header-subtitle {\n    font-size: large; }\n\n.navigation {\n  position: absolute;\n  bottom: 10px;\n  left: 50%;\n  transform: translateX(-50%);\n  display: flex;\n  z-index: 1; }\n  .navigation-button {\n    width: 200px;\n    height: 50px;\n    font-size: xx-large;\n    text-align: center; }\n    .navigation-button:hover {\n      color: white; }\n\n.contact {\n  position: absolute;\n  right: 0;\n  bottom: 0;\n  width: 100%;\n  height: 80%;\n  background-image: linear-gradient(rgba(250, 212, 132, 0), #fad484);\n  opacity: 1;\n  transition: opacity 1s ease-in-out, visibility 1s, height 1s ease-in-out; }\n  .contact.hidden {\n    height: 0;\n    opacity: 0;\n    visibility: none; }\n", ""]);
+exports.push([module.i, "html,\nbody {\n  margin: 0;\n  padding: 0;\n  width: 100%;\n  height: 100%;\n  background: transparent;\n  overflow-x: hidden;\n  font-family: 'Courier New', Courier;\n  font-style: oblique; }\n  html::-webkit-scrollbar,\n  body::-webkit-scrollbar {\n    -webkit-appearance: none;\n    width: 0; }\n\n.hidden {\n  visibility: hidden;\n  opacity: 0;\n  pointer-events: none; }\n\n.app {\n  position: absolute;\n  width: 100%; }\n\n.game {\n  width: 100%; }\n\n.header {\n  position: absolute;\n  top: 20px;\n  left: 20px; }\n  .header-title {\n    font-size: x-large; }\n  .header-subtitle {\n    font-size: large; }\n\n.menu {\n  position: absolute;\n  bottom: 10px;\n  left: 50%;\n  transform: translateX(-50%);\n  display: flex;\n  z-index: 1; }\n  .menu-button {\n    width: 200px;\n    height: 50px;\n    font-size: xx-large;\n    text-align: center; }\n    .menu-button:hover {\n      color: white; }\n\n.inventory {\n  position: absolute;\n  top: 0;\n  left: 50%;\n  transform: translateX(-50%);\n  width: 90%;\n  height: 100%;\n  background-image: linear-gradient(rgba(250, 212, 132, 0) 0%, #fad484 5%, #fad484 95%, rgba(250, 212, 132, 0) 100%);\n  background-repeat: no-repeat;\n  background-size: 100% 70%;\n  background-position: center;\n  opacity: 1;\n  visibility: visible;\n  transition: opacity 0.5s ease-in-out, visibility 0.5s; }\n  .inventory.hidden {\n    opacity: 0;\n    visibility: none; }\n  .inventory-label {\n    position: absolute;\n    top: 20%;\n    left: 50%;\n    transform: translateX(-50%);\n    font-size: xx-large;\n    text-align: center; }\n  .inventory-content {\n    position: absolute;\n    top: 30%;\n    width: 100%;\n    height: 50%; }\n\n.about {\n  position: absolute;\n  height: 100%;\n  width: 100%; }\n  .about-avatar {\n    position: absolute;\n    top: -10%;\n    left: 10%;\n    height: 100%;\n    width: 20%; }\n  .about-body {\n    position: absolute;\n    right: 10%;\n    width: 50%; }\n\n.resume {\n  height: 100%; }\n  .resume-body {\n    position: absolute;\n    left: 10%; }\n  .resume-skills {\n    display: flex;\n    flex-wrap: wrap;\n    width: 50%;\n    height: 50%;\n    position: absolute;\n    right: 0; }\n  .resume-slot {\n    width: 20%;\n    height: 60%;\n    margin-left: 10px;\n    margin-bottom: 10px;\n    background-color: navajowhite;\n    border-radius: 100%; }\n  .resume-skill {\n    width: 70%;\n    height: 70%;\n    margin-top: calc((100% - 70%) / 2);\n    margin-left: calc((100% - 70%) / 2); }\n", ""]);
 
 // exports
 

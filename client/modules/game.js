@@ -2,7 +2,6 @@ import { createEl, addEl } from 'lmnt';
 import autoBind from 'auto-bind';
 import { Scene, PerspectiveCamera, WebGLRenderer, PointLight, Color, sRGBEncoding, Fog, AnimationClip, AnimationMixer, Clock, PlaneGeometry, MeshBasicMaterial, DoubleSide,  Mesh, LoopOnce, Raycaster, Vector3, Vector2} from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { Tween, Easing, update as tweenUpdate } from '@tweenjs/tween.js';
 
 export default class Game {
@@ -45,14 +44,24 @@ export default class Game {
     this.raycaster = new Raycaster();
 
     // events
-    window.addEventListener( 'resize', this.onWindowResize, false );
-    window.addEventListener( 'mousemove', this.onMouseMove);
-    window.addEventListener( 'click', this.onMouseClick);
+    this.listen();
 
     // init animate
     this.animate();
   }
+
+  listen() {
+    window.addEventListener( 'resize', this.onWindowResize, false );
+    window.addEventListener( 'mousemove', this.onMouseMove);
+    window.addEventListener( 'click', this.onMouseClick);
+  }
   
+  unlisten() {
+    window.removeEventListener( 'resize', this.onWindowResize, false );
+    window.removeEventListener( 'mousemove', this.onMouseMove);
+    window.removeEventListener( 'click', this.onMouseClick);
+  }
+
   animate() {
     requestAnimationFrame( this.animate );
     this.renderer.render( this.scene, this.camera );

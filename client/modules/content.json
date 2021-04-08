@@ -1,0 +1,24 @@
+{
+    "menu" : {
+        "play" : {
+            "label" : "Play",
+            "hasPage" : false
+        },
+        "about" : {
+            "label" : "About",
+            "hasPage" : true
+        },
+        "projects" : {
+            "label" : "Projects",
+            "hasPage" : true
+        },
+        "resume" : {
+            "label" : "Resume",
+            "hasPage" : true
+        }
+    },
+
+    "about" : {
+        "text" : "Hey there I'm Johnnan, a developer who likes to create games, VR/AR experiences, and interactive websites<br><br><b>Origin:</b> Staten Island, NY <br><br><b>Class:</b> Experiential Developer <br><br><b>Passive Abilities</b>: Chess, Boardgames, Pokemon Go, Longboarding"
+    }
+}

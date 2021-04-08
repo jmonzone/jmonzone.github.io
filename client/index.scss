@@ -7,8 +7,6 @@ body {
   height: 100%;
   background: transparent;
   overflow-x: hidden;
-  // font-weight: 300;
-  // font-size: 12px;
 
   font-family: 'Courier New', Courier;
   font-style: oblique;
@@ -36,5 +34,5 @@ body {
 
 // imports
 @import 'modules/app.scss';
-@import 'modules/navigation.scss';
-@import 'modules/contact.scss';
+@import 'modules/menu.scss';
+@import 'modules/inventory.scss';
