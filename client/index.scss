@@ -7,8 +7,11 @@ body {
   height: 100%;
   background: transparent;
   overflow-x: hidden;
-  font-weight: 300;
-  font-size: 12px;
+  // font-weight: 300;
+  // font-size: 12px;
+
+  font-family: 'Courier New', Courier;
+  font-style: oblique;
 
   &::-webkit-scrollbar {
     -webkit-appearance: none;
@@ -33,3 +36,5 @@ body {
 
 // imports
 @import 'modules/app.scss';
+@import 'modules/navigation.scss';
+@import 'modules/contact.scss';
