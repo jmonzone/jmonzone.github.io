@@ -20,5 +20,11 @@
 
     "about" : {
         "text" : "Hey there I'm Johnnan, a developer who likes to create games, VR/AR experiences, and interactive websites<br><br><b>Origin:</b> Staten Island, NY <br><br><b>Class:</b> Experiential Developer <br><br><b>Passive Abilities</b>: Chess, Boardgames, Pokemon Go, Longboarding"
+    },
+
+    "skills" : {
+        "web" : [  "js", "sass", "webpack"],
+        "threed" : [ "csharp", "unity", "threejs"]
     }
+    
 }

@@ -1,8 +1,9 @@
 import { createEl, addEl } from 'lmnt';
 import autoBind from 'auto-bind';
-import { menu, about } from './content.json'
+import { menu, about, skills } from './content.json'
 import Contact from './contact';
 import Avatar from './avatar';
+import { add } from '@tweenjs/tween.js';
 
 export default class Inventory {
   constructor(game) {
@@ -14,14 +15,8 @@ export default class Inventory {
     this.content = createEl('div', {className: 'inventory-content'});
     addEl(this.el, this.label, this.content);
 
-
     // add pages
     this.pages = {}
-
-    // add contact page
-    // this.contact = createEl('div', {className: 'inventory-contact'});
-    // this.contact = new Contact();
-    // this.pages['contact'] = this.contact;
 
     // add about page
     this.about = createEl('div', { className: 'about hidden' }); 
@@ -36,26 +31,41 @@ export default class Inventory {
 
     // add resume page
     this.resume = createEl('div', { className: 'resume hidden' }); 
-    this.resumeContent = createEl('div', {className: 'resume-body', innerHTML: 'Open <a href=\'./assets/resume.pdf\' target="blank">Resume.pdf</a> in new tab'});
-    this.resumeSkills = createEl('div', { className: 'resume-skills' });
+    this.resumeBody = createEl('div', {className: 'resume-body', innerHTML: 'Open <a href=\'./assets/resume.pdf\' target="blank">Resume.pdf</a> in new tab'});
+    this.resumeSkills = createEl('div', {className: 'resume-skills'});
 
-    const skills = ['js', 'html', 'css', 'sass', 'csharp', 'python', 'java', 'swift', 'webpack', 'react', 'node', 'mongo'];
-    // const skills = ['js', 'html', 'css', 'sass', 'csharp', 'python'];
+    this.webSkills = createEl('div', {className: 'resume-skills-web'});
+    this.webLabel = createEl('div', { className: 'resume-skills-label', innerText: 'Web'});
+    addEl(this.resumeSkills, this.webLabel);
 
-
-    skills.forEach((skill) => {
-      const resumeSlot = createEl('div', {className: 'resume-slot'});
-      const resumeSkill = createEl('img', {className: 'resume-skill', src: `assets/images/skills/${skill}.svg`});
+    skills['web'].forEach((skill) => {
+      const resumeSlot = createEl('div', {className: 'resume-skills-slot'});
+      const resumeSkill = createEl('img', {className: 'resume-skills-slot-image', src: `assets/images/skills/${skill}.svg`});
 
       addEl(resumeSlot, resumeSkill)
-      addEl(this.resumeSkills, resumeSlot);
+      addEl(this.webSkills, resumeSlot);
     })
+    addEl(this.resumeSkills, this.webSkills);
+
+    this.threedSkills = createEl('div', {className: 'resume-skills-threed'});
+    this.threedLabel = createEl('div', { className: 'resume-skills-label', innerText: '3D'});
+    addEl(this.resumeSkills, this.threedLabel);
+
+    skills['threed'].forEach((skill) => {
+      const resumeSlot = createEl('div', {className: 'resume-skills-slot'});
+      const resumeSkill = createEl('img', {className: 'resume-skills-slot-image', src: `assets/images/skills/${skill}.svg`});
+
+      addEl(resumeSlot, resumeSkill)
+      addEl(this.threedSkills, resumeSlot);
+    })
+    addEl(this.resumeSkills, this.threedSkills);
+    
+    addEl(this.resume, this.resumeBody, this.resumeSkills);
 
     this.pages['about'] = this.about;
     this.pages['projects'] = this.projects;
     this.pages['resume'] = this.resume;
 
-    addEl(this.resume, this.resumeContent, this.resumeSkills);
 
     addEl(this.content, this.about, this.projects, this.resume);
 
@@ -67,7 +77,6 @@ export default class Inventory {
     this.label.innerText = menu[current].label;
     this.el.classList.remove('hidden');
     this.pages[current].classList.remove('hidden');
-    if (current == 'about') this.aboutAvatar.show();
 
     if (previous) this.pages[previous].classList.add('hidden');
   }

@@ -10,6 +10,7 @@ export default class App {
     autoBind(this);
 
     const state = {
+      flow: null,
       menu: null,
     };
     this.state = onChange(state, this.update);
@@ -22,14 +23,18 @@ export default class App {
     this.headerSubtitle = createEl('div', { className: 'header-subtitle', innerText: 'Experiential Developer'});
     addEl(this.header, this.headerTitle, this.headerSubtitle);
 
+    this.linkedin = createEl('a', { className: 'linkedin', href: 'https://www.linkedin.com/in/jmonzone/'} );
+    this.linkedinImage = createEl('img', {className: 'linkedin-image', src: 'assets/images/skills/linkedin.svg'} );
+    addEl(this.linkedin, this.linkedinImage);
+
     this.menu = new Menu(this.state);
     this.game = new Game();
     this.inventory = new Inventory(this.game);
 
-    addEl(this.el, this.header, this.menu.el, this.game.el, this.inventory.el);
+    addEl(this.el, this.header, this.linkedin, this.menu.el, this.game.el, this.inventory.el);
 
     window.addEventListener('popstate', this.route);
-    // if (window.location.search === '') this.state.menu = 'null';
+    if (window.location.search === '') this.state.flow = 'home';
     this.route();
   }
 

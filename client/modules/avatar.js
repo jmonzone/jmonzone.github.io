@@ -32,6 +32,7 @@ export default class Avatar {
 
     // events
     window.addEventListener( 'resize', this.onWindowResize, false );
+    window.addEventListener('DOMContentLoaded', this.onWindowResize);
 
     // init animate
     this.animate();
@@ -52,9 +53,5 @@ export default class Avatar {
     this.camera.updateProjectionMatrix();
 
     this.renderer.setSize( this.el.clientWidth, this.el.clientHeight );
-  }
-
-  show() {
-      this.onWindowResize();
   }
 }

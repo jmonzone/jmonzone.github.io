@@ -44,6 +44,7 @@ export default class Game {
     this.raycaster = new Raycaster();
 
     // events
+    window.addEventListener( 'resize', this.onWindowResize, false );
     this.listen();
 
     // init animate
@@ -51,13 +52,11 @@ export default class Game {
   }
 
   listen() {
-    window.addEventListener( 'resize', this.onWindowResize, false );
     window.addEventListener( 'mousemove', this.onMouseMove);
     window.addEventListener( 'click', this.onMouseClick);
   }
   
   unlisten() {
-    window.removeEventListener( 'resize', this.onWindowResize, false );
     window.removeEventListener( 'mousemove', this.onMouseMove);
     window.removeEventListener( 'click', this.onMouseClick);
   }
