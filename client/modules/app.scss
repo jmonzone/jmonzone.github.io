@@ -7,6 +7,10 @@
   width: 100%;
 }
 
+.projects {
+  position: absolute;
+}
+
 .header {
   position: absolute;
   top: 20px;
@@ -19,8 +23,6 @@
   &-subtitle {
     font-size: large;
   }
-  
-  
 }
 
 .linkedin {
