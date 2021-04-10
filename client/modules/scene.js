@@ -17,13 +17,13 @@ export default class SceneManager {
 
     // create scene
     this.scene = new Scene();
-    const backgroundColor = '#8FBC8F';
+    const backgroundColor = '#222222';
     this.scene.background = new Color(backgroundColor);
     this.scene.fog = new Fog(backgroundColor, 0, 25);
 
     // add camera
     this.camera = new PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    this.camera.position.set(0, 2, 5);
+    this.camera.position.set(0, 1, 4);
 
     // add rendererer
     this.renderer = new WebGLRenderer({ powerPreference: 'low-power' });
@@ -35,11 +35,11 @@ export default class SceneManager {
     this.initGround();
     this.initProjects();
 
-    const light = new AmbientLight(0x404040); // soft white light
+    const light = new AmbientLight(0xf0f0f0); // soft white light
     this.scene.add(light);
 
     // init controls
-    this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+    // this.controls = new OrbitControls(this.camera, this.renderer.domElement);
 
     // events
     window.addEventListener('resize', this.onWindowResize, false);
@@ -68,9 +68,7 @@ export default class SceneManager {
 
   initGround() {
     const geometry = new PlaneGeometry(100, 50, 32, 32);
-    const texture = new TextureLoader().load('assets/images/floor.jpg');
-    texture.repeat = MirroredRepeatWrapping;
-    const material = new MeshBasicMaterial({ color: 0xffffff, map: texture });
+    const material = new MeshBasicMaterial({ color: 0x000000 });
     this.ground = new Mesh(geometry, material);
     this.ground.position.set(0, 0, 0);
     this.ground.rotateX(-Math.PI / 2);
@@ -81,7 +79,7 @@ export default class SceneManager {
     this.projects = [];
 
     Object.keys(monitors).forEach((monitor, index) => {
-      const position = new Vector3((index - 1) * 2, Math.random() + 1, 0);
+      const position = new Vector3((index - 1) * 2, 0.5, 0);
       this.createTV(monitor, position, (tv) => { this.projects[index] = tv; });
     });
   }
