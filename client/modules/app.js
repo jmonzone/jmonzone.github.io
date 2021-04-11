@@ -48,7 +48,7 @@ export default class App {
 
     if (path == 'view') {
       this.navigation.onViewHasChanged(previous, current);
-      this.scene.onViewHasChanged(previous, current);
+      this.scene.onViewHasChanged(current);
 
       if (current == 'Projects') this.projects.show();
       if (previous == 'Projects') this.projects.hide();
