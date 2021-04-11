@@ -1,6 +1,7 @@
 import { createEl, addEl } from 'lmnt';
 import autoBind from 'auto-bind';
-import { Scene, PerspectiveCamera, WebGLRenderer, Color, Fog, TextureLoader, BoxGeometry, PlaneGeometry, MeshBasicMaterial, Mesh, AmbientLight, VideoTexture, Vector3, Vector2, RepeatWrapping, MirroredRepeatWrapping, MeshPhysicalMaterial, Clock } from 'three';
+import { Scene, PerspectiveCamera, WebGLRenderer, Color, Fog, BoxGeometry, PlaneGeometry, MeshBasicMaterial, Mesh, VideoTexture, Vector3, Vector2, RepeatWrapping, MirroredRepeatWrapping, MeshPhysicalMaterial, Clock } from 'three';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 import { Reflector } from 'three/examples/jsm/objects/Reflector.js';
 
@@ -11,15 +12,15 @@ import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPa
 import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js';
 import { RGBShiftShader } from 'three/examples/jsm/shaders/RGBShiftShader';
 import { Tween, Easing, update as tweenUpdate } from '@tweenjs/tween.js';
+import Monitor from './monitor';
 
-const degToRad = deg => deg / 180 * Math.PI;
 
 export default class SceneManager {
-  constructor(projects) {
+  constructor(state, projects) {
     autoBind(this);
 
+    this.state = state;
     this.video = projects.video;
-
 
     this.el = createEl('div', { className: 'game' });
 
@@ -27,12 +28,12 @@ export default class SceneManager {
     this.scene = new Scene();
     const backgroundColor = '#000000';
     this.scene.background = new Color(backgroundColor);
-    this.scene.fog = new Fog(backgroundColor, 0, 25);
+    this.scene.fog = new Fog(backgroundColor, 0, 17);
 
     // add camera
     this.camera = new PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    this.camera.position.set(0, 1, 0);
-    this.cameraTarget = this.camera.position;
+    this.cameraY = 2;
+    this.camera.position.set(0, this.cameraY, 0);
 
     // add rendererer
     this.renderer = new WebGLRenderer({ powerPreference: 'low-power' });
@@ -46,8 +47,8 @@ export default class SceneManager {
     this.composer.addPass(renderPass);
 
 
-    const bloomPass = new UnrealBloomPass( new Vector2( window.innerWidth, window.innerHeight ), 0.5, 1, 0 );
-    this.composer.addPass(bloomPass);
+    // const bloomPass = new UnrealBloomPass( new Vector2( window.innerWidth, window.innerHeight ), 0.25, 1, 0 );
+    // this.composer.addPass(bloomPass);
 
 
     this.rgbPass = new ShaderPass( RGBShiftShader );
@@ -55,17 +56,21 @@ export default class SceneManager {
     this.composer.addPass( this.rgbPass );
 
     // init objects
-    this.initGround();
-    this.initProjects();
+    this.mirrors = []
+    this.mirrors[0] = this.initMirror(new Vector3(0, 0, 0), new Vector3(-Math.PI / 2, 0, 0), 0x4D7674, 0.5);
+    // this.mirrors[1] = this.initMirror(new Vector3(0, 0, -7.5), new Vector3(0, 0, 0), 0x969A9A, 0.1);
+
+    this.initMonitors();
 
     // init controls
-    // this.controls = new OrbitControls(this.camera, this.renderer.domElement);
-    // this.controls.target = new Vector3(0, this.camera.position.y, 0);
-    // this.controls.update();
+    this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+    this.controls.target = new Vector3(-5, this.cameraY, 0);
+    this.controls.enabled = false;
 
     // events
     window.addEventListener('resize', this.onWindowResize, false);
     window.addEventListener('mousemove', this.onMouseMove);
+    window.addEventListener('click', this.onClick);
     projects.el.addEventListener('videoselect', this.onVideoSelect);
     projects.el.addEventListener('videochange', this.onVideoChange);
     projects.el.addEventListener('videoexit', this.onExitClick);
@@ -79,117 +84,147 @@ export default class SceneManager {
     this.animate();
   }
 
+  animate() {
+    requestAnimationFrame(this.animate);
+    this.renderer.render(this.scene, this.camera);
+    this.composer.render(this.clock.getDelta());
+    this.controls.update();
+    tweenUpdate();
+
+    if(!this.isTweening) {
+      this.isTweening = true;
+      const random = Math.random() * 1000 + 500;
+      new Tween(this.rgbPass.uniforms.amount).to({value: 0.01}, random).easing(Easing.Quadratic.InOut).start().onComplete(() => {
+        this.rgbPass.uniforms.amount.value = 0.001;
+
+        const random = Math.random() * 5000 + 1000;
+        setTimeout(() => this.isTweening = false, random);
+      });
+    }
+
+    if (!this.zoomed) { this.monitors.forEach((monitor) => { monitor.update(); }); }
+    
+  }
+
   onWindowResize() {
     this.camera.aspect = window.innerWidth / window.innerHeight;
     this.camera.updateProjectionMatrix();
 
     this.renderer.setSize(window.innerWidth, window.innerHeight);
 
-    this.groundMirror.getRenderTarget().setSize(
-      window.innerWidth * window.devicePixelRatio,
-      window.innerHeight * window.devicePixelRatio
-    );
+    this.mirrors.forEach((mirror) => {
+      mirror.getRenderTarget().setSize(
+        window.innerWidth * window.devicePixelRatio,
+        window.innerHeight * window.devicePixelRatio
+      );
+    })
+    
+  }
+
+  calculateCameraTarget(view) {
+    let angle = 0;
+    switch(view) {
+      case 'About': 
+        angle = Math.PI / 2;
+        break;
+      case 'Projects':
+        angle = 0;
+        break;
+      case 'Resume':
+        angle = -Math.PI / 2
+        break;
+    }
+
+    const x = -5 * Math.sin(angle);
+    const z = -5 * Math.cos(angle);
+
+    return new Vector3(x, this.cameraY, z);
+  }
+
+  onViewHasChanged(previous, current) {
+    const previousTarget = this.calculateCameraTarget(previous);
+    const currentTarget = this.calculateCameraTarget(current);
+    const transitionDuration = 1000;
+
+    if (previousTarget.angleTo(currentTarget) > 2) {
+      new Tween(this.controls.target).to({x: currentTarget.z, y: currentTarget.y, z: currentTarget.x}, transitionDuration / 2).easing(Easing.Quadratic.In).start().onComplete(() => {
+        new Tween(this.controls.target).to({x: currentTarget.x, y: currentTarget.y, z: currentTarget.z}, transitionDuration / 2).easing(Easing.Quadratic.Out).start();
+      });
+    }
+    else new Tween(this.controls.target).to({x: currentTarget.x, y: currentTarget.y, z: currentTarget.z}, transitionDuration).easing(Easing.Quadratic.InOut).start();
   }
 
   onMouseMove(e) {
-    const x = (e.screenX - (window.innerWidth / 2)) * 0.0005;
-    const y = (e.screenY - (window.innerHeight / 2)) * 0.0005;
+    if (this.zoomed) return;
+    const parallaxScale = 0.001;
+    const x = (e.screenX - (window.innerWidth / 2)) * parallaxScale;
+    let y = (e.screenY - (window.innerHeight / 2)) * -parallaxScale * 0.5 + 1;
 
-    this.camera.position.set(x, -y + 1, this.camera.position.z);
+    const minimumY = 0.1
+    if (y < minimumY) y = minimumY;
+    this.camera.position.set(x, y, this.camera.position.z);
 
   }
 
   onVideoSelect(e) {
+    const transitionDuration = 1000;
     this.zoomed = true;
-    new Tween(this.camera.position).to({z: -3}, 1000).easing(Easing.Quadratic.InOut).start();
+    new Tween(this.camera.position).to({x: 0, y: this.cameraY, z: -3}, transitionDuration).easing(Easing.Quadratic.InOut).start();
+
+    const random = Math.floor(Math.random() * this.monitors.length);
+    for (let i = 0; i < this.monitors.length; i += 1) {
+      if (i === random) this.monitors[i].onZoomIn(new Vector3(0, this.cameraY, -5), new Vector3( 2, 2, 1), false);
+      else {
+        const customPosition = this.monitors[i].object.position.clone();
+        customPosition.x *= 2;
+        customPosition.y *= 1.5;
+        this.monitors[i].onZoomIn(customPosition);
+      }
+    }
   }
 
   onExitClick() {
     new Tween(this.camera.position).to({z: 0}, 1000).easing(Easing.Quadratic.InOut).start().onComplete(() => {
       this.zoomed = false;
     });
+
+    this.monitors.forEach((monitor) => monitor.onZoomOut());
   }
 
   onVideoChange(e) {
     if (this.zoomed) return;
 
-    if(!this.isTweening) {
-      this.isTweening = true;
-      new Tween(this.rgbPass.uniforms.amount).to({value: 0.01}, 1000).easing(Easing.Quadratic.In).start().onComplete(() => {
-        this.rgbPass.uniforms.amount.value = 0.001;
-        this.isTweening = false;
-      });
-    }
-
-    const texture = new VideoTexture(e.detail);
-    this.projects.forEach((project) => {
-      project.material.map = texture;
-    })
+    this.monitors.forEach((monitor) => { monitor.setVideo(e.detail); });
   }
 
-  animate() {
-    requestAnimationFrame(this.animate);
-    this.renderer.render(this.scene, this.camera);
-    this.composer.render(this.clock.getDelta());
-
-
-    if(!this.isTweening && this.zoomed) {
-      this.isTweening = true;
-      new Tween(this.rgbPass.uniforms.amount).to({value: 0.01}, 500).easing(Easing.Quadratic.InOut).start().onComplete(() => {
-        this.rgbPass.uniforms.amount.value = 0.001;
-
-        const random = Math.random() * 5000 + 5000;
-        setTimeout(() => this.isTweening = false, random);
-      });
-    }
-
-    tweenUpdate();
-
-    this.projects.forEach((project) => {
-      project.rotation.x += 0.001;
-      project.rotation.y += 0.001;
-      project.rotation.z += 0.001;
-    });
-  }
-
-  initGround() {
+  initMirror(position, rotation, color, opacity) {
     const geometry = new PlaneGeometry(100, 50, 32, 32);
-    const material = new MeshBasicMaterial({ color: 0x000011, opacity: 0.75, transparent: true });
-    this.ground = new Mesh(geometry, material);
-    this.ground.position.set(0, 0, 0);
-    this.ground.rotateX(-Math.PI / 2);
-    this.scene.add(this.ground);
+    const material = new MeshBasicMaterial({ color: color, opacity: opacity, transparent: true });
+    const overlay = new Mesh(geometry, material);
+    overlay.position.set(position.x, position.y, position.z);
+    overlay.rotation.setFromVector3(rotation);
 
-    this.groundMirror = new Reflector( geometry, {
+    const mirror = new Reflector( geometry, {
       textureWidth: window.innerWidth * window.devicePixelRatio,
       textureHeight: window.innerHeight * window.devicePixelRatio,
     } );
-    this.groundMirror.position.y = -0.01;
-    this.groundMirror.rotateX( - Math.PI / 2 );
-    this.scene.add(this.groundMirror)
+    mirror.position.z = -0.001;
+
+    overlay.add(mirror)
+    this.scene.add(overlay);
+
+    return mirror;
+  }
+
+  initMonitors() {
+    this.monitors = [];
+
+    this.monitors[0] = new Monitor(this.scene, this.video, new Vector3(1, 3, -6), new Vector3(2, 2, 2));
+    this.monitors[1] = new Monitor(this.scene, this.video, new Vector3(-1 * 2, 1.5, -5), new Vector3(1, 2, 1));
+    this.monitors[2] = new Monitor(this.scene, this.video, new Vector3(3, 1, -5));
+    this.monitors[3] = new Monitor(this.scene, this.video, new Vector3(-5, this.cameraY, 0), new Vector3(2, 3, 2));
 
 
   }
 
-  initProjects() {
-    this.projects = [];
-
-    for ( let i = 0; i < 3; i += 1) {
-      const position = new Vector3((i - 1) * 2, 1, -5);
-      this.projects[i] = this.createTV(position);
-    }
-  }
-
-  createTV(position) {
-
-    const texture = new VideoTexture(this.video);
-    const geometry = new BoxGeometry(1, 1, 1);
-    const material = new MeshBasicMaterial({ map: texture, opacity: 0.75, transparent: true });
-    const tv = new Mesh(geometry, material);
-    tv.position.set(position.x, position.y, position.z);
-
-
-    this.scene.add(tv);
-    return tv;
-  }
 }

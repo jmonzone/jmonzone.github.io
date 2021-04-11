@@ -10,7 +10,7 @@ export default class App {
     autoBind(this);
 
     const state = {
-      view: null,
+      view: null, // <string> ['About', 'Projects', 'Resume']
     };
     this.state = onChange(state, this.update);
 
@@ -22,15 +22,17 @@ export default class App {
     this.headerSubtitle = createEl('div', { className: 'header-subtitle', innerText: 'Experiential Developer' });
     addEl(this.header, this.headerTitle, this.headerSubtitle);
 
+
     this.navigation = new Navigation(this.state);
     this.projects = new Projects();
-    this.scene = new SceneManager(this.projects);
+    this.scene = new SceneManager(this.state, this.projects);
 
     addEl(this.el, this.header, this.navigation.el, this.projects.el, this.scene.el);
 
     window.addEventListener('popstate', this.route);
-    if (window.location.search === '') this.state.view = 'Projects';
+    if (window.location.search === '') this.state.view = 'About';
     this.route();
+    
   }
 
   route(e) {
@@ -45,7 +47,11 @@ export default class App {
     console.log(path, ':', previous, ' -> ', current);
 
     if (path == 'view') {
-      this.navigation.onStateViewChanged(previous, current);
+      this.navigation.onViewHasChanged(previous, current);
+      this.scene.onViewHasChanged(previous, current);
+
+      if (current == 'Projects') this.projects.show();
+      if (previous == 'Projects') this.projects.hide();
     }
 
     let stateString = '';

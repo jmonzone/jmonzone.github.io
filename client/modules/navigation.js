@@ -17,7 +17,7 @@ export default class Navigation {
     });
   }
 
-  onStateViewChanged(previous, current) {
+  onViewHasChanged(previous, current) {
       if (previous) this.navigationButtons[previous].classList.remove('selected');
       if (current) this.navigationButtons[current].classList.add('selected');
   }

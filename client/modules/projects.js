@@ -10,12 +10,9 @@ export default class Projects {
   constructor() {
     autoBind(this);
 
-    this.el = createEl('div', { className: 'projects' });
+    this.el = createEl('div', { className: 'projects up' });
 
-    this.video = createEl('video', { className: 'projects-video hidden', src: 'assets/videos/test.mp4'});
-    this.video.muted = true;
-    this.video.play();
-    addEl(this.el, this.video);
+    this.videos = {}
 
     // add projects
     projects.forEach((project) => {
@@ -24,10 +21,27 @@ export default class Projects {
       projectSelect.addEventListener('mouseenter', () => this.onMouseEnter(project));
       projectSelect.addEventListener('click', () => this.onClick(project));
 
-      addEl(this.el, projectSelect);
+      const video = createEl('video', { className: 'projects-video hidden', src: `assets/videos/${project.video}.mp4`});
+      video.muted = true;
+      video.loop = true;
+      video.preload = true;
+      video.play();
+      this.videos[project.video] = video;
 
+      addEl(projectSelect, video);
+      addEl(this.el, projectSelect);
     });
+
+    this.video = this.videos['test'];
     
+  }
+
+  show() {
+    this.el.classList.remove('up');
+  }
+
+  hide() {
+    this.el.classList.add('up');
   }
 
   onClick(project) {
@@ -41,7 +55,6 @@ export default class Projects {
   }
 
   onExitClick() {
-    console.log('hi');
     window.removeEventListener('click', this.onExitClick);
     this.el.classList.remove('up');
 
@@ -51,28 +64,11 @@ export default class Projects {
   }
 
   onMouseEnter(project) {
-    this.setVideo(`assets/videos/${project.video}.mp4`);
-  }
+    this.video = this.videos[project.video];
 
-  setVideo(videoPath) {
-    // transition in new video
-    const newVideo = createEl('video', { className: 'projects-video hidden', src: videoPath});
-    newVideo.style.opacity = 0;
-    addEl(this.el, newVideo);
-    this.currentVideo = videoPath;
-
-    new Tween(newVideo).to({opacity : 1}, transitionDuration).start().onComplete(() => {
-      this.el.removeChild(this.video);
-      this.video = newVideo;
-
-      const event = new Event('videochange');
+    const event = new Event('videochange');
       event.detail = this.video;
       this.el.dispatchEvent(event);
-
-      //todo add a promise for safari
-      this.video.muted = true;
-      this.video.play();
-    });
   }
 
 }
