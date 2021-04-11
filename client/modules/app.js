@@ -3,14 +3,14 @@ import autoBind from 'auto-bind';
 import onChange from 'on-change';
 import SceneManager from './scene';
 import Projects from './projects';
+import Navigation from './navigation';
 
 export default class App {
   constructor() {
     autoBind(this);
 
     const state = {
-      flow: null,
-      menu: null,
+      view: null,
     };
     this.state = onChange(state, this.update);
 
@@ -22,13 +22,14 @@ export default class App {
     this.headerSubtitle = createEl('div', { className: 'header-subtitle', innerText: 'Experiential Developer' });
     addEl(this.header, this.headerTitle, this.headerSubtitle);
 
+    this.navigation = new Navigation(this.state);
     this.projects = new Projects();
-    this.scene = new SceneManager(this.projects.videos);
+    this.scene = new SceneManager(this.projects);
 
-    addEl(this.el, this.header, this.projects.el, this.scene.el);
+    addEl(this.el, this.header, this.navigation.el, this.projects.el, this.scene.el);
 
     window.addEventListener('popstate', this.route);
-    if (window.location.search === '') this.state.flow = 'home';
+    if (window.location.search === '') this.state.view = 'Projects';
     this.route();
   }
 
@@ -43,15 +44,8 @@ export default class App {
   update(path, current, previous) {
     console.log(path, ':', previous, ' -> ', current);
 
-    if (path == 'menu') {
-      if (current) {
-        this.inventory.show(current, previous);
-        this.game.unlisten();
-      } else if (previous) {
-        this.inventory.hide(previous);
-      }
-
-      if (!current || current == 'play') this.game.listen();
+    if (path == 'view') {
+      this.navigation.onStateViewChanged(previous, current);
     }
 
     let stateString = '';

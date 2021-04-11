@@ -7,29 +7,16 @@
   width: 100%;
 }
 
-.projects {
-  position: absolute;
-}
-
 .header {
   position: absolute;
-  top: 20px;
+  top: $header-height;
   left: 20px;
 
   &-title {
-    font-size: x-large;
+    font-size: xx-large;
   }
 
   &-subtitle {
-    font-size: large;
+    font-size: x-large;
   }
-}
-
-.linkedin {
-  position: absolute;
-  top: 1%;
-  right: 1%;
-
-  width: 3%;
-  filter: grayscale(100%);
 }

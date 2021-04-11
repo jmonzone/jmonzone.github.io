@@ -1,3 +1,10 @@
+@font-face {
+  font-family: 'BebasNeue';
+  src: url('assets/BebasNeue-Regular.woff') format('woff');
+}
+
+$header-height: 20px;
+
 // defaults
 html,
 body {
@@ -8,8 +15,9 @@ body {
   background: transparent;
   overflow-x: hidden;
 
-  font-family: 'Courier New', Courier;
-  font-style: oblique;
+  color: white;
+  
+  font-family: 'BebasNeue';
 
   &::-webkit-scrollbar {
     -webkit-appearance: none;
@@ -34,3 +42,5 @@ body {
 
 // imports
 @import 'modules/app.scss';
+@import 'modules/projects.scss';
+@import 'modules/navigation.scss';

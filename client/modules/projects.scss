@@ -1,0 +1,36 @@
+.projects {
+    position: absolute;
+    top: 20%;
+
+    height: 80%;
+    width: 100%;
+
+    overflow-y: auto;
+
+    transition: transform 1s;
+
+
+    &.up {
+        transform: translateY(-150%);
+        transition: transform 1s;
+    }
+
+
+    &-select {
+        text-align: center;
+        opacity: 0.5;
+
+        font-size: 50px;
+        margin-bottom: 5%;
+        white-space: nowrap;
+
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+
+    &-video {
+        height: 0;
+    }
+}

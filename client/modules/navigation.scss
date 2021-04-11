@@ -1,0 +1,21 @@
+.navigation {
+    position: absolute;
+    top: $header-height;
+    right: $header-height;
+
+    // width: 50%;
+
+    display: flex;
+
+    &-button {
+        font-size: large;
+        margin-left: 20px;
+
+        transition: opacity 0.5s;
+
+        &:hover, &.selected {
+            opacity: 0.5;
+            transition: opacity 0.5s;
+        }
+    }
+}

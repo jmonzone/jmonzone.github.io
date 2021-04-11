@@ -21,53 +21,43 @@
     "about" : {
         "text" : "Hey there I'm Johnnan, a developer who likes to create games, VR/AR experiences, and interactive websites<br><br><b>Origin:</b> Staten Island, NY <br><br><b>Class:</b> Experiential Developer <br><br><b>Passive Abilities</b>: Chess, Boardgames, Pokemon Go, Longboarding"
     },
-
-    "skills" : {
-        "web" : [  "js", "sass", "webpack"],
-        "threed" : [ "csharp", "unity", "threejs"]
-    },
-
-    "monitors" : {
-        "1970_tv" : {
-            "gltf" : "scene",
-            "monitor" : {
-                "scale" : 0.01,
-                "rotation" : 180
-            },
-            "screen" : {
-                "aspect" : {
-                    "width" : 45,
-                    "height" : 34
-                },
-                "position" : {
-                    "x" : 65,
-                    "y" : -20,
-                    "z" : -30
-                },
-                "rotation" : 180,
-                "scale" : 1.5
-            }
-        },
-        "1990_tv" : {
-            "gltf" : "scene",
-            "monitor" : {
-                "scale" : 0.5,
-                "rotation" : 0
-            },
-            "screen" : {
-                "aspect" : {
-                    "width" : 6,
-                    "height" : 5
-                },
-                "position" : {
-                    "x" : 0,
-                    "y" : 0.1,
-                    "z" : 0.8
-                },
-                "rotation" : 0,
-                "scale" : 0.275
-            }
-        }
-    }
     
+    "projects" : [
+        {
+            "label" : "Seven Wonders Augmented Reality Tool",
+            "video" : "seven-wonders"
+        },
+        {
+            "label" : "Virtual Reality Handtracking Earthbending Experience",
+            "video" : "earthbending"
+        },
+        {
+            "label" : "[PLACEHOLDER]",
+            "video" : "test"
+        },
+        {
+            "label" : "[PLACEHOLDER]",
+            "video" : "test"
+        },
+        {
+            "label" : "[PLACEHOLDER]",
+            "video" : "test"
+        },
+        {
+            "label" : "[PLACEHOLDER]",
+            "video" : "test"
+        },
+        {
+            "label" : "[PLACEHOLDER]",
+            "video" : "test"
+        },
+        {
+            "label" : "[PLACEHOLDER]",
+            "video" : "test"
+        },
+        {
+            "label" : "[PLACEHOLDER]",
+            "video" : "test"
+        }
+    ]
 }
