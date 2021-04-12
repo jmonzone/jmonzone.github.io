@@ -5,10 +5,9 @@
     height: 80%;
     width: 100%;
 
-    overflow-y: auto;
+    overflow-y: scroll;
 
     transition: transform 1s;
-
 
     &.up {
         transform: translateY(-150%);

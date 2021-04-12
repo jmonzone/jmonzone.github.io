@@ -32,7 +32,6 @@ export default class App {
     window.addEventListener('popstate', this.route);
     if (window.location.search === '') this.state.view = 'Projects';
     this.route();
-    
   }
 
   route(e) {
