@@ -63,7 +63,7 @@
 /******/
 /******/ 	var hotApplyOnUpdate = true;
 /******/ 	// eslint-disable-next-line no-unused-vars
-/******/ 	var hotCurrentHash = "6aa47e3e082327cd6dbb";
+/******/ 	var hotCurrentHash = "9e69c39df82d1deb20ec";
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule;
@@ -1074,11 +1074,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 class Monitor {
-  constructor(scene, video, position, scale = new three__WEBPACK_IMPORTED_MODULE_1__["Vector3"](1, 1, 1)) {
+  constructor(scene, video, position, rotation, scale = new three__WEBPACK_IMPORTED_MODULE_1__["Vector3"](1, 1, 1)) {
     auto_bind__WEBPACK_IMPORTED_MODULE_0___default()(this);
 
     this.scene = scene;
     this.defaultPosition = position;
+    this.defaultRotation = rotation;
     this.defaultScale = scale;
     this.lowOpacity = 0.25;
     this.customScale = new three__WEBPACK_IMPORTED_MODULE_1__["Vector3"](1, 1, 1);
@@ -1088,6 +1089,7 @@ class Monitor {
     const material = new three__WEBPACK_IMPORTED_MODULE_1__["MeshBasicMaterial"]({ map: texture, opacity: this.lowOpacity, transparent: true });
     this.object = new three__WEBPACK_IMPORTED_MODULE_1__["Mesh"](geometry, material);
     this.object.position.set(position.x, position.y, position.z);
+    this.object.rotation.set(rotation.x, rotation.y, rotation.z);
     this.object.scale.set(scale.x, scale.y, scale.z);
     this.scene.add(this.object);
 
@@ -1118,7 +1120,7 @@ class Monitor {
   onZoomOut() {
     new _tweenjs_tween_js__WEBPACK_IMPORTED_MODULE_2__["Tween"](this.object.position).to({x: this.defaultPosition.x, y:  this.defaultPosition.y, z:  this.defaultPosition.z}, this.transitionDuration).easing(_tweenjs_tween_js__WEBPACK_IMPORTED_MODULE_2__["Easing"].Quadratic.InOut).start();
     new _tweenjs_tween_js__WEBPACK_IMPORTED_MODULE_2__["Tween"](this.object.scale).to({x: this.defaultScale.x, y: this.defaultScale.y, z: this.defaultScale.z}, this.transitionDuration).easing(_tweenjs_tween_js__WEBPACK_IMPORTED_MODULE_2__["Easing"].Quadratic.InOut).start();
-    new _tweenjs_tween_js__WEBPACK_IMPORTED_MODULE_2__["Tween"](this.object.rotation).to({x: 0, y: 0, z: 0}, this.transitionDuration).easing(_tweenjs_tween_js__WEBPACK_IMPORTED_MODULE_2__["Easing"].Quadratic.InOut).start();
+    new _tweenjs_tween_js__WEBPACK_IMPORTED_MODULE_2__["Tween"](this.object.rotation).to({x: this.defaultRotation.x, y: this.defaultRotation.y, z: this.defaultRotation.z}, this.transitionDuration).easing(_tweenjs_tween_js__WEBPACK_IMPORTED_MODULE_2__["Easing"].Quadratic.InOut).start();
     new _tweenjs_tween_js__WEBPACK_IMPORTED_MODULE_2__["Tween"](this.object.material).to({opacity: this.lowOpacity}, this.transitionDuration).easing(_tweenjs_tween_js__WEBPACK_IMPORTED_MODULE_2__["Easing"].Quadratic.InOut).start();
 
 
@@ -1464,17 +1466,18 @@ class SceneManager {
     this.zoomed = true;
     new _tweenjs_tween_js__WEBPACK_IMPORTED_MODULE_11__["Tween"](this.camera.position).to({x: 0, y: this.cameraY, z: -3}, transitionDuration).easing(_tweenjs_tween_js__WEBPACK_IMPORTED_MODULE_11__["Easing"].Quadratic.InOut).start();
 
+    this.monitors[0].onZoomIn(new three__WEBPACK_IMPORTED_MODULE_2__["Vector3"](0, this.cameraY, -5), false)
     // const random = Math.floor(Math.random() * (this.monitors.length - 1));
-    for (let i = 0; i < this.monitors.length; i += 1) {
-      if (i === 0) this.monitors[i].onZoomIn(new three__WEBPACK_IMPORTED_MODULE_2__["Vector3"](0, this.cameraY, -5), false);
-      else {
-        const customPosition = this.monitors[i].object.position.clone();
-        customPosition.x *= 0.8;
-        // customPosition.y *= 1.5;
-        customPosition.z = -6;
-        this.monitors[i].onZoomIn(customPosition);
-      }
-    }
+    // for (let i = 0; i < this.monitors.length; i += 1) {
+    //   if (i === 0) this.monitors[i].onZoomIn(new Vector3(0, this.cameraY, -5), false);
+    //   else {
+    //     const customPosition = this.monitors[i].object.position.clone();
+    //     customPosition.x *= 0.8;
+    //     // customPosition.y *= 1.5;
+    //     customPosition.z = -6;
+    //     this.monitors[i].onZoomIn(customPosition);
+    //   }
+    // }
   }
 
   onExitClick() {
@@ -1511,7 +1514,10 @@ class SceneManager {
   initMonitors() {
     this.monitors = [];
 
-    this.monitors[0] = new _monitor__WEBPACK_IMPORTED_MODULE_12__["default"](this.scene, this.projects.video, new three__WEBPACK_IMPORTED_MODULE_2__["Vector3"](0, 3, -7), new three__WEBPACK_IMPORTED_MODULE_2__["Vector3"](16/2, 9 /2, 1));
+    const scale = new three__WEBPACK_IMPORTED_MODULE_2__["Vector3"](16/2, 9 /2, 0.001);
+    this.monitors[0] = new _monitor__WEBPACK_IMPORTED_MODULE_12__["default"](this.scene, this.projects.video, new three__WEBPACK_IMPORTED_MODULE_2__["Vector3"](0, 3, -7), new three__WEBPACK_IMPORTED_MODULE_2__["Vector3"](0, 0, 0), scale);
+    this.monitors[1] = new _monitor__WEBPACK_IMPORTED_MODULE_12__["default"](this.scene, this.projects.video, new three__WEBPACK_IMPORTED_MODULE_2__["Vector3"](-8, 3, -6.5), new three__WEBPACK_IMPORTED_MODULE_2__["Vector3"](0, Math.PI / 25, 0), scale);
+    this.monitors[2] = new _monitor__WEBPACK_IMPORTED_MODULE_12__["default"](this.scene, this.projects.video, new three__WEBPACK_IMPORTED_MODULE_2__["Vector3"](8, 3, -6.5), new three__WEBPACK_IMPORTED_MODULE_2__["Vector3"](0, Math.PI / -25, 0), scale);
 
     this.projectsMonitor = this.monitors[0];
     

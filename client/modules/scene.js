@@ -177,17 +177,18 @@ export default class SceneManager {
     this.zoomed = true;
     new Tween(this.camera.position).to({x: 0, y: this.cameraY, z: -3}, transitionDuration).easing(Easing.Quadratic.InOut).start();
 
+    this.monitors[0].onZoomIn(new Vector3(0, this.cameraY, -5), false)
     // const random = Math.floor(Math.random() * (this.monitors.length - 1));
-    for (let i = 0; i < this.monitors.length; i += 1) {
-      if (i === 0) this.monitors[i].onZoomIn(new Vector3(0, this.cameraY, -5), false);
-      else {
-        const customPosition = this.monitors[i].object.position.clone();
-        customPosition.x *= 0.8;
-        // customPosition.y *= 1.5;
-        customPosition.z = -6;
-        this.monitors[i].onZoomIn(customPosition);
-      }
-    }
+    // for (let i = 0; i < this.monitors.length; i += 1) {
+    //   if (i === 0) this.monitors[i].onZoomIn(new Vector3(0, this.cameraY, -5), false);
+    //   else {
+    //     const customPosition = this.monitors[i].object.position.clone();
+    //     customPosition.x *= 0.8;
+    //     // customPosition.y *= 1.5;
+    //     customPosition.z = -6;
+    //     this.monitors[i].onZoomIn(customPosition);
+    //   }
+    // }
   }
 
   onExitClick() {
@@ -224,7 +225,10 @@ export default class SceneManager {
   initMonitors() {
     this.monitors = [];
 
-    this.monitors[0] = new Monitor(this.scene, this.projects.video, new Vector3(0, 3, -7), new Vector3(16/2, 9 /2, 1));
+    const scale = new Vector3(16/2, 9 /2, 0.001);
+    this.monitors[0] = new Monitor(this.scene, this.projects.video, new Vector3(0, 3, -7), new Vector3(0, 0, 0), scale);
+    this.monitors[1] = new Monitor(this.scene, this.projects.video, new Vector3(-8, 3, -6.5), new Vector3(0, Math.PI / 25, 0), scale);
+    this.monitors[2] = new Monitor(this.scene, this.projects.video, new Vector3(8, 3, -6.5), new Vector3(0, Math.PI / -25, 0), scale);
 
     this.projectsMonitor = this.monitors[0];
     

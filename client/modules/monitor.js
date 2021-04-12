@@ -4,11 +4,12 @@ import { BoxGeometry, MeshBasicMaterial, Mesh, VideoTexture, Vector3 } from 'thr
 import { Tween, Easing, update as tweenUpdate } from '@tweenjs/tween.js';
 
 export default class Monitor {
-  constructor(scene, video, position, scale = new Vector3(1, 1, 1)) {
+  constructor(scene, video, position, rotation, scale = new Vector3(1, 1, 1)) {
     autoBind(this);
 
     this.scene = scene;
     this.defaultPosition = position;
+    this.defaultRotation = rotation;
     this.defaultScale = scale;
     this.lowOpacity = 0.25;
     this.customScale = new Vector3(1, 1, 1);
@@ -18,6 +19,7 @@ export default class Monitor {
     const material = new MeshBasicMaterial({ map: texture, opacity: this.lowOpacity, transparent: true });
     this.object = new Mesh(geometry, material);
     this.object.position.set(position.x, position.y, position.z);
+    this.object.rotation.set(rotation.x, rotation.y, rotation.z);
     this.object.scale.set(scale.x, scale.y, scale.z);
     this.scene.add(this.object);
 
@@ -48,7 +50,7 @@ export default class Monitor {
   onZoomOut() {
     new Tween(this.object.position).to({x: this.defaultPosition.x, y:  this.defaultPosition.y, z:  this.defaultPosition.z}, this.transitionDuration).easing(Easing.Quadratic.InOut).start();
     new Tween(this.object.scale).to({x: this.defaultScale.x, y: this.defaultScale.y, z: this.defaultScale.z}, this.transitionDuration).easing(Easing.Quadratic.InOut).start();
-    new Tween(this.object.rotation).to({x: 0, y: 0, z: 0}, this.transitionDuration).easing(Easing.Quadratic.InOut).start();
+    new Tween(this.object.rotation).to({x: this.defaultRotation.x, y: this.defaultRotation.y, z: this.defaultRotation.z}, this.transitionDuration).easing(Easing.Quadratic.InOut).start();
     new Tween(this.object.material).to({opacity: this.lowOpacity}, this.transitionDuration).easing(Easing.Quadratic.InOut).start();
 
 
