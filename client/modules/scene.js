@@ -7,6 +7,9 @@ import { Reflector } from 'three/examples/jsm/objects/Reflector.js';
 
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
+import { FilmPass } from 'three/examples/jsm/postprocessing/FilmPass';
+
+import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass';
 
 import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js';
 import { RGBShiftShader } from 'three/examples/jsm/shaders/RGBShiftShader';
@@ -20,7 +23,6 @@ export default class SceneManager {
 
     this.state = state;
     this.projects = projects;
-    this.video = projects.video;
 
     this.el = createEl('div', { className: 'game' });
 
@@ -28,7 +30,7 @@ export default class SceneManager {
     this.scene = new Scene();
     const backgroundColor = '#000000';
     this.scene.background = new Color(backgroundColor);
-    this.scene.fog = new Fog(backgroundColor, 0, 17);
+    this.scene.fog = new Fog(backgroundColor, 0, 15);
 
     // add camera
     this.camera = new PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -49,9 +51,11 @@ export default class SceneManager {
     this.composer.addPass(renderPass);
 
 
-    // const bloomPass = new UnrealBloomPass( new Vector2( window.innerWidth, window.innerHeight ), 0.25, 1, 0 );
+    // const bloomPass = new UnrealBloomPass( new Vector2( window.innerWidth, window.innerHeight ), 0.1, 1, 0 );
     // this.composer.addPass(bloomPass);
 
+    const filmPass = new FilmPass(0.5, 0.1, 50, false);
+    this.composer.addPass(filmPass);
 
     this.rgbPass = new ShaderPass( RGBShiftShader );
     this.rgbPass.uniforms.amount.value = 0.001;
@@ -59,8 +63,9 @@ export default class SceneManager {
 
     // init objects
     this.mirrors = []
-    this.mirrors[0] = this.initMirror(new Vector3(0, 0, 0), new Vector3(-Math.PI / 2, 0, 0), 0x4D7674, 0.5);
-    this.mirrors[1] = this.initMirror(new Vector3(0, 0, -7.5), new Vector3(0, 0, 0), 0x969A9A, 0.1);
+    this.mirrors[0] = this.initMirror(new Vector3(0, 0, 0), new Vector3(-Math.PI / 2, 0, 0), 0x111111, 0.9);
+    // this.mirrors[1] = this.initMirror(new Vector3(0, 0, -7.5), new Vector3(0, 0, 0), 0x969A9A, 0.1);
+    // this.mirrors[2] = this.initMirror(new Vector3(0, 0, 7.5), new Vector3(0, Math.PI, 0), 0x969A9A, 0.1);
 
     this.initMonitors();
 
@@ -93,10 +98,10 @@ export default class SceneManager {
     this.controls.update();
     tweenUpdate();
 
+
     if(this.cameraTarget.distanceTo(this.camera.position) > 0.05) {
       const direction = this.cameraTarget.clone().sub(this.camera.position).normalize();
-      console.log(direction);
-      const parallaxSpeed = 0.05;
+      const parallaxSpeed = 0.005 * this.cameraTarget.distanceTo(this.camera.position);
       this.camera.position.x += Math.cos(this.cameraAngle) * direction.x * parallaxSpeed;
       this.camera.position.y += direction.y * parallaxSpeed;
       this.camera.position.z += Math.sin(this.cameraAngle) * direction.z * parallaxSpeed;
@@ -104,11 +109,11 @@ export default class SceneManager {
     
     if(!this.isTweening) {
       this.isTweening = true;
-      const random = Math.random() * 500 + 500;
-      new Tween(this.rgbPass.uniforms.amount).to({value: 0.01}, random).easing(Easing.Quadratic.InOut).start().onComplete(() => {
+      const transitionDuration = 1000;
+      new Tween(this.rgbPass.uniforms.amount).to({value: 0.0025}, transitionDuration).easing(Easing.Quadratic.InOut).start().onComplete(() => {
         this.rgbPass.uniforms.amount.value = 0.001;
 
-        const random = Math.random() * 5000 + 2000;
+        const random = Math.random() * 1000 + 1000;
         setTimeout(() => this.isTweening = false, random);
       });
     }
@@ -157,20 +162,14 @@ export default class SceneManager {
   }
 
   onMouseMove(e) {
-    if (this.zoomed) return;
-
-    const parallaxScale = 0.005;
-    const x = Math.cos(this.cameraAngle) * (e.screenX - (window.innerWidth / 2)) * parallaxScale;
+    const parallaxScale = 0.0005;
+    const x = -Math.cos(this.cameraAngle) * (e.screenX - (window.innerWidth / 2)) * parallaxScale;
     const z = Math.sin(this.cameraAngle) * (e.screenX - (window.innerWidth / 2)) * parallaxScale;
-    let y = (e.screenY - (this.projects.el.offsetHeight / 2)) * -parallaxScale * 2 + 1;
-
+    let y = (e.screenY - (window.innerHeight / 2)) * parallaxScale * 2 + 2;
 
     const minimumY = 0.1
     if (y < minimumY) y = minimumY;
     this.cameraTarget = new Vector3(x, y, z);
-
-    console.log(this.cameraTarget);
-
   }
 
   onVideoSelect(e) {
@@ -180,11 +179,12 @@ export default class SceneManager {
 
     // const random = Math.floor(Math.random() * (this.monitors.length - 1));
     for (let i = 0; i < this.monitors.length; i += 1) {
-      if (i === 0) this.monitors[i].onZoomIn(new Vector3(0, this.cameraY, -5), new Vector3( 2, 2, 1), false);
+      if (i === 0) this.monitors[i].onZoomIn(new Vector3(0, this.cameraY, -5), false);
       else {
         const customPosition = this.monitors[i].object.position.clone();
-        customPosition.x *= 2;
-        customPosition.y *= 1.5;
+        customPosition.x *= 0.8;
+        // customPosition.y *= 1.5;
+        customPosition.z = -6;
         this.monitors[i].onZoomIn(customPosition);
       }
     }
@@ -199,9 +199,7 @@ export default class SceneManager {
   }
 
   onVideoChange(e) {
-    if (this.zoomed) return;
-
-    this.monitors.forEach((monitor) => { monitor.setVideo(e.detail); });
+    this.monitors[0].setVideo(e.detail);
   }
 
   initMirror(position, rotation, color, opacity) {
@@ -226,10 +224,12 @@ export default class SceneManager {
   initMonitors() {
     this.monitors = [];
 
-    this.monitors[0] = new Monitor(this.scene, this.video, new Vector3(1, 3, -6), new Vector3(2, 2, 2));
-    this.monitors[1] = new Monitor(this.scene, this.video, new Vector3(-1 * 2, 1.5, -5), new Vector3(1, 2, 1));
-    this.monitors[2] = new Monitor(this.scene, this.video, new Vector3(3, 1, -5));
-    this.monitors[3] = new Monitor(this.scene, this.video, new Vector3(-5, this.cameraY, 0), new Vector3(2, 3, 2));
+    this.monitors[0] = new Monitor(this.scene, this.projects.video, new Vector3(0, 3, -7), new Vector3(16/2, 9 /2, 1));
+
+    this.projectsMonitor = this.monitors[0];
+    
+    // this.monitors[3] = new Monitor(this.scene, this.video, new Vector3(-5, this.cameraY, 0), new Vector3(2, 3, 2));
+    // this.monitors[4] = new Monitor(this.scene, this.video, new Vector3(-4, this.cameraY + 1, 2.5), new Vector3(1, 1, 1));
 
 
   }

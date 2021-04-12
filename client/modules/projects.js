@@ -1,11 +1,6 @@
 import { createEl, addEl } from 'lmnt';
 import autoBind from 'auto-bind';
 import { projects } from './content.json';
-import { Tween, Easing, update as tweenUpdate, add } from '@tweenjs/tween.js';
-
-const buffer = 1; // amount of seconds before end of clip to start transition
-const transitionDuration = 500;
-
 export default class Projects {
   constructor() {
     autoBind(this);
@@ -13,26 +8,30 @@ export default class Projects {
     this.el = createEl('div', { className: 'projects up' });
 
     this.videos = {}
+    this.projectSelects = {}
 
     // add projects
-    projects.forEach((project) => {
+    Object.keys(projects).forEach((project) => {
 
-      const projectSelect = createEl('div', { className: 'projects-select', innerText: project.label });
+      const projectSelect = createEl('div', { className: 'projects-select', innerText: projects[project].label });
       projectSelect.addEventListener('mouseenter', () => this.onMouseEnter(project));
       projectSelect.addEventListener('click', () => this.onClick(project));
+      this.projectSelects[project] = projectSelect;
 
-      const video = createEl('video', { className: 'projects-video hidden', src: `assets/videos/${project.video}.mp4`});
+      const video = createEl('video', { className: 'projects-video hidden', src: `assets/videos/${projects[project].video}.mp4`}, {}, {});
       video.muted = true;
       video.loop = true;
       video.preload = true;
       video.play();
-      this.videos[project.video] = video;
+
+      this.videos[projects[project].video] = video;
+      
 
       addEl(projectSelect, video);
       addEl(this.el, projectSelect);
     });
 
-    this.video = this.videos['test'];
+    this.video = this.videos['earthbending'];
     
   }
 
@@ -58,17 +57,15 @@ export default class Projects {
     window.removeEventListener('click', this.onExitClick);
     this.el.classList.remove('up');
 
-
     const event = new Event('videoexit');
     this.el.dispatchEvent(event);
   }
 
   onMouseEnter(project) {
-    this.video = this.videos[project.video];
-
+    this.video = this.videos[project];
     const event = new Event('videochange');
-      event.detail = this.video;
-      this.el.dispatchEvent(event);
+    event.detail = this.video;
+    this.el.dispatchEvent(event);
   }
 
 }
