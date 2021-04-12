@@ -30,7 +30,7 @@ export default class App {
     addEl(this.el, this.header, this.navigation.el, this.projects.el, this.scene.el);
 
     window.addEventListener('popstate', this.route);
-    if (window.location.search === '') this.state.view = 'About';
+    if (window.location.search === '') this.state.view = 'Projects';
     this.route();
     
   }

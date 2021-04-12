@@ -63,7 +63,7 @@
 /******/
 /******/ 	var hotApplyOnUpdate = true;
 /******/ 	// eslint-disable-next-line no-unused-vars
-/******/ 	var hotCurrentHash = "9e69c39df82d1deb20ec";
+/******/ 	var hotCurrentHash = "3bb69e5f6ffecda48109";
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule;
@@ -1006,7 +1006,7 @@ class App {
     Object(lmnt__WEBPACK_IMPORTED_MODULE_0__["addEl"])(this.el, this.header, this.navigation.el, this.projects.el, this.scene.el);
 
     window.addEventListener('popstate', this.route);
-    if (window.location.search === '') this.state.view = 'About';
+    if (window.location.search === '') this.state.view = 'Projects';
     this.route();
     
   }
@@ -1326,7 +1326,7 @@ class SceneManager {
     this.cameraY = 2;
     this.camera.position.set(0, this.cameraY, 0);
     this.cameraTarget = this.camera.position;
-    this.cameraAngle = Math.PI / 2;
+    this.cameraAngle = 0;
 
     // add rendererer
     this.renderer = new three__WEBPACK_IMPORTED_MODULE_2__["WebGLRenderer"]({ powerPreference: 'low-power' });
@@ -1338,7 +1338,6 @@ class SceneManager {
 
     const renderPass = new three_examples_jsm_postprocessing_RenderPass_js__WEBPACK_IMPORTED_MODULE_6__["RenderPass"]( this.scene, this.camera );
     this.composer.addPass(renderPass);
-
 
     // const bloomPass = new UnrealBloomPass( new Vector2( window.innerWidth, window.innerHeight ), 0.1, 1, 0 );
     // this.composer.addPass(bloomPass);
@@ -1360,7 +1359,7 @@ class SceneManager {
 
     // init controls
     this.controls = new three_examples_jsm_controls_OrbitControls__WEBPACK_IMPORTED_MODULE_3__["OrbitControls"](this.camera, this.renderer.domElement);
-    this.controls.target = new three__WEBPACK_IMPORTED_MODULE_2__["Vector3"](-5, this.cameraY, 0);
+    this.controls.target = new three__WEBPACK_IMPORTED_MODULE_2__["Vector3"](0, this.cameraY, -5);
     this.controls.enabled = false;
 
     // events

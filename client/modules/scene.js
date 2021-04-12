@@ -37,7 +37,7 @@ export default class SceneManager {
     this.cameraY = 2;
     this.camera.position.set(0, this.cameraY, 0);
     this.cameraTarget = this.camera.position;
-    this.cameraAngle = Math.PI / 2;
+    this.cameraAngle = 0;
 
     // add rendererer
     this.renderer = new WebGLRenderer({ powerPreference: 'low-power' });
@@ -49,7 +49,6 @@ export default class SceneManager {
 
     const renderPass = new RenderPass( this.scene, this.camera );
     this.composer.addPass(renderPass);
-
 
     // const bloomPass = new UnrealBloomPass( new Vector2( window.innerWidth, window.innerHeight ), 0.1, 1, 0 );
     // this.composer.addPass(bloomPass);
@@ -71,7 +70,7 @@ export default class SceneManager {
 
     // init controls
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
-    this.controls.target = new Vector3(-5, this.cameraY, 0);
+    this.controls.target = new Vector3(0, this.cameraY, -5);
     this.controls.enabled = false;
 
     // events
