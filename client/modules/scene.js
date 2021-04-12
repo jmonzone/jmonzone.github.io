@@ -62,7 +62,7 @@ export default class SceneManager {
 
     // init objects
     this.mirrors = []
-    this.mirrors[0] = this.initMirror(new Vector3(0, 0, 0), new Vector3(-Math.PI / 2, 0, 0), 0x111111, 0.9);
+    this.mirrors[0] = this.initMirror(new Vector3(0, 0, 0), new Vector3(-Math.PI / 2, 0, 0), 0x111111, 0.75);
     // this.mirrors[1] = this.initMirror(new Vector3(0, 0, -7.5), new Vector3(0, 0, 0), 0x969A9A, 0.1);
     // this.mirrors[2] = this.initMirror(new Vector3(0, 0, 7.5), new Vector3(0, Math.PI, 0), 0x969A9A, 0.1);
 
@@ -71,7 +71,7 @@ export default class SceneManager {
     // init controls
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
     this.controls.target = new Vector3(0, this.cameraY, -5);
-    this.controls.enabled = false;
+    // this.controls.enabled = false;
 
     // events
     window.addEventListener('resize', this.onWindowResize, false);
@@ -147,17 +147,17 @@ export default class SceneManager {
   }
 
   onViewHasChanged(current) {
-    const previousTarget = new Vector3(-5 * Math.sin(this.cameraAngle), this.cameraY,-5 * Math.cos(this.cameraAngle));
-    this.cameraAngle = this.getCameraAngle(current);
-    const currentTarget = new Vector3(-5 * Math.sin(this.cameraAngle), this.cameraY,-5 * Math.cos(this.cameraAngle));
-    const transitionDuration = 1000;
+    // const previousTarget = new Vector3(-5 * Math.sin(this.cameraAngle), this.cameraY,-5 * Math.cos(this.cameraAngle));
+    // this.cameraAngle = this.getCameraAngle(current);
+    // const currentTarget = new Vector3(-5 * Math.sin(this.cameraAngle), this.cameraY,-5 * Math.cos(this.cameraAngle));
+    // const transitionDuration = 1000;
     
-    if (previousTarget.angleTo(currentTarget) > 2) {
-      new Tween(this.controls.target).to({x: currentTarget.z, y: currentTarget.y, z: currentTarget.x}, transitionDuration / 2).easing(Easing.Quadratic.In).start().onComplete(() => {
-        new Tween(this.controls.target).to({x: currentTarget.x, y: currentTarget.y, z: currentTarget.z}, transitionDuration / 2).easing(Easing.Quadratic.Out).start();
-      });
-    }
-    else new Tween(this.controls.target).to({x: currentTarget.x, y: currentTarget.y, z: currentTarget.z}, transitionDuration).easing(Easing.Quadratic.InOut).start();
+    // if (previousTarget.angleTo(currentTarget) > 2) {
+    //   new Tween(this.controls.target).to({x: currentTarget.z, y: currentTarget.y, z: currentTarget.x}, transitionDuration / 2).easing(Easing.Quadratic.In).start().onComplete(() => {
+    //     new Tween(this.controls.target).to({x: currentTarget.x, y: currentTarget.y, z: currentTarget.z}, transitionDuration / 2).easing(Easing.Quadratic.Out).start();
+    //   });
+    // }
+    // else new Tween(this.controls.target).to({x: currentTarget.x, y: currentTarget.y, z: currentTarget.z}, transitionDuration).easing(Easing.Quadratic.InOut).start();
   }
 
   onMouseMove(e) {
@@ -174,9 +174,9 @@ export default class SceneManager {
   onVideoSelect(e) {
     const transitionDuration = 1000;
     this.zoomed = true;
-    new Tween(this.camera.position).to({x: 0, y: this.cameraY, z: -3}, transitionDuration).easing(Easing.Quadratic.InOut).start();
+    new Tween(this.camera.position).to({x: 0, y: this.cameraY, z: -0.5}, transitionDuration).easing(Easing.Quadratic.InOut).start();
 
-    this.monitors[0].onZoomIn(new Vector3(0, this.cameraY, -5), false)
+    this.monitors[0].onZoomIn();
     // const random = Math.floor(Math.random() * (this.monitors.length - 1));
     // for (let i = 0; i < this.monitors.length; i += 1) {
     //   if (i === 0) this.monitors[i].onZoomIn(new Vector3(0, this.cameraY, -5), false);
@@ -224,17 +224,27 @@ export default class SceneManager {
   initMonitors() {
     this.monitors = [];
 
-    const scale = new Vector3(16/2, 9 /2, 0.001);
-    this.monitors[0] = new Monitor(this.scene, this.projects.video, new Vector3(0, 3, -7), new Vector3(0, 0, 0), scale);
-    this.monitors[1] = new Monitor(this.scene, this.projects.video, new Vector3(-8, 3, -6.5), new Vector3(0, Math.PI / 25, 0), scale);
-    this.monitors[2] = new Monitor(this.scene, this.projects.video, new Vector3(8, 3, -6.5), new Vector3(0, Math.PI / -25, 0), scale);
+    const offset = 0.05;
+
+    const depth = 3;
+    const width = depth;
+    const aspect = 1.66;
+    const height = width / aspect;
+    const y = this.cameraY;
+    const scale = new Vector3(width, height, 0.001);
+    this.monitors[0] = new Monitor(this.scene, this.projects.video, new Vector3(0, y, -depth), new Vector3(0, 0, 0), scale);
+    this.monitors[1] = new Monitor(this.scene, this.projects.video, new Vector3(-width + offset, y, -2.5), new Vector3(0, Math.PI/10, 0), scale);
+    this.monitors[2] = new Monitor(this.scene, this.projects.video, new Vector3(width - offset, y, -2.5), new Vector3(0, -Math.PI/10, 0), scale);
+
+    // for (let i = 0; i < 8; i += 1) {
+    //   const angle = i * Math.PI / 4;
+    //   const x = Math.sin(angle) * depth;
+    //   const z = -Math.cos(angle) * depth;
+    //   this.monitors[i] = new Monitor(this.scene, this.projects.video, new Vector3(x, y, z), new Vector3(0, -angle, 0), scale);
+
+    // }
 
     this.projectsMonitor = this.monitors[0];
-    
-    // this.monitors[3] = new Monitor(this.scene, this.video, new Vector3(-5, this.cameraY, 0), new Vector3(2, 3, 2));
-    // this.monitors[4] = new Monitor(this.scene, this.video, new Vector3(-4, this.cameraY + 1, 2.5), new Vector3(1, 1, 1));
-
-
   }
 
 }

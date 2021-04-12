@@ -36,10 +36,10 @@ export default class Monitor {
       this.object.material.map = texture;
   }
 
-  onZoomIn(customPosition = this.defaultPosition, spin = true) {
+  onZoomIn(customPosition = this.defaultPosition, spin = false) {
     const customScale = this.defaultScale.clone().multiplyScalar(0.4);
-    new Tween(this.object.position).to({x: customPosition.x, y: customPosition.y, z: customPosition.z}, this.transitionDuration).easing(Easing.Quadratic.InOut).start();
-    new Tween(this.object.scale).to({x: customScale.x, y: customScale.y, z: customScale.z}, this.transitionDuration).easing(Easing.Quadratic.InOut).start();
+    // new Tween(this.object.position).to({x: customPosition.x, y: customPosition.y, z: customPosition.z}, this.transitionDuration).easing(Easing.Quadratic.InOut).start();
+    // new Tween(this.object.scale).to({x: customScale.x, y: customScale.y, z: customScale.z}, this.transitionDuration).easing(Easing.Quadratic.InOut).start();
     new Tween(this.object.material).to({opacity: 1}, this.transitionDuration).easing(Easing.Quadratic.InOut).start();
 
     if (spin) new Tween(this.object.rotation).to({x: Math.PI * 2, y: Math.PI * 2, z: Math.PI * 2}, this.transitionDuration * 1.5).easing(Easing.Quadratic.InOut).start();
@@ -48,8 +48,8 @@ export default class Monitor {
 }
 
   onZoomOut() {
-    new Tween(this.object.position).to({x: this.defaultPosition.x, y:  this.defaultPosition.y, z:  this.defaultPosition.z}, this.transitionDuration).easing(Easing.Quadratic.InOut).start();
-    new Tween(this.object.scale).to({x: this.defaultScale.x, y: this.defaultScale.y, z: this.defaultScale.z}, this.transitionDuration).easing(Easing.Quadratic.InOut).start();
+    // new Tween(this.object.position).to({x: this.defaultPosition.x, y:  this.defaultPosition.y, z:  this.defaultPosition.z}, this.transitionDuration).easing(Easing.Quadratic.InOut).start();
+    // new Tween(this.object.scale).to({x: this.defaultScale.x, y: this.defaultScale.y, z: this.defaultScale.z}, this.transitionDuration).easing(Easing.Quadratic.InOut).start();
     new Tween(this.object.rotation).to({x: this.defaultRotation.x, y: this.defaultRotation.y, z: this.defaultRotation.z}, this.transitionDuration).easing(Easing.Quadratic.InOut).start();
     new Tween(this.object.material).to({opacity: this.lowOpacity}, this.transitionDuration).easing(Easing.Quadratic.InOut).start();
 

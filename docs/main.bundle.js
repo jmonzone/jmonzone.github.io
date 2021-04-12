@@ -63,7 +63,7 @@
 /******/
 /******/ 	var hotApplyOnUpdate = true;
 /******/ 	// eslint-disable-next-line no-unused-vars
-/******/ 	var hotCurrentHash = "3bb69e5f6ffecda48109";
+/******/ 	var hotCurrentHash = "3f7c6161da2278048e15";
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule;
@@ -1106,10 +1106,10 @@ class Monitor {
       this.object.material.map = texture;
   }
 
-  onZoomIn(customPosition = this.defaultPosition, spin = true) {
+  onZoomIn(customPosition = this.defaultPosition, spin = false) {
     const customScale = this.defaultScale.clone().multiplyScalar(0.4);
-    new _tweenjs_tween_js__WEBPACK_IMPORTED_MODULE_2__["Tween"](this.object.position).to({x: customPosition.x, y: customPosition.y, z: customPosition.z}, this.transitionDuration).easing(_tweenjs_tween_js__WEBPACK_IMPORTED_MODULE_2__["Easing"].Quadratic.InOut).start();
-    new _tweenjs_tween_js__WEBPACK_IMPORTED_MODULE_2__["Tween"](this.object.scale).to({x: customScale.x, y: customScale.y, z: customScale.z}, this.transitionDuration).easing(_tweenjs_tween_js__WEBPACK_IMPORTED_MODULE_2__["Easing"].Quadratic.InOut).start();
+    // new Tween(this.object.position).to({x: customPosition.x, y: customPosition.y, z: customPosition.z}, this.transitionDuration).easing(Easing.Quadratic.InOut).start();
+    // new Tween(this.object.scale).to({x: customScale.x, y: customScale.y, z: customScale.z}, this.transitionDuration).easing(Easing.Quadratic.InOut).start();
     new _tweenjs_tween_js__WEBPACK_IMPORTED_MODULE_2__["Tween"](this.object.material).to({opacity: 1}, this.transitionDuration).easing(_tweenjs_tween_js__WEBPACK_IMPORTED_MODULE_2__["Easing"].Quadratic.InOut).start();
 
     if (spin) new _tweenjs_tween_js__WEBPACK_IMPORTED_MODULE_2__["Tween"](this.object.rotation).to({x: Math.PI * 2, y: Math.PI * 2, z: Math.PI * 2}, this.transitionDuration * 1.5).easing(_tweenjs_tween_js__WEBPACK_IMPORTED_MODULE_2__["Easing"].Quadratic.InOut).start();
@@ -1118,8 +1118,8 @@ class Monitor {
 }
 
   onZoomOut() {
-    new _tweenjs_tween_js__WEBPACK_IMPORTED_MODULE_2__["Tween"](this.object.position).to({x: this.defaultPosition.x, y:  this.defaultPosition.y, z:  this.defaultPosition.z}, this.transitionDuration).easing(_tweenjs_tween_js__WEBPACK_IMPORTED_MODULE_2__["Easing"].Quadratic.InOut).start();
-    new _tweenjs_tween_js__WEBPACK_IMPORTED_MODULE_2__["Tween"](this.object.scale).to({x: this.defaultScale.x, y: this.defaultScale.y, z: this.defaultScale.z}, this.transitionDuration).easing(_tweenjs_tween_js__WEBPACK_IMPORTED_MODULE_2__["Easing"].Quadratic.InOut).start();
+    // new Tween(this.object.position).to({x: this.defaultPosition.x, y:  this.defaultPosition.y, z:  this.defaultPosition.z}, this.transitionDuration).easing(Easing.Quadratic.InOut).start();
+    // new Tween(this.object.scale).to({x: this.defaultScale.x, y: this.defaultScale.y, z: this.defaultScale.z}, this.transitionDuration).easing(Easing.Quadratic.InOut).start();
     new _tweenjs_tween_js__WEBPACK_IMPORTED_MODULE_2__["Tween"](this.object.rotation).to({x: this.defaultRotation.x, y: this.defaultRotation.y, z: this.defaultRotation.z}, this.transitionDuration).easing(_tweenjs_tween_js__WEBPACK_IMPORTED_MODULE_2__["Easing"].Quadratic.InOut).start();
     new _tweenjs_tween_js__WEBPACK_IMPORTED_MODULE_2__["Tween"](this.object.material).to({opacity: this.lowOpacity}, this.transitionDuration).easing(_tweenjs_tween_js__WEBPACK_IMPORTED_MODULE_2__["Easing"].Quadratic.InOut).start();
 
@@ -1351,7 +1351,7 @@ class SceneManager {
 
     // init objects
     this.mirrors = []
-    this.mirrors[0] = this.initMirror(new three__WEBPACK_IMPORTED_MODULE_2__["Vector3"](0, 0, 0), new three__WEBPACK_IMPORTED_MODULE_2__["Vector3"](-Math.PI / 2, 0, 0), 0x111111, 0.9);
+    this.mirrors[0] = this.initMirror(new three__WEBPACK_IMPORTED_MODULE_2__["Vector3"](0, 0, 0), new three__WEBPACK_IMPORTED_MODULE_2__["Vector3"](-Math.PI / 2, 0, 0), 0x111111, 0.75);
     // this.mirrors[1] = this.initMirror(new Vector3(0, 0, -7.5), new Vector3(0, 0, 0), 0x969A9A, 0.1);
     // this.mirrors[2] = this.initMirror(new Vector3(0, 0, 7.5), new Vector3(0, Math.PI, 0), 0x969A9A, 0.1);
 
@@ -1360,7 +1360,7 @@ class SceneManager {
     // init controls
     this.controls = new three_examples_jsm_controls_OrbitControls__WEBPACK_IMPORTED_MODULE_3__["OrbitControls"](this.camera, this.renderer.domElement);
     this.controls.target = new three__WEBPACK_IMPORTED_MODULE_2__["Vector3"](0, this.cameraY, -5);
-    this.controls.enabled = false;
+    // this.controls.enabled = false;
 
     // events
     window.addEventListener('resize', this.onWindowResize, false);
@@ -1436,17 +1436,17 @@ class SceneManager {
   }
 
   onViewHasChanged(current) {
-    const previousTarget = new three__WEBPACK_IMPORTED_MODULE_2__["Vector3"](-5 * Math.sin(this.cameraAngle), this.cameraY,-5 * Math.cos(this.cameraAngle));
-    this.cameraAngle = this.getCameraAngle(current);
-    const currentTarget = new three__WEBPACK_IMPORTED_MODULE_2__["Vector3"](-5 * Math.sin(this.cameraAngle), this.cameraY,-5 * Math.cos(this.cameraAngle));
-    const transitionDuration = 1000;
+    // const previousTarget = new Vector3(-5 * Math.sin(this.cameraAngle), this.cameraY,-5 * Math.cos(this.cameraAngle));
+    // this.cameraAngle = this.getCameraAngle(current);
+    // const currentTarget = new Vector3(-5 * Math.sin(this.cameraAngle), this.cameraY,-5 * Math.cos(this.cameraAngle));
+    // const transitionDuration = 1000;
     
-    if (previousTarget.angleTo(currentTarget) > 2) {
-      new _tweenjs_tween_js__WEBPACK_IMPORTED_MODULE_11__["Tween"](this.controls.target).to({x: currentTarget.z, y: currentTarget.y, z: currentTarget.x}, transitionDuration / 2).easing(_tweenjs_tween_js__WEBPACK_IMPORTED_MODULE_11__["Easing"].Quadratic.In).start().onComplete(() => {
-        new _tweenjs_tween_js__WEBPACK_IMPORTED_MODULE_11__["Tween"](this.controls.target).to({x: currentTarget.x, y: currentTarget.y, z: currentTarget.z}, transitionDuration / 2).easing(_tweenjs_tween_js__WEBPACK_IMPORTED_MODULE_11__["Easing"].Quadratic.Out).start();
-      });
-    }
-    else new _tweenjs_tween_js__WEBPACK_IMPORTED_MODULE_11__["Tween"](this.controls.target).to({x: currentTarget.x, y: currentTarget.y, z: currentTarget.z}, transitionDuration).easing(_tweenjs_tween_js__WEBPACK_IMPORTED_MODULE_11__["Easing"].Quadratic.InOut).start();
+    // if (previousTarget.angleTo(currentTarget) > 2) {
+    //   new Tween(this.controls.target).to({x: currentTarget.z, y: currentTarget.y, z: currentTarget.x}, transitionDuration / 2).easing(Easing.Quadratic.In).start().onComplete(() => {
+    //     new Tween(this.controls.target).to({x: currentTarget.x, y: currentTarget.y, z: currentTarget.z}, transitionDuration / 2).easing(Easing.Quadratic.Out).start();
+    //   });
+    // }
+    // else new Tween(this.controls.target).to({x: currentTarget.x, y: currentTarget.y, z: currentTarget.z}, transitionDuration).easing(Easing.Quadratic.InOut).start();
   }
 
   onMouseMove(e) {
@@ -1463,9 +1463,9 @@ class SceneManager {
   onVideoSelect(e) {
     const transitionDuration = 1000;
     this.zoomed = true;
-    new _tweenjs_tween_js__WEBPACK_IMPORTED_MODULE_11__["Tween"](this.camera.position).to({x: 0, y: this.cameraY, z: -3}, transitionDuration).easing(_tweenjs_tween_js__WEBPACK_IMPORTED_MODULE_11__["Easing"].Quadratic.InOut).start();
+    new _tweenjs_tween_js__WEBPACK_IMPORTED_MODULE_11__["Tween"](this.camera.position).to({x: 0, y: this.cameraY, z: -0.5}, transitionDuration).easing(_tweenjs_tween_js__WEBPACK_IMPORTED_MODULE_11__["Easing"].Quadratic.InOut).start();
 
-    this.monitors[0].onZoomIn(new three__WEBPACK_IMPORTED_MODULE_2__["Vector3"](0, this.cameraY, -5), false)
+    this.monitors[0].onZoomIn();
     // const random = Math.floor(Math.random() * (this.monitors.length - 1));
     // for (let i = 0; i < this.monitors.length; i += 1) {
     //   if (i === 0) this.monitors[i].onZoomIn(new Vector3(0, this.cameraY, -5), false);
@@ -1513,17 +1513,27 @@ class SceneManager {
   initMonitors() {
     this.monitors = [];
 
-    const scale = new three__WEBPACK_IMPORTED_MODULE_2__["Vector3"](16/2, 9 /2, 0.001);
-    this.monitors[0] = new _monitor__WEBPACK_IMPORTED_MODULE_12__["default"](this.scene, this.projects.video, new three__WEBPACK_IMPORTED_MODULE_2__["Vector3"](0, 3, -7), new three__WEBPACK_IMPORTED_MODULE_2__["Vector3"](0, 0, 0), scale);
-    this.monitors[1] = new _monitor__WEBPACK_IMPORTED_MODULE_12__["default"](this.scene, this.projects.video, new three__WEBPACK_IMPORTED_MODULE_2__["Vector3"](-8, 3, -6.5), new three__WEBPACK_IMPORTED_MODULE_2__["Vector3"](0, Math.PI / 25, 0), scale);
-    this.monitors[2] = new _monitor__WEBPACK_IMPORTED_MODULE_12__["default"](this.scene, this.projects.video, new three__WEBPACK_IMPORTED_MODULE_2__["Vector3"](8, 3, -6.5), new three__WEBPACK_IMPORTED_MODULE_2__["Vector3"](0, Math.PI / -25, 0), scale);
+    const offset = 0.05;
+
+    const depth = 3;
+    const width = depth;
+    const aspect = 1.66;
+    const height = width / aspect;
+    const y = this.cameraY;
+    const scale = new three__WEBPACK_IMPORTED_MODULE_2__["Vector3"](width, height, 0.001);
+    this.monitors[0] = new _monitor__WEBPACK_IMPORTED_MODULE_12__["default"](this.scene, this.projects.video, new three__WEBPACK_IMPORTED_MODULE_2__["Vector3"](0, y, -depth), new three__WEBPACK_IMPORTED_MODULE_2__["Vector3"](0, 0, 0), scale);
+    this.monitors[1] = new _monitor__WEBPACK_IMPORTED_MODULE_12__["default"](this.scene, this.projects.video, new three__WEBPACK_IMPORTED_MODULE_2__["Vector3"](-width + offset, y, -2.5), new three__WEBPACK_IMPORTED_MODULE_2__["Vector3"](0, Math.PI/10, 0), scale);
+    this.monitors[2] = new _monitor__WEBPACK_IMPORTED_MODULE_12__["default"](this.scene, this.projects.video, new three__WEBPACK_IMPORTED_MODULE_2__["Vector3"](width - offset, y, -2.5), new three__WEBPACK_IMPORTED_MODULE_2__["Vector3"](0, -Math.PI/10, 0), scale);
+
+    // for (let i = 0; i < 8; i += 1) {
+    //   const angle = i * Math.PI / 4;
+    //   const x = Math.sin(angle) * depth;
+    //   const z = -Math.cos(angle) * depth;
+    //   this.monitors[i] = new Monitor(this.scene, this.projects.video, new Vector3(x, y, z), new Vector3(0, -angle, 0), scale);
+
+    // }
 
     this.projectsMonitor = this.monitors[0];
-    
-    // this.monitors[3] = new Monitor(this.scene, this.video, new Vector3(-5, this.cameraY, 0), new Vector3(2, 3, 2));
-    // this.monitors[4] = new Monitor(this.scene, this.video, new Vector3(-4, this.cameraY + 1, 2.5), new Vector3(1, 1, 1));
-
-
   }
 
 }
