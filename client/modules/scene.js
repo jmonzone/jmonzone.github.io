@@ -62,7 +62,7 @@ export default class SceneManager {
 
     // init objects
     this.mirrors = []
-    this.mirrors[0] = this.initMirror(new Vector3(0, 0, 0), new Vector3(-Math.PI / 2, 0, 0), 0x111111, 0.75);
+    this.mirrors[0] = this.initMirror(new Vector3(0, 1, 0), new Vector3(-Math.PI / 2, 0, 0), 0x111111, 0.9);
     // this.mirrors[1] = this.initMirror(new Vector3(0, 0, -7.5), new Vector3(0, 0, 0), 0x969A9A, 0.1);
     // this.mirrors[2] = this.initMirror(new Vector3(0, 0, 7.5), new Vector3(0, Math.PI, 0), 0x969A9A, 0.1);
 
