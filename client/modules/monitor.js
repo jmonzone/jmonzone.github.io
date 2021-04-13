@@ -52,7 +52,13 @@ export default class Monitor {
     // new Tween(this.object.scale).to({x: this.defaultScale.x, y: this.defaultScale.y, z: this.defaultScale.z}, this.transitionDuration).easing(Easing.Quadratic.InOut).start();
     new Tween(this.object.rotation).to({x: this.defaultRotation.x, y: this.defaultRotation.y, z: this.defaultRotation.z}, this.transitionDuration).easing(Easing.Quadratic.InOut).start();
     new Tween(this.object.material).to({opacity: this.lowOpacity}, this.transitionDuration).easing(Easing.Quadratic.InOut).start();
+  }
 
+  turnOn() {
+    new Tween(this.object.material).to({opacity: this.lowOpacity}, this.transitionDuration).easing(Easing.Quadratic.InOut).start();
+  }
 
+  turnOff() {
+    new Tween(this.object.material).to({opacity: 0}, this.transitionDuration).easing(Easing.Quadratic.InOut).start();
   }
 }

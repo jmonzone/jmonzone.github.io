@@ -9,13 +9,6 @@
 
     transition: transform 1s;
 
-
-    &.up {
-        transform: translateY(-150%);
-        transition: transform 1s;
-    }
-
-
     &-select {
         text-align: center;
         opacity: 0.75;

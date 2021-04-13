@@ -15,6 +15,9 @@ export default class Navigation {
         this.navigationButtons[nav] = button;
         addEl(this.el, button);
     });
+
+    //PDF Viewer
+    this.navigationButtons['Resume'].innerHTML = '<a href=\'assets/resume.pdf\'>Resume</a>';
   }
 
   onViewHasChanged(previous, current) {

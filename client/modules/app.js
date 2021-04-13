@@ -4,6 +4,7 @@ import onChange from 'on-change';
 import SceneManager from './scene';
 import Projects from './projects';
 import Navigation from './navigation';
+import About from './about';
 
 export default class App {
   constructor() {
@@ -24,10 +25,11 @@ export default class App {
 
 
     this.navigation = new Navigation(this.state);
+    this.about = new About();
     this.projects = new Projects();
     this.scene = new SceneManager(this.state, this.projects);
 
-    addEl(this.el, this.header, this.navigation.el, this.projects.el, this.scene.el);
+    addEl(this.el, this.header, this.navigation.el, this.about.el, this.projects.el, this.scene.el);
 
     window.addEventListener('popstate', this.route);
     if (window.location.search === '') this.state.view = 'Projects';
@@ -50,8 +52,21 @@ export default class App {
       this.navigation.onViewHasChanged(previous, current);
       this.scene.onViewHasChanged(current);
 
-      if (current == 'Projects') this.projects.show();
-      if (previous == 'Projects') this.projects.hide();
+      if (current == 'Projects') {
+        this.projects.show();
+        this.scene.turnOnMonitors();
+      }
+      else {
+        this.projects.hide();
+        this.scene.turnOffMonitors();
+      }
+
+      if (current == 'About') {
+        this.about.show();
+      }
+      else {
+        this.about.hide();
+      }
     }
 
     let stateString = '';

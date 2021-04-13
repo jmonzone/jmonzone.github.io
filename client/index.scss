@@ -19,10 +19,16 @@ body {
   
   font-family: 'BebasNeue';
 
+
   &::-webkit-scrollbar {
     -webkit-appearance: none;
     width: 0;
   }
+}
+
+a {
+  text-decoration: none;
+  color: white;
 }
 
 @mixin full($pad: 0) {
@@ -40,7 +46,18 @@ body {
   pointer-events: none;
 }
 
+.up {
+    transform: translateY(-150%);
+    transition: transform 1s;
+}
+
+.left {
+  transform: translateX(-150%);
+  transition: transform 1s;
+}
+
 // imports
 @import 'modules/app.scss';
+@import 'modules/about.scss';
 @import 'modules/projects.scss';
 @import 'modules/navigation.scss';

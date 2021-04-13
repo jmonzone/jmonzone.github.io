@@ -1,0 +1,33 @@
+.about {
+    position: absolute;
+    top: 50%;
+
+    height: 30%;
+    width: 90%;
+
+    overflow-y: auto;
+
+    transition: transform 1s ease-in;
+
+    background: lightgray;
+    color: black;
+    font-family: 'Roboto', sans-serif;
+
+    &-header {
+        position: absolute;
+        top: 10%;
+        left: 5%;
+
+        font-size: medium;
+    }
+
+    &-body {
+        position: absolute;
+        left: 5%;
+        top: 30%;
+        width: 90%;
+        text-align: justify;
+        font-size: medium;
+        line-height: 25px;
+    }
+}

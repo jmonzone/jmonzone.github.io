@@ -34,7 +34,7 @@ export default class SceneManager {
 
     // add camera
     this.camera = new PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    this.cameraY = 2;
+    this.cameraY = 1;
     this.camera.position.set(0, this.cameraY, 0);
     this.cameraTarget = this.camera.position;
     this.cameraAngle = 0;
@@ -62,7 +62,7 @@ export default class SceneManager {
 
     // init objects
     this.mirrors = []
-    this.mirrors[0] = this.initMirror(new Vector3(0, 1, 0), new Vector3(-Math.PI / 2, 0, 0), 0x111111, 0.9);
+    this.mirrors[0] = this.initMirror(new Vector3(0, 0, 0), new Vector3(-Math.PI / 2, 0, 0), 0x111111, 0.9);
     // this.mirrors[1] = this.initMirror(new Vector3(0, 0, -7.5), new Vector3(0, 0, 0), 0x969A9A, 0.1);
     // this.mirrors[2] = this.initMirror(new Vector3(0, 0, 7.5), new Vector3(0, Math.PI, 0), 0x969A9A, 0.1);
 
@@ -112,7 +112,7 @@ export default class SceneManager {
       new Tween(this.rgbPass.uniforms.amount).to({value: 0.0025}, transitionDuration).easing(Easing.Quadratic.InOut).start().onComplete(() => {
         this.rgbPass.uniforms.amount.value = 0.001;
 
-        const random = Math.random() * 1000 + 1000;
+        const random = Math.random() * 2000 + 2000;
         setTimeout(() => this.isTweening = false, random);
       });
     }
@@ -164,7 +164,7 @@ export default class SceneManager {
     const parallaxScale = 0.0005;
     const x = -Math.cos(this.cameraAngle) * (e.screenX - (window.innerWidth / 2)) * parallaxScale;
     const z = Math.sin(this.cameraAngle) * (e.screenX - (window.innerWidth / 2)) * parallaxScale;
-    let y = (e.screenY - (window.innerHeight / 2)) * parallaxScale * 2 + 2;
+    let y = (e.screenY - (window.innerHeight / 2)) * parallaxScale * 2 + this.cameraY;
 
     const minimumY = 0.1
     if (y < minimumY) y = minimumY;
@@ -177,17 +177,6 @@ export default class SceneManager {
     new Tween(this.camera.position).to({x: 0, y: this.cameraY, z: -0.5}, transitionDuration).easing(Easing.Quadratic.InOut).start();
 
     this.monitors[0].onZoomIn();
-    // const random = Math.floor(Math.random() * (this.monitors.length - 1));
-    // for (let i = 0; i < this.monitors.length; i += 1) {
-    //   if (i === 0) this.monitors[i].onZoomIn(new Vector3(0, this.cameraY, -5), false);
-    //   else {
-    //     const customPosition = this.monitors[i].object.position.clone();
-    //     customPosition.x *= 0.8;
-    //     // customPosition.y *= 1.5;
-    //     customPosition.z = -6;
-    //     this.monitors[i].onZoomIn(customPosition);
-    //   }
-    // }
   }
 
   onExitClick() {
@@ -236,15 +225,15 @@ export default class SceneManager {
     this.monitors[1] = new Monitor(this.scene, this.projects.video, new Vector3(-width + offset, y, -2.5), new Vector3(0, Math.PI/10, 0), scale);
     this.monitors[2] = new Monitor(this.scene, this.projects.video, new Vector3(width - offset, y, -2.5), new Vector3(0, -Math.PI/10, 0), scale);
 
-    // for (let i = 0; i < 8; i += 1) {
-    //   const angle = i * Math.PI / 4;
-    //   const x = Math.sin(angle) * depth;
-    //   const z = -Math.cos(angle) * depth;
-    //   this.monitors[i] = new Monitor(this.scene, this.projects.video, new Vector3(x, y, z), new Vector3(0, -angle, 0), scale);
-
-    // }
-
     this.projectsMonitor = this.monitors[0];
+  }
+
+  turnOnMonitors() {
+    this.monitors.forEach((monitor) => monitor.turnOn());
+  }
+
+  turnOffMonitors() {
+    this.monitors.forEach((monitor) => monitor.turnOff());
   }
 
 }

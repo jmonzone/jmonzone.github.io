@@ -63,7 +63,7 @@
 /******/
 /******/ 	var hotApplyOnUpdate = true;
 /******/ 	// eslint-disable-next-line no-unused-vars
-/******/ 	var hotCurrentHash = "d8103779635168b8aeb1";
+/******/ 	var hotCurrentHash = "2eb016cad959f6ab16a2";
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule;
@@ -955,6 +955,46 @@ if(true) {
 
 /***/ }),
 
+/***/ "./client/modules/about.js":
+/*!*********************************!*\
+  !*** ./client/modules/about.js ***!
+  \*********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return About; });
+/* harmony import */ var lmnt__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lmnt */ "./node_modules/lmnt/index.js");
+/* harmony import */ var lmnt__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lmnt__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var auto_bind__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! auto-bind */ "./node_modules/auto-bind/index.js");
+/* harmony import */ var auto_bind__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(auto_bind__WEBPACK_IMPORTED_MODULE_1__);
+
+
+
+class About {
+  constructor() {
+    auto_bind__WEBPACK_IMPORTED_MODULE_1___default()(this);
+
+    this.el = Object(lmnt__WEBPACK_IMPORTED_MODULE_0__["createEl"])('div', { className: 'about left' });
+    this.header = Object(lmnt__WEBPACK_IMPORTED_MODULE_0__["createEl"])('div', {className: 'about-header', innerHTML: '<b>ABOUT ME</b>'});
+    this.body = Object(lmnt__WEBPACK_IMPORTED_MODULE_0__["createEl"])(('div'), {className: 'about-body', innerText: 'I\'m a developer who loves making video games, augmented and virtual reality experiences, and interactive websites. I also enjoy math, chess, puzzles, strategy, and other board games, and Pokemon Go. \n\nAs of now, I\'m going with the flow, learning about everything that intrigues me and coming up with fun new projects to work on and share with others.' });
+    Object(lmnt__WEBPACK_IMPORTED_MODULE_0__["addEl"])(this.el, this.header, this.body);
+  }
+
+  show() {
+    this.el.classList.remove('left');
+  }
+
+  hide() {
+    this.el.classList.add('left');
+  }
+
+}
+
+
+/***/ }),
+
 /***/ "./client/modules/app.js":
 /*!*******************************!*\
   !*** ./client/modules/app.js ***!
@@ -974,6 +1014,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _scene__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./scene */ "./client/modules/scene.js");
 /* harmony import */ var _projects__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./projects */ "./client/modules/projects.js");
 /* harmony import */ var _navigation__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./navigation */ "./client/modules/navigation.js");
+/* harmony import */ var _about__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./about */ "./client/modules/about.js");
+
 
 
 
@@ -1000,10 +1042,11 @@ class App {
 
 
     this.navigation = new _navigation__WEBPACK_IMPORTED_MODULE_5__["default"](this.state);
+    this.about = new _about__WEBPACK_IMPORTED_MODULE_6__["default"]();
     this.projects = new _projects__WEBPACK_IMPORTED_MODULE_4__["default"]();
     this.scene = new _scene__WEBPACK_IMPORTED_MODULE_3__["default"](this.state, this.projects);
 
-    Object(lmnt__WEBPACK_IMPORTED_MODULE_0__["addEl"])(this.el, this.header, this.navigation.el, this.projects.el, this.scene.el);
+    Object(lmnt__WEBPACK_IMPORTED_MODULE_0__["addEl"])(this.el, this.header, this.navigation.el, this.about.el, this.projects.el, this.scene.el);
 
     window.addEventListener('popstate', this.route);
     if (window.location.search === '') this.state.view = 'Projects';
@@ -1026,8 +1069,21 @@ class App {
       this.navigation.onViewHasChanged(previous, current);
       this.scene.onViewHasChanged(current);
 
-      if (current == 'Projects') this.projects.show();
-      if (previous == 'Projects') this.projects.hide();
+      if (current == 'Projects') {
+        this.projects.show();
+        this.scene.turnOnMonitors();
+      }
+      else {
+        this.projects.hide();
+        this.scene.turnOffMonitors();
+      }
+
+      if (current == 'About') {
+        this.about.show();
+      }
+      else {
+        this.about.hide();
+      }
     }
 
     let stateString = '';
@@ -1122,8 +1178,14 @@ class Monitor {
     // new Tween(this.object.scale).to({x: this.defaultScale.x, y: this.defaultScale.y, z: this.defaultScale.z}, this.transitionDuration).easing(Easing.Quadratic.InOut).start();
     new _tweenjs_tween_js__WEBPACK_IMPORTED_MODULE_2__["Tween"](this.object.rotation).to({x: this.defaultRotation.x, y: this.defaultRotation.y, z: this.defaultRotation.z}, this.transitionDuration).easing(_tweenjs_tween_js__WEBPACK_IMPORTED_MODULE_2__["Easing"].Quadratic.InOut).start();
     new _tweenjs_tween_js__WEBPACK_IMPORTED_MODULE_2__["Tween"](this.object.material).to({opacity: this.lowOpacity}, this.transitionDuration).easing(_tweenjs_tween_js__WEBPACK_IMPORTED_MODULE_2__["Easing"].Quadratic.InOut).start();
+  }
 
+  turnOn() {
+    new _tweenjs_tween_js__WEBPACK_IMPORTED_MODULE_2__["Tween"](this.object.material).to({opacity: this.lowOpacity}, this.transitionDuration).easing(_tweenjs_tween_js__WEBPACK_IMPORTED_MODULE_2__["Easing"].Quadratic.InOut).start();
+  }
 
+  turnOff() {
+    new _tweenjs_tween_js__WEBPACK_IMPORTED_MODULE_2__["Tween"](this.object.material).to({opacity: 0}, this.transitionDuration).easing(_tweenjs_tween_js__WEBPACK_IMPORTED_MODULE_2__["Easing"].Quadratic.InOut).start();
   }
 }
 
@@ -1161,6 +1223,9 @@ class Navigation {
         this.navigationButtons[nav] = button;
         Object(lmnt__WEBPACK_IMPORTED_MODULE_0__["addEl"])(this.el, button);
     });
+
+    //PDF Viewer
+    this.navigationButtons['Resume'].innerHTML = '<a href=\'assets/resume.pdf\'>Resume</a>';
   }
 
   onViewHasChanged(previous, current) {
@@ -1323,7 +1388,7 @@ class SceneManager {
 
     // add camera
     this.camera = new three__WEBPACK_IMPORTED_MODULE_2__["PerspectiveCamera"](75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    this.cameraY = 2;
+    this.cameraY = 1;
     this.camera.position.set(0, this.cameraY, 0);
     this.cameraTarget = this.camera.position;
     this.cameraAngle = 0;
@@ -1351,7 +1416,7 @@ class SceneManager {
 
     // init objects
     this.mirrors = []
-    this.mirrors[0] = this.initMirror(new three__WEBPACK_IMPORTED_MODULE_2__["Vector3"](0, 1, 0), new three__WEBPACK_IMPORTED_MODULE_2__["Vector3"](-Math.PI / 2, 0, 0), 0x111111, 0.9);
+    this.mirrors[0] = this.initMirror(new three__WEBPACK_IMPORTED_MODULE_2__["Vector3"](0, 0, 0), new three__WEBPACK_IMPORTED_MODULE_2__["Vector3"](-Math.PI / 2, 0, 0), 0x111111, 0.9);
     // this.mirrors[1] = this.initMirror(new Vector3(0, 0, -7.5), new Vector3(0, 0, 0), 0x969A9A, 0.1);
     // this.mirrors[2] = this.initMirror(new Vector3(0, 0, 7.5), new Vector3(0, Math.PI, 0), 0x969A9A, 0.1);
 
@@ -1401,7 +1466,7 @@ class SceneManager {
       new _tweenjs_tween_js__WEBPACK_IMPORTED_MODULE_11__["Tween"](this.rgbPass.uniforms.amount).to({value: 0.0025}, transitionDuration).easing(_tweenjs_tween_js__WEBPACK_IMPORTED_MODULE_11__["Easing"].Quadratic.InOut).start().onComplete(() => {
         this.rgbPass.uniforms.amount.value = 0.001;
 
-        const random = Math.random() * 1000 + 1000;
+        const random = Math.random() * 2000 + 2000;
         setTimeout(() => this.isTweening = false, random);
       });
     }
@@ -1453,7 +1518,7 @@ class SceneManager {
     const parallaxScale = 0.0005;
     const x = -Math.cos(this.cameraAngle) * (e.screenX - (window.innerWidth / 2)) * parallaxScale;
     const z = Math.sin(this.cameraAngle) * (e.screenX - (window.innerWidth / 2)) * parallaxScale;
-    let y = (e.screenY - (window.innerHeight / 2)) * parallaxScale * 2 + 2;
+    let y = (e.screenY - (window.innerHeight / 2)) * parallaxScale * 2 + this.cameraY;
 
     const minimumY = 0.1
     if (y < minimumY) y = minimumY;
@@ -1466,17 +1531,6 @@ class SceneManager {
     new _tweenjs_tween_js__WEBPACK_IMPORTED_MODULE_11__["Tween"](this.camera.position).to({x: 0, y: this.cameraY, z: -0.5}, transitionDuration).easing(_tweenjs_tween_js__WEBPACK_IMPORTED_MODULE_11__["Easing"].Quadratic.InOut).start();
 
     this.monitors[0].onZoomIn();
-    // const random = Math.floor(Math.random() * (this.monitors.length - 1));
-    // for (let i = 0; i < this.monitors.length; i += 1) {
-    //   if (i === 0) this.monitors[i].onZoomIn(new Vector3(0, this.cameraY, -5), false);
-    //   else {
-    //     const customPosition = this.monitors[i].object.position.clone();
-    //     customPosition.x *= 0.8;
-    //     // customPosition.y *= 1.5;
-    //     customPosition.z = -6;
-    //     this.monitors[i].onZoomIn(customPosition);
-    //   }
-    // }
   }
 
   onExitClick() {
@@ -1525,15 +1579,15 @@ class SceneManager {
     this.monitors[1] = new _monitor__WEBPACK_IMPORTED_MODULE_12__["default"](this.scene, this.projects.video, new three__WEBPACK_IMPORTED_MODULE_2__["Vector3"](-width + offset, y, -2.5), new three__WEBPACK_IMPORTED_MODULE_2__["Vector3"](0, Math.PI/10, 0), scale);
     this.monitors[2] = new _monitor__WEBPACK_IMPORTED_MODULE_12__["default"](this.scene, this.projects.video, new three__WEBPACK_IMPORTED_MODULE_2__["Vector3"](width - offset, y, -2.5), new three__WEBPACK_IMPORTED_MODULE_2__["Vector3"](0, -Math.PI/10, 0), scale);
 
-    // for (let i = 0; i < 8; i += 1) {
-    //   const angle = i * Math.PI / 4;
-    //   const x = Math.sin(angle) * depth;
-    //   const z = -Math.cos(angle) * depth;
-    //   this.monitors[i] = new Monitor(this.scene, this.projects.video, new Vector3(x, y, z), new Vector3(0, -angle, 0), scale);
-
-    // }
-
     this.projectsMonitor = this.monitors[0];
+  }
+
+  turnOnMonitors() {
+    this.monitors.forEach((monitor) => monitor.turnOn());
+  }
+
+  turnOffMonitors() {
+    this.monitors.forEach((monitor) => monitor.turnOff());
   }
 
 }
@@ -2439,7 +2493,7 @@ exports = module.exports = __webpack_require__(/*! ../node_modules/css-loader/li
 
 
 // module
-exports.push([module.i, "@font-face {\n  font-family: 'BebasNeue';\n  src: url(" + escape(__webpack_require__(/*! ./assets/BebasNeue-Regular.woff */ "./client/assets/BebasNeue-Regular.woff")) + ") format(\"woff\"); }\n\nhtml,\nbody {\n  margin: 0;\n  padding: 0;\n  width: 100%;\n  height: 100%;\n  background: transparent;\n  overflow-x: hidden;\n  color: white;\n  font-family: 'BebasNeue'; }\n  html::-webkit-scrollbar,\n  body::-webkit-scrollbar {\n    -webkit-appearance: none;\n    width: 0; }\n\n.hidden {\n  visibility: hidden;\n  opacity: 0;\n  pointer-events: none; }\n\n.app {\n  position: absolute;\n  width: 100%; }\n\n.game {\n  width: 100%; }\n\n.header {\n  position: absolute;\n  top: 20px;\n  left: 20px; }\n  .header-title {\n    font-size: xx-large; }\n  .header-subtitle {\n    font-size: x-large; }\n\n.projects {\n  position: absolute;\n  top: 20%;\n  height: 80%;\n  width: 100%;\n  overflow-y: auto;\n  transition: transform 1s; }\n  .projects.up {\n    transform: translateY(-150%);\n    transition: transform 1s; }\n  .projects-select {\n    text-align: center;\n    opacity: 0.75;\n    font-size: 50px;\n    margin-bottom: 5%;\n    white-space: nowrap; }\n    .projects-select:hover {\n      opacity: 1; }\n  .projects-video {\n    position: absolute; }\n\n.navigation {\n  position: absolute;\n  top: 20px;\n  right: 20px;\n  display: flex; }\n  .navigation-button {\n    font-size: large;\n    margin-left: 20px;\n    transition: opacity 0.5s; }\n    .navigation-button:hover, .navigation-button.selected {\n      opacity: 0.5;\n      transition: opacity 0.5s; }\n", ""]);
+exports.push([module.i, "@font-face {\n  font-family: 'BebasNeue';\n  src: url(" + escape(__webpack_require__(/*! ./assets/BebasNeue-Regular.woff */ "./client/assets/BebasNeue-Regular.woff")) + ") format(\"woff\"); }\n\nhtml,\nbody {\n  margin: 0;\n  padding: 0;\n  width: 100%;\n  height: 100%;\n  background: transparent;\n  overflow-x: hidden;\n  color: white;\n  font-family: 'BebasNeue'; }\n  html::-webkit-scrollbar,\n  body::-webkit-scrollbar {\n    -webkit-appearance: none;\n    width: 0; }\n\na {\n  text-decoration: none;\n  color: white; }\n\n.hidden {\n  visibility: hidden;\n  opacity: 0;\n  pointer-events: none; }\n\n.up {\n  transform: translateY(-150%);\n  transition: transform 1s; }\n\n.left {\n  transform: translateX(-150%);\n  transition: transform 1s; }\n\n.app {\n  position: absolute;\n  width: 100%; }\n\n.game {\n  width: 100%; }\n\n.header {\n  position: absolute;\n  top: 20px;\n  left: 20px; }\n  .header-title {\n    font-size: xx-large; }\n  .header-subtitle {\n    font-size: x-large; }\n\n.about {\n  position: absolute;\n  top: 50%;\n  height: 30%;\n  width: 90%;\n  overflow-y: auto;\n  transition: transform 1s ease-in;\n  background: lightgray;\n  color: black;\n  font-family: 'Roboto', sans-serif; }\n  .about-header {\n    position: absolute;\n    top: 10%;\n    left: 5%;\n    font-size: medium; }\n  .about-body {\n    position: absolute;\n    left: 5%;\n    top: 30%;\n    width: 90%;\n    text-align: justify;\n    font-size: medium;\n    line-height: 25px; }\n\n.projects {\n  position: absolute;\n  top: 20%;\n  height: 80%;\n  width: 100%;\n  overflow-y: auto;\n  transition: transform 1s; }\n  .projects-select {\n    text-align: center;\n    opacity: 0.75;\n    font-size: 50px;\n    margin-bottom: 5%;\n    white-space: nowrap; }\n    .projects-select:hover {\n      opacity: 1; }\n  .projects-video {\n    position: absolute; }\n\n.navigation {\n  position: absolute;\n  top: 20px;\n  right: 20px;\n  display: flex; }\n  .navigation-button {\n    font-size: large;\n    margin-left: 20px;\n    transition: opacity 0.5s; }\n    .navigation-button:hover, .navigation-button.selected {\n      opacity: 0.5;\n      transition: opacity 0.5s; }\n", ""]);
 
 // exports
 
