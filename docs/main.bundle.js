@@ -63,7 +63,7 @@
 /******/
 /******/ 	var hotApplyOnUpdate = true;
 /******/ 	// eslint-disable-next-line no-unused-vars
-/******/ 	var hotCurrentHash = "2eb016cad959f6ab16a2";
+/******/ 	var hotCurrentHash = "e0ed29816444906ae381";
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule;
@@ -1051,7 +1051,6 @@ class App {
     window.addEventListener('popstate', this.route);
     if (window.location.search === '') this.state.view = 'Projects';
     this.route();
-    
   }
 
   route(e) {
@@ -1255,38 +1254,37 @@ var _content_json__WEBPACK_IMPORTED_MODULE_2___namespace = /*#__PURE__*/__webpac
 
 
 
+
 class Projects {
   constructor() {
     auto_bind__WEBPACK_IMPORTED_MODULE_1___default()(this);
 
     this.el = Object(lmnt__WEBPACK_IMPORTED_MODULE_0__["createEl"])('div', { className: 'projects up' });
 
-    this.videos = {}
-    this.projectSelects = {}
+    this.videos = {};
+    this.projectSelects = {};
 
     // add projects
     Object.keys(_content_json__WEBPACK_IMPORTED_MODULE_2__["projects"]).forEach((project) => {
-
       const projectSelect = Object(lmnt__WEBPACK_IMPORTED_MODULE_0__["createEl"])('div', { className: 'projects-select', innerText: _content_json__WEBPACK_IMPORTED_MODULE_2__["projects"][project].label });
       projectSelect.addEventListener('mouseenter', () => this.onMouseEnter(project));
       projectSelect.addEventListener('click', () => this.onClick(project));
       this.projectSelects[project] = projectSelect;
 
-      const video = Object(lmnt__WEBPACK_IMPORTED_MODULE_0__["createEl"])('video', { className: 'projects-video hidden', src: `assets/videos/${_content_json__WEBPACK_IMPORTED_MODULE_2__["projects"][project].video}.mp4`}, {}, {});
+      const video = Object(lmnt__WEBPACK_IMPORTED_MODULE_0__["createEl"])('video', { className: 'projects-video hidden', src: `assets/videos/${_content_json__WEBPACK_IMPORTED_MODULE_2__["projects"][project].video}.mp4` }, {}, {});
       video.muted = true;
       video.loop = true;
       video.preload = true;
       video.play();
 
       this.videos[_content_json__WEBPACK_IMPORTED_MODULE_2__["projects"][project].video] = video;
-      
+
 
       Object(lmnt__WEBPACK_IMPORTED_MODULE_0__["addEl"])(projectSelect, video);
       Object(lmnt__WEBPACK_IMPORTED_MODULE_0__["addEl"])(this.el, projectSelect);
     });
 
-    this.video = this.videos['earthbending'];
-    
+    this.video = this.videos.earthbending;
   }
 
   show() {
@@ -1321,7 +1319,6 @@ class Projects {
     event.detail = this.video;
     this.el.dispatchEvent(event);
   }
-
 }
 
 
@@ -2493,7 +2490,7 @@ exports = module.exports = __webpack_require__(/*! ../node_modules/css-loader/li
 
 
 // module
-exports.push([module.i, "@font-face {\n  font-family: 'BebasNeue';\n  src: url(" + escape(__webpack_require__(/*! ./assets/BebasNeue-Regular.woff */ "./client/assets/BebasNeue-Regular.woff")) + ") format(\"woff\"); }\n\nhtml,\nbody {\n  margin: 0;\n  padding: 0;\n  width: 100%;\n  height: 100%;\n  background: transparent;\n  overflow-x: hidden;\n  color: white;\n  font-family: 'BebasNeue'; }\n  html::-webkit-scrollbar,\n  body::-webkit-scrollbar {\n    -webkit-appearance: none;\n    width: 0; }\n\na {\n  text-decoration: none;\n  color: white; }\n\n.hidden {\n  visibility: hidden;\n  opacity: 0;\n  pointer-events: none; }\n\n.up {\n  transform: translateY(-150%);\n  transition: transform 1s; }\n\n.left {\n  transform: translateX(-150%);\n  transition: transform 1s; }\n\n.app {\n  position: absolute;\n  width: 100%; }\n\n.game {\n  width: 100%; }\n\n.header {\n  position: absolute;\n  top: 20px;\n  left: 20px; }\n  .header-title {\n    font-size: xx-large; }\n  .header-subtitle {\n    font-size: x-large; }\n\n.about {\n  position: absolute;\n  top: 50%;\n  height: 30%;\n  width: 90%;\n  overflow-y: auto;\n  transition: transform 1s ease-in;\n  background: lightgray;\n  color: black;\n  font-family: 'Roboto', sans-serif; }\n  .about-header {\n    position: absolute;\n    top: 10%;\n    left: 5%;\n    font-size: medium; }\n  .about-body {\n    position: absolute;\n    left: 5%;\n    top: 30%;\n    width: 90%;\n    text-align: justify;\n    font-size: medium;\n    line-height: 25px; }\n\n.projects {\n  position: absolute;\n  top: 20%;\n  height: 80%;\n  width: 100%;\n  overflow-y: auto;\n  transition: transform 1s; }\n  .projects-select {\n    text-align: center;\n    opacity: 0.75;\n    font-size: 50px;\n    margin-bottom: 5%;\n    white-space: nowrap; }\n    .projects-select:hover {\n      opacity: 1; }\n  .projects-video {\n    position: absolute; }\n\n.navigation {\n  position: absolute;\n  top: 20px;\n  right: 20px;\n  display: flex; }\n  .navigation-button {\n    font-size: large;\n    margin-left: 20px;\n    transition: opacity 0.5s; }\n    .navigation-button:hover, .navigation-button.selected {\n      opacity: 0.5;\n      transition: opacity 0.5s; }\n", ""]);
+exports.push([module.i, "@font-face {\n  font-family: 'BebasNeue';\n  src: url(" + escape(__webpack_require__(/*! ./assets/BebasNeue-Regular.woff */ "./client/assets/BebasNeue-Regular.woff")) + ") format(\"woff\"); }\n\nhtml,\nbody {\n  margin: 0;\n  padding: 0;\n  width: 100%;\n  height: 100%;\n  background: transparent;\n  overflow-x: hidden;\n  color: white;\n  font-family: 'BebasNeue'; }\n  html::-webkit-scrollbar,\n  body::-webkit-scrollbar {\n    -webkit-appearance: none;\n    width: 0; }\n\n::-webkit-scrollbar {\n  width: 0;\n  /* Remove scrollbar space */\n  background: transparent;\n  /* Optional: just make scrollbar invisible */ }\n\na {\n  text-decoration: none;\n  color: white; }\n\n.hidden {\n  visibility: hidden;\n  opacity: 0;\n  pointer-events: none; }\n\n.up {\n  transform: translateY(-150%);\n  transition: transform 1s; }\n\n.left {\n  transform: translateX(-150%);\n  transition: transform 1s; }\n\n.app {\n  position: absolute;\n  width: 100%; }\n\n.game {\n  width: 100%; }\n\n.header {\n  position: absolute;\n  top: 20px;\n  left: 20px; }\n  .header-title {\n    font-size: xx-large; }\n  .header-subtitle {\n    font-size: x-large; }\n\n.about {\n  position: absolute;\n  top: 50%;\n  height: 30%;\n  width: 90%;\n  overflow-y: auto;\n  transition: transform 1s ease-in;\n  background: lightgray;\n  color: black;\n  font-family: 'Roboto', sans-serif; }\n  .about-header {\n    position: absolute;\n    top: 10%;\n    left: 5%;\n    font-size: medium; }\n  .about-body {\n    position: absolute;\n    left: 5%;\n    top: 30%;\n    width: 90%;\n    text-align: justify;\n    font-size: medium;\n    line-height: 25px; }\n\n.projects {\n  position: absolute;\n  top: 20%;\n  height: 80%;\n  width: 100%;\n  overflow-y: scroll;\n  transition: transform 1s; }\n  .projects-select {\n    text-align: center;\n    opacity: 0.75;\n    font-size: 50px;\n    margin-bottom: 5%;\n    white-space: nowrap; }\n    .projects-select:hover {\n      opacity: 1; }\n  .projects-video {\n    position: absolute; }\n\n.navigation {\n  position: absolute;\n  top: 20px;\n  right: 20px;\n  display: flex; }\n  .navigation-button {\n    font-size: large;\n    margin-left: 20px;\n    transition: opacity 0.5s; }\n    .navigation-button:hover, .navigation-button.selected {\n      opacity: 0.5;\n      transition: opacity 0.5s; }\n", ""]);
 
 // exports
 
