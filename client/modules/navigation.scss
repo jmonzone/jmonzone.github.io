@@ -1,21 +1,55 @@
 .navigation {
-    position: absolute;
-    top: $header-height;
-    right: $header-height;
+    width: 100%;
+    height: $header-height;
+    border-bottom: 1px solid rgba($color: #000000, $alpha: 0.1);
+    box-shadow: 0px 1px rgba($color: #000000, $alpha: 0.2);
+    text-align: center;
 
-    // width: 50%;
+    background: linear-gradient(#555,#333);
+    color: white;
 
     display: flex;
+    align-items: center;
+    justify-content: space-between;
 
-    &-button {
-        font-size: large;
-        margin-left: 20px;
+    a {
+        color: white;
+        text-decoration: none;
+    }
 
-        transition: opacity 0.5s;
+    &-logo {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 21rem;
+        padding-left: 2.5%;
 
-        &:hover, &.selected {
-            opacity: 0.5;
-            transition: opacity 0.5s;
+        &-name {
+            color: rgb(65, 110, 247);
+            font-size: 1.5rem;
+        }
+
+        &-title {
+            font-size: 1rem;
+            font-style: italic;
         }
     }
+
+    &-buttons {
+
+        display: flex;
+        justify-content: space-between;
+        width: 15rem;
+        padding-right: 5%;
+
+        &-button {
+            font-size: 1rem;
+            font-style: italic;
+
+            &:hover{
+                opacity: 0.25;
+            }
+        }
+    }
+    
 }

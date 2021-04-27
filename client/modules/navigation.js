@@ -1,27 +1,20 @@
-import { createEl, addEl } from 'lmnt';
-import autoBind from 'auto-bind';
+import { addEl, createEl } from 'lmnt';
 
 export default class Navigation {
-  constructor(state) {
-    autoBind(this);
-    this.state = state;
-
+  constructor(about) {
     this.el = createEl('div', { className: 'navigation' });
 
-    this.navigationButtons = {};
-    const navigationLabels = [ 'About', 'Projects', 'Resume' ];
-    navigationLabels.forEach((nav) => {
-        const button = createEl('div', { className: 'navigation-button', innerText: nav}, {}, { click: () => this.state.view = nav});
-        this.navigationButtons[nav] = button;
-        addEl(this.el, button);
-    });
+    this.logo = createEl('div', { className: 'navigation-logo' });
+    this.name = createEl('div', { className: 'navigation-logo-name', innerText: 'Johnnan Monzon' });
+    this.title = createEl('div', { className: 'navigation-logo-title', innerText: 'XR Developer' });
+    addEl(this.logo, this.name, this.title);
 
-    //PDF Viewer
-    this.navigationButtons['Resume'].innerHTML = '<a href=\'assets/resume.pdf\'>Resume</a>';
-  }
+    this.buttons = createEl('div', { className: 'navigation-buttons' });
+    this.about = createEl('div', { className: 'navigation-buttons-button', innerHTML: '<a href=\'#about\'>About</a>' });
+    this.projects = createEl('div', { className: 'navigation-buttons-button', innerHTML: '<a href=\'#projects\'>Projects</a>' });
+    this.resume = createEl('div', { className: 'navigation-buttons-button', innerHTML: '<a href=\'assets/resume.pdf\' target="_blank">Resume/CV</a>' });
+    addEl(this.buttons, this.about, this.projects, this.resume);
 
-  onViewHasChanged(previous, current) {
-      if (previous) this.navigationButtons[previous].classList.remove('selected');
-      if (current) this.navigationButtons[current].classList.add('selected');
+    addEl(this.el, this.logo, this.buttons);
   }
 }

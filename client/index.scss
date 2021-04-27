@@ -1,9 +1,8 @@
 @font-face {
-  font-family: 'BebasNeue';
-  src: url('assets/BebasNeue-Regular.woff') format('woff');
+  font-family: 'Menlo';
+  src: url('assets/Menlo-Regular.woff') format('woff');
 }
 
-$header-height: 20px;
 
 // defaults
 html,
@@ -12,38 +11,20 @@ body {
   padding: 0;
   width: 100%;
   height: 100%;
-  background: transparent;
-  overflow-x: hidden;
+  // overflow: hidden;
 
-  color: white;
   
-  font-family: 'BebasNeue';
-
+  font-family: 'Menlo';
 
   &::-webkit-scrollbar {
     -webkit-appearance: none;
     width: 0;
   }
-
-  
 }
 
 ::-webkit-scrollbar {
   width: 0;  /* Remove scrollbar space */
   background: transparent;  /* Optional: just make scrollbar invisible */
-}
-
-a {
-  text-decoration: none;
-  color: white;
-}
-
-@mixin full($pad: 0) {
-  position: absolute;
-  top: $pad;
-  left: $pad;
-  right: $pad;
-  bottom: $pad;
 }
 
 // global classes
@@ -53,18 +34,12 @@ a {
   pointer-events: none;
 }
 
-.up {
-    transform: translateY(-150%);
-    transition: transform 1s;
-}
-
-.left {
-  transform: translateX(-150%);
-  transition: transform 1s;
-}
+// global vars
+$header-height: 7.5vh;
 
 // imports
 @import 'modules/app.scss';
+@import 'modules/navigation.scss';
+@import 'modules/home.scss';
 @import 'modules/about.scss';
 @import 'modules/projects.scss';
-@import 'modules/navigation.scss';

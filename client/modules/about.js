@@ -1,22 +1,13 @@
-import { createEl, addEl } from 'lmnt';
-import autoBind from 'auto-bind';
+import { addEl, createEl } from 'lmnt';
 
 export default class About {
   constructor() {
-    autoBind(this);
-
-    this.el = createEl('div', { className: 'about left' });
-    this.header = createEl('div', {className: 'about-header', innerHTML: '<b>ABOUT ME</b>'});
-    this.body = createEl(('div'), {className: 'about-body', innerText: 'I\'m a developer who loves making video games, augmented and virtual reality experiences, and interactive websites. I also enjoy math, chess, puzzles, strategy, and other board games, and Pokemon Go. \n\nAs of now, I\'m going with the flow, learning about everything that intrigues me and coming up with fun new projects to work on and share with others.' });
-    addEl(this.el, this.header, this.body);
+    this.el = createEl('div', { className: 'about', id: 'about' });
+    this.headshot = createEl('img', { className: 'about-headshot', src: 'assets/images/headshot.png' });
+    this.description = createEl('div', { className: 'about-description' });
+    this.header = createEl('div', { className: 'about-description-header', innerText: 'About Me' });
+    this.body = createEl('div', { className: 'about-description-body', innerText: 'Hi reader, I’m a software developer, eager to dive into cool and innovative projects. I am interested in designing video games, websites, and augmented/virtual reality experiences (AR/VR). Hit me up if you have something to work on.' });
+    addEl(this.description, this.header, this.body);
+    addEl(this.el, this.headshot, this.description);
   }
-
-  show() {
-    this.el.classList.remove('left');
-  }
-
-  hide() {
-    this.el.classList.add('left');
-  }
-
 }
