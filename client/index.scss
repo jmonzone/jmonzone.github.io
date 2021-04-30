@@ -1,8 +1,8 @@
-@font-face {
-  font-family: 'Menlo';
-  src: url('assets/Menlo-Regular.woff') format('woff');
-}
 
+@font-face {
+  font-family: 'Poppins';
+  src: url('assets/fonts/poppins.woff') format('woff');
+}
 
 // defaults
 html,
@@ -14,7 +14,8 @@ body {
   overflow: hidden;
 
   
-  font-family: 'Menlo';
+  font-family: 'Poppins';
+  color: white;
 
   &::-webkit-scrollbar {
     -webkit-appearance: none;
@@ -40,3 +41,5 @@ $header-height: 7.5vh;
 // imports
 @import 'modules/app.scss';
 @import 'modules/scene.scss';
+@import 'modules/intro.scss';
+@import 'modules/projects.scss';

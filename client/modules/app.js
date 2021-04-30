@@ -2,6 +2,8 @@ import { createEl, addEl } from 'lmnt';
 import autoBind from 'auto-bind';
 import onChange from 'on-change';
 import SceneManager from './scene';
+import Intro from './intro';
+import Projects from './projects';
 
 export default class App {
   constructor() {
@@ -14,7 +16,9 @@ export default class App {
 
     this.el = createEl('div', { className: 'app' });
     this.scene = new SceneManager();
-    addEl(this.el, this.scene.el);
+    this.intro = new Intro();
+    this.projects = new Projects();
+    addEl(this.el, this.scene.el, this.intro.el, this.projects.el);
   }
 
 
