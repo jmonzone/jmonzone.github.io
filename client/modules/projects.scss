@@ -1,4 +1,4 @@
-@media only screen and (min-width: 601px) {
+@media only screen and (min-width: $width-breakpoint) {
 .projects {
   pointer-events: none;
 
@@ -50,7 +50,7 @@
 }
 }
 
-@media only screen and (min-width: 321px) and (max-width: 600px) {
+@media only screen and (min-width: 321px) and (max-width: $width-breakpoint) {
   .projects {
     pointer-events: none;
     position: absolute;
