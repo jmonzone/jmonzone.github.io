@@ -6,8 +6,13 @@
         },
         "sevenwonders" : {
             "label" : "AR Seven Wonders",
-            "video" : "seven-wonders"
+            "video" : "earthbending"
+        },
+        "pewtersite" : {
+            "label" : "Pewter 3D Interactive Site",
+            "image" : "pewter-statues"
         }
+        
 
 
     }
