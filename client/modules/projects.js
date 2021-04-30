@@ -15,19 +15,21 @@ export default class Projects {
       const label = createEl('div', { className: 'projects-slider-project-label', innerText: projects[projectName].label });
 
       if (projects[projectName].video) {
-        const video = createEl('video', { className: 'projects-slider-project-video', src: `assets/videos/${projects[projectName].video}.mp4` });
-        addEl(project, video, label);
+        const video = createEl('video', { className: 'projects-slider-project-video', src: `assets/videos/${projects[projectName].video}.mp4`, volume: 0 }, { autoplay: true, muted: true, loop: true });
+        addEl(project, video);
       }
 
       if (projects[projectName].image) {
         const image = createEl('img', { className: 'projects-slider-project-video', src: `assets/images/projects/${projects[projectName].image}.png` });
-        addEl(project, image, label);
+        addEl(project, image);
       }
+
+      addEl(project, label);
+
 
       VanillaTilt.init(project, {
         reverse: true,
         speed: 10000,
-        // 'full-page-listening': true,
       });
 
       addEl(this.slider, project);
