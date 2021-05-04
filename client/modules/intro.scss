@@ -1,5 +1,5 @@
 
-@media only screen and (min-width: $width-breakpoint) {
+@media only screen and (min-width: 801px) {
   .intro {
     pointer-events: none;
     position: absolute;
@@ -79,7 +79,7 @@
   100% { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);}
 }
 
-@media only screen and (max-width: $width-breakpoint) {
+@media only screen and (max-width: 800px) {
   .intro {
     pointer-events: none;
     position: absolute;

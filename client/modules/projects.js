@@ -7,11 +7,14 @@ export default class Projects {
   constructor() {
     this.el = createEl('div', { className: 'projects' });
     this.slider = createEl('div', { className: 'projects-slider' });
-
-    addEl(this.el, this.slider);
+    this.uparrow = createEl('img', { className: 'projects-arrow up', src: 'assets/images/arrow.png' });
+    this.downarrow = createEl('img', { className: 'projects-arrow down', src: 'assets/images/arrow.png' });
+    addEl(this.el, this.slider, this.uparrow, this.downarrow);
 
     Object.keys(projects).forEach((projectName) => {
-      const project = createEl('div', { className: 'projects-slider-project' });
+      const project = createEl('div', { className: 'projects-slider-project' }, {}, { click: () => {
+        window.open('assets/websites/pewter/index.html');
+      } });
       const label = createEl('div', { className: 'projects-slider-project-label', innerText: projects[projectName].label });
 
       if (projects[projectName].video) {

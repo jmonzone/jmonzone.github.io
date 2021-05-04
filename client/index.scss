@@ -36,8 +36,8 @@ body {
 }
 
 // global vars
+$breakpoint: 800px;
 $header-height: 7.5vh;
-$width-breakpoint: 1000px;
 
 // imports
 @import 'modules/app.scss';
