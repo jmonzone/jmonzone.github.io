@@ -63,7 +63,7 @@
 /******/
 /******/ 	var hotApplyOnUpdate = true;
 /******/ 	// eslint-disable-next-line no-unused-vars
-/******/ 	var hotCurrentHash = "98bfb5c2456032714091";
+/******/ 	var hotCurrentHash = "308ca8b618a8a359348a";
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule;
@@ -1013,7 +1013,7 @@ class App {
 /*! exports provided: projects, default */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"projects\":{\"earthbending\":{\"label\":\"VR Earthbending\",\"video\":\"earthbending\"},\"pewtersite\":{\"label\":\"Pewter 3D Interactive Site\",\"image\":\"pewter-statues\"}}}");
+module.exports = JSON.parse("{\"projects\":{\"earthbending\":{\"label\":\"VR Earthbending\",\"video\":\"earthbending\"},\"decksmash\":{\"label\":\"Koala Deck Smash\",\"gif\":\"https://media.giphy.com/media/m9O7xtj7CgTcd8skE2/giphy.gif\"},\"speararena\":{\"label\":\"Spear Arena\",\"gif\":\"https://media.giphy.com/media/WT9RM1TgOOkJiM3hwH/giphy.gif\"},\"werewolf\":{\"label\":\"One Night Werewolf\",\"gif\":\"https://media.giphy.com/media/dqzRf8K7IAeil1G4FG/giphy.gif\"},\"pewtersite\":{\"label\":\"Pewter 3D Site\",\"image\":\"pewter-statues.png\",\"url\":\"assets/websites/pewter/index.html\"},\"prettylist\":{\"label\":\"Pretty List NPM Package\",\"image\":\"npm-icon.png\",\"url\":\"https://www.npmjs.com/package/prettylist\"},\"sevenwonders\":{\"label\":\"7 Wonders AR Calculator\",\"image\":\"seven-wonders.jpeg\"}}}");
 
 /***/ }),
 
@@ -1060,8 +1060,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Projects; });
 /* harmony import */ var lmnt__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lmnt */ "./node_modules/lmnt/index.js");
 /* harmony import */ var lmnt__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lmnt__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vanilla_tilt__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vanilla-tilt */ "./node_modules/vanilla-tilt/lib/vanilla-tilt.js");
-/* harmony import */ var vanilla_tilt__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vanilla_tilt__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var prettylist__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prettylist */ "./node_modules/prettylist/dist/index.js");
+/* harmony import */ var prettylist__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prettylist__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _content_json__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./content.json */ "./client/modules/content.json");
 var _content_json__WEBPACK_IMPORTED_MODULE_2___namespace = /*#__PURE__*/__webpack_require__.t(/*! ./content.json */ "./client/modules/content.json", 1);
 
@@ -1076,32 +1076,35 @@ class Projects {
     this.uparrow = Object(lmnt__WEBPACK_IMPORTED_MODULE_0__["createEl"])('img', { className: 'projects-arrow up', src: 'assets/images/arrow.png' });
     this.downarrow = Object(lmnt__WEBPACK_IMPORTED_MODULE_0__["createEl"])('img', { className: 'projects-arrow down', src: 'assets/images/arrow.png' });
     Object(lmnt__WEBPACK_IMPORTED_MODULE_0__["addEl"])(this.el, this.slider, this.uparrow, this.downarrow);
+    // addEl(this.el, this.slider);
+
+    const items = [];
 
     Object.keys(_content_json__WEBPACK_IMPORTED_MODULE_2__["projects"]).forEach((projectName) => {
       const project = Object(lmnt__WEBPACK_IMPORTED_MODULE_0__["createEl"])('div', { className: 'projects-slider-project' }, {}, { click: () => {
-        window.open('assets/websites/pewter/index.html');
+        if (_content_json__WEBPACK_IMPORTED_MODULE_2__["projects"][projectName].url) window.open(_content_json__WEBPACK_IMPORTED_MODULE_2__["projects"][projectName].url);
       } });
+
       const label = Object(lmnt__WEBPACK_IMPORTED_MODULE_0__["createEl"])('div', { className: 'projects-slider-project-label', innerText: _content_json__WEBPACK_IMPORTED_MODULE_2__["projects"][projectName].label });
 
+      let card = null;
       if (_content_json__WEBPACK_IMPORTED_MODULE_2__["projects"][projectName].video) {
-        const video = Object(lmnt__WEBPACK_IMPORTED_MODULE_0__["createEl"])('video', { className: 'projects-slider-project-video', src: `assets/videos/${_content_json__WEBPACK_IMPORTED_MODULE_2__["projects"][projectName].video}.mp4`, volume: 0 }, { autoplay: true, muted: true, loop: true });
-        Object(lmnt__WEBPACK_IMPORTED_MODULE_0__["addEl"])(project, video);
+        card = Object(lmnt__WEBPACK_IMPORTED_MODULE_0__["createEl"])('video', { className: 'projects-slider-project-video', src: `assets/videos/${_content_json__WEBPACK_IMPORTED_MODULE_2__["projects"][projectName].video}.mp4`, volume: 0 }, { autoplay: true, muted: true, loop: true });
+      } else if (_content_json__WEBPACK_IMPORTED_MODULE_2__["projects"][projectName].image) {
+        card = Object(lmnt__WEBPACK_IMPORTED_MODULE_0__["createEl"])('img', { className: 'projects-slider-project-video', src: `assets/images/projects/${_content_json__WEBPACK_IMPORTED_MODULE_2__["projects"][projectName].image}` });
+      } else if (_content_json__WEBPACK_IMPORTED_MODULE_2__["projects"][projectName].gif) {
+        card = Object(lmnt__WEBPACK_IMPORTED_MODULE_0__["createEl"])('img', { className: 'projects-slider-project-video', src: _content_json__WEBPACK_IMPORTED_MODULE_2__["projects"][projectName].gif });
       }
 
-      if (_content_json__WEBPACK_IMPORTED_MODULE_2__["projects"][projectName].image) {
-        const image = Object(lmnt__WEBPACK_IMPORTED_MODULE_0__["createEl"])('img', { className: 'projects-slider-project-video', src: `assets/images/projects/${_content_json__WEBPACK_IMPORTED_MODULE_2__["projects"][projectName].image}.png` });
-        Object(lmnt__WEBPACK_IMPORTED_MODULE_0__["addEl"])(project, image);
-      }
+      Object(lmnt__WEBPACK_IMPORTED_MODULE_0__["addEl"])(project, card, label);
 
-      Object(lmnt__WEBPACK_IMPORTED_MODULE_0__["addEl"])(project, label);
+      items.push(project);
+    });
 
-
-      vanilla_tilt__WEBPACK_IMPORTED_MODULE_1___default.a.init(project, {
-        reverse: true,
-        speed: 10000,
-      });
-
-      Object(lmnt__WEBPACK_IMPORTED_MODULE_0__["addEl"])(this.slider, project);
+    const list = new prettylist__WEBPACK_IMPORTED_MODULE_1___default.a(items, this.slider, {
+      visible: 3,
+      rotation: 5,
+      loop: true,
     });
   }
 }
@@ -1309,7 +1312,7 @@ exports = module.exports = __webpack_require__(/*! ../node_modules/css-loader/li
 
 
 // module
-exports.push([module.i, "@font-face {\n  font-family: 'Poppins';\n  src: url(" + escape(__webpack_require__(/*! ./assets/fonts/poppins.woff */ "./client/assets/fonts/poppins.woff")) + ") format(\"woff\"); }\n\nhtml,\nbody {\n  margin: 0;\n  padding: 0;\n  width: 100%;\n  height: 100%;\n  overflow: hidden;\n  font-family: 'Poppins';\n  color: white; }\n  html::-webkit-scrollbar,\n  body::-webkit-scrollbar {\n    -webkit-appearance: none;\n    width: 0; }\n\n::-webkit-scrollbar {\n  width: 0;\n  /* Remove scrollbar space */\n  background: transparent;\n  /* Optional: just make scrollbar invisible */ }\n\n.hidden {\n  visibility: hidden;\n  opacity: 0;\n  pointer-events: none; }\n\n.app {\n  position: absolute;\n  width: 100%;\n  height: 100%; }\n\n.scene {\n  position: absolute;\n  width: 100%;\n  height: 100%; }\n\n@media only screen and (min-width: 801px) {\n  .intro {\n    pointer-events: none;\n    position: absolute;\n    height: 100%;\n    top: 30%;\n    left: 10%;\n    display: flex;\n    flex-direction: column;\n    animation: slide 5s ease-out;\n    white-space: nowrap; }\n    .intro-title {\n      pointer-events: all;\n      font-size: 3rem;\n      text-align: justify; }\n    .intro-subtitle {\n      pointer-events: all;\n      font-size: 2rem;\n      width: 40vw; }\n    .intro-description {\n      pointer-events: all;\n      font-size: 1rem;\n      margin-top: 50px;\n      width: 50vw; }\n    .intro-contact, .intro-resume {\n      pointer-events: all;\n      text-align: center;\n      width: 150px;\n      padding: 10px 0;\n      margin-top: 25px;\n      border: 0.1px solid rgba(0, 0, 0, 0.1);\n      border-radius: 25px;\n      box-shadow: 1px 3px rgba(0, 0, 0, 0.3); }\n      .intro-contact:hover, .intro-resume:hover {\n        transform: translateX(1px) translateY(3px);\n        box-shadow: 1px 3px rgba(0, 0, 0, 0); }\n    .intro-resume {\n      background-color: royalblue; }\n      .intro-resume a {\n        color: white;\n        text-decoration: none; }\n    .intro-contact {\n      background-color: white; }\n      .intro-contact a {\n        color: black;\n        text-decoration: none; } }\n\n@keyframes slide {\n  0% {\n    clip-path: polygon(0 0, 100% 0, 100% 0, 0 0); }\n  100% {\n    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); } }\n\n@media only screen and (max-width: 800px) {\n  .intro {\n    pointer-events: none;\n    position: absolute;\n    top: 10%;\n    left: 10%;\n    width: 80%;\n    display: flex;\n    flex-direction: column;\n    animation: slide 5s ease-out; }\n    .intro-title {\n      font-size: 2rem; }\n    .intro-subtitle {\n      font-size: 1.5rem; }\n    .intro-description {\n      pointer-events: all;\n      font-size: 1rem;\n      margin-top: 25px;\n      width: 100%;\n      white-space: pre-wrap; }\n    .intro-contact, .intro-resume {\n      pointer-events: all;\n      text-align: center;\n      width: 150px;\n      padding: 10px 0;\n      margin-top: 25px;\n      border: 0.1px solid rgba(0, 0, 0, 0.1);\n      border-radius: 25px;\n      box-shadow: 1px 3px rgba(0, 0, 0, 0.3); }\n      .intro-contact:hover, .intro-resume:hover {\n        transform: translateX(1px) translateY(3px);\n        box-shadow: 1px 3px rgba(0, 0, 0, 0); }\n    .intro-resume {\n      background-color: royalblue; }\n      .intro-resume a {\n        color: white;\n        text-decoration: none; }\n    .intro-contact {\n      background-color: white; }\n      .intro-contact a {\n        color: black;\n        text-decoration: none; } }\n\n@media only screen and (min-width: 801px) {\n  .projects {\n    pointer-events: none;\n    position: absolute;\n    right: 0;\n    width: 50%;\n    max-width: 800px;\n    height: 100%; }\n    .projects-arrow {\n      position: absolute;\n      left: 50%;\n      width: 40px;\n      filter: invert(1); }\n      .projects-arrow.up {\n        top: 3px;\n        transform: translateX(-50%) rotate(-90deg); }\n      .projects-arrow.down {\n        bottom: 3px;\n        transform: translateX(-50%) rotate(90deg); }\n    .projects-slider {\n      pointer-events: visible;\n      height: 80%;\n      margin: 10%;\n      overflow-y: auto; }\n      .projects-slider-project {\n        transform-style: preserve-3d;\n        transform: perspective(1000px);\n        margin-bottom: 20%;\n        text-align: center; }\n        .projects-slider-project-video {\n          width: 100%;\n          height: auto;\n          opacity: 0.5;\n          transition: opacity 0.5s ease-in-out;\n          box-shadow: 5px 5px 20px black;\n          border: 1px solid black; }\n          .projects-slider-project-video:hover {\n            opacity: 1;\n            transition: opacity 0.5s ease-in-out; }\n        .projects-slider-project-label {\n          pointer-events: none;\n          transform: translateZ(50px);\n          text-shadow: 0 0 20px black;\n          white-space: nowrap; } }\n\n@media only screen and (min-width: 321px) and (max-width: 800px) {\n  .projects {\n    pointer-events: none;\n    position: absolute;\n    bottom: 10%;\n    left: 10%;\n    width: 100%;\n    height: 40%; }\n    .projects-arrow {\n      opacity: 0; }\n    .projects-slider {\n      position: absolute;\n      top: 25%;\n      pointer-events: all;\n      width: 80%;\n      height: 80%;\n      overflow-x: scroll;\n      display: flex; }\n      .projects-slider-project {\n        height: 100%;\n        transform-style: preserve-3d;\n        transform: perspective(1000px);\n        margin-right: 10%;\n        text-align: center; }\n        .projects-slider-project-video {\n          height: 70%;\n          width: auto;\n          opacity: 0.5;\n          transition: opacity 0.5s ease-in-out;\n          box-shadow: 5px 5px 20px black;\n          border: 1px solid black; }\n          .projects-slider-project-video:hover {\n            opacity: 1;\n            transition: opacity 0.5s ease-in-out; }\n        .projects-slider-project-label {\n          pointer-events: none;\n          transform: translateZ(50px);\n          text-shadow: 0 0 20px black;\n          white-space: nowrap; } }\n\n@media only screen and (max-width: 320px) {\n  .projects {\n    pointer-events: none;\n    position: absolute;\n    bottom: 0%;\n    left: 10%;\n    width: 100%;\n    height: 30%; }\n    .projects-slider {\n      position: absolute;\n      top: 25%;\n      pointer-events: all;\n      width: 80%;\n      height: 80%;\n      overflow-x: scroll;\n      display: flex; }\n      .projects-slider-project {\n        height: 100%;\n        transform-style: preserve-3d;\n        transform: perspective(1000px);\n        margin-right: 10%;\n        text-align: center; }\n        .projects-slider-project-video {\n          height: 70%;\n          width: auto;\n          opacity: 0.5;\n          transition: opacity 0.5s ease-in-out;\n          box-shadow: 5px 5px 20px black;\n          border: 1px solid black; }\n          .projects-slider-project-video:hover {\n            opacity: 1;\n            transition: opacity 0.5s ease-in-out; }\n        .projects-slider-project-label {\n          pointer-events: none;\n          transform: translateZ(50px);\n          text-shadow: 0 0 20px black;\n          white-space: nowrap; } }\n", ""]);
+exports.push([module.i, "@font-face {\n  font-family: 'Poppins';\n  src: url(" + escape(__webpack_require__(/*! ./assets/fonts/poppins.woff */ "./client/assets/fonts/poppins.woff")) + ") format(\"woff\"); }\n\nhtml,\nbody {\n  margin: 0;\n  padding: 0;\n  width: 100%;\n  height: 100%;\n  overflow: hidden;\n  font-family: 'Poppins';\n  color: white; }\n  html::-webkit-scrollbar,\n  body::-webkit-scrollbar {\n    -webkit-appearance: none;\n    width: 0; }\n\n::-webkit-scrollbar {\n  width: 0;\n  /* Remove scrollbar space */\n  background: transparent;\n  /* Optional: just make scrollbar invisible */ }\n\n.app {\n  position: absolute;\n  width: 100%;\n  height: 100%; }\n\n.scene {\n  position: absolute;\n  width: 100%;\n  height: 100%; }\n\n.intro {\n  pointer-events: none;\n  position: absolute;\n  height: 100%;\n  top: 20%;\n  left: 10%;\n  display: flex;\n  flex-direction: column;\n  white-space: nowrap; }\n  .intro-title {\n    pointer-events: all;\n    font-size: 3rem;\n    text-align: justify; }\n  .intro-subtitle {\n    pointer-events: all;\n    font-size: 2rem;\n    width: 40vw; }\n  .intro-description {\n    pointer-events: all;\n    font-size: 1rem;\n    margin-top: 50px;\n    width: 50vw; }\n  .intro-contact, .intro-resume {\n    pointer-events: all;\n    text-align: center;\n    width: 150px;\n    padding: 10px 0;\n    margin-top: 25px;\n    border: 0.1px solid rgba(0, 0, 0, 0.1);\n    border-radius: 25px;\n    box-shadow: 1px 3px rgba(0, 0, 0, 0.3); }\n    .intro-contact:hover, .intro-resume:hover {\n      transform: translateX(1px) translateY(3px);\n      box-shadow: 1px 3px rgba(0, 0, 0, 0); }\n  .intro-resume {\n    background-color: royalblue; }\n    .intro-resume a {\n      color: white;\n      text-decoration: none; }\n  .intro-contact {\n    background-color: white; }\n    .intro-contact a {\n      color: black;\n      text-decoration: none; }\n\n.projects {\n  pointer-events: none;\n  position: absolute;\n  right: 0;\n  width: 30%;\n  max-width: 800px;\n  height: 100%; }\n  .projects-arrow {\n    position: absolute;\n    left: 50%;\n    width: 40px;\n    filter: invert(1); }\n    .projects-arrow.up {\n      top: 50px;\n      transform: translateX(-50%) rotate(-90deg); }\n    .projects-arrow.down {\n      bottom: 50px;\n      transform: translateX(-50%) rotate(90deg); }\n  .projects-slider {\n    pointer-events: visible;\n    position: absolute;\n    height: 100%;\n    width: 100%; }\n    .projects-slider-project {\n      text-align: center;\n      width: 200px; }\n      .projects-slider-project-video {\n        width: 100%;\n        transition: opacity 1s;\n        box-shadow: 5px 5px 20px black;\n        border: 1px solid black; }\n      .projects-slider-project-label {\n        pointer-events: none;\n        text-shadow: 0 0 20px black;\n        white-space: nowrap; }\n", ""]);
 
 // exports
 
@@ -2508,6 +2511,17 @@ module.exports = (iterator, target, thisArg, applyPath, prepareValue) => {
 	return iterator;
 };
 
+
+/***/ }),
+
+/***/ "./node_modules/prettylist/dist/index.js":
+/*!***********************************************!*\
+  !*** ./node_modules/prettylist/dist/index.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+(()=>{"use strict";var t={800:(t,e,i)=>{i.d(e,{Z:()=>r});var s=i(645),n=i.n(s)()((function(t){return t[1]}));n.push([t.id,".prettylist{position:absolute;height:100%;width:100%}.prettylist-item{position:absolute;--top: 0%;--left: 0%;--rotation: 0deg;--opacity: 1;transform:translateY(calc(var(--top) - 50%)) translateX(var(--left)) rotate(var(--rotation));opacity:var(--opacity);transition:opacity 1s}.prettylist-item.hidden{opacity:0;visibility:none}\n",""]);const r=n},645:t=>{t.exports=function(t){var e=[];return e.toString=function(){return this.map((function(e){var i=t(e);return e[2]?"@media ".concat(e[2]," {").concat(i,"}"):i})).join("")},e.i=function(t,i,s){"string"==typeof t&&(t=[[null,t,""]]);var n={};if(s)for(var r=0;r<this.length;r++){var o=this[r][0];null!=o&&(n[o]=!0)}for(var a=0;a<t.length;a++){var l=[].concat(t[a]);s&&n[l[0]]||(i&&(l[2]?l[2]="".concat(i," and ").concat(l[2]):l[2]=i),e.push(l))}},e}},379:(t,e,i)=>{var s,n=function(){var t={};return function(e){if(void 0===t[e]){var i=document.querySelector(e);if(window.HTMLIFrameElement&&i instanceof window.HTMLIFrameElement)try{i=i.contentDocument.head}catch(t){i=null}t[e]=i}return t[e]}}(),r=[];function o(t){for(var e=-1,i=0;i<r.length;i++)if(r[i].identifier===t){e=i;break}return e}function a(t,e){for(var i={},s=[],n=0;n<t.length;n++){var a=t[n],l=e.base?a[0]+e.base:a[0],h=i[l]||0,c="".concat(l," ").concat(h);i[l]=h+1;var d=o(c),u={css:a[1],media:a[2],sourceMap:a[3]};-1!==d?(r[d].references++,r[d].updater(u)):r.push({identifier:c,updater:v(u,e),references:1}),s.push(c)}return s}function l(t){var e=document.createElement("style"),s=t.attributes||{};if(void 0===s.nonce){var r=i.nc;r&&(s.nonce=r)}if(Object.keys(s).forEach((function(t){e.setAttribute(t,s[t])})),"function"==typeof t.insert)t.insert(e);else{var o=n(t.insert||"head");if(!o)throw new Error("Couldn't find a style target. This probably means that the value for the 'insert' parameter is invalid.");o.appendChild(e)}return e}var h,c=(h=[],function(t,e){return h[t]=e,h.filter(Boolean).join("\n")});function d(t,e,i,s){var n=i?"":s.media?"@media ".concat(s.media," {").concat(s.css,"}"):s.css;if(t.styleSheet)t.styleSheet.cssText=c(e,n);else{var r=document.createTextNode(n),o=t.childNodes;o[e]&&t.removeChild(o[e]),o.length?t.insertBefore(r,o[e]):t.appendChild(r)}}function u(t,e,i){var s=i.css,n=i.media,r=i.sourceMap;if(n?t.setAttribute("media",n):t.removeAttribute("media"),r&&"undefined"!=typeof btoa&&(s+="\n/*# sourceMappingURL=data:application/json;base64,".concat(btoa(unescape(encodeURIComponent(JSON.stringify(r))))," */")),t.styleSheet)t.styleSheet.cssText=s;else{for(;t.firstChild;)t.removeChild(t.firstChild);t.appendChild(document.createTextNode(s))}}var p=null,f=0;function v(t,e){var i,s,n;if(e.singleton){var r=f++;i=p||(p=l(e)),s=d.bind(null,i,r,!1),n=d.bind(null,i,r,!0)}else i=l(e),s=u.bind(null,i,e),n=function(){!function(t){if(null===t.parentNode)return!1;t.parentNode.removeChild(t)}(i)};return s(t),function(e){if(e){if(e.css===t.css&&e.media===t.media&&e.sourceMap===t.sourceMap)return;s(t=e)}else n()}}t.exports=function(t,e){(e=e||{}).singleton||"boolean"==typeof e.singleton||(e.singleton=(void 0===s&&(s=Boolean(window&&document&&document.all&&!window.atob)),s));var i=a(t=t||[],e);return function(t){if(t=t||[],"[object Array]"===Object.prototype.toString.call(t)){for(var s=0;s<i.length;s++){var n=o(i[s]);r[n].references--}for(var l=a(t,e),h=0;h<i.length;h++){var c=o(i[h]);0===r[c].references&&(r[c].updater(),r.splice(c,1))}i=l}}}}},e={};function i(s){var n=e[s];if(void 0!==n)return n.exports;var r=e[s]={id:s,exports:{}};return t[s](r,r.exports,i),r.exports}i.n=t=>{var e=t&&t.__esModule?()=>t.default:()=>t;return i.d(e,{a:e}),e},i.d=(t,e)=>{for(var s in e)i.o(e,s)&&!i.o(t,s)&&Object.defineProperty(t,s,{enumerable:!0,get:e[s]})},i.o=(t,e)=>Object.prototype.hasOwnProperty.call(t,e),i.r=t=>{"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0})};var s={};(()=>{i.r(s),i.d(s,{default:()=>r});var t=i(379),e=i.n(t),n=i(800);e()(n.Z,{insert:"head",singleton:!1}),n.Z.locals;class r{constructor(t,e,i){this.items=t,this.list=document.createElement("div"),this.list.classList.add("prettylist"),e.append(this.list),this.options={visible:3,rotation:1,opacity:.3,loop:!0},Object.assign(this.options,i),this.rotation=this.options.rotation,this.visible=this.options.visible,this.visible>this.items.length&&console.error(`PRETTYLIST: you are asking for ${this.visible} items to be visible, but you only have ${this.items.length} items.`),this.currentIndex=0;for(let e=0;e<t.length;e+=1){const i=t[e];i.classList.add("prettylist-item"),i.classList.add("hidden"),this.list.appendChild(i)}this.y=.5,this.sensitivity=.001,this.scroll=this.scroll.bind(this),this.update=this.update.bind(this),this.list.addEventListener("wheel",this.scroll),window.addEventListener("DOMContentLoaded",this.update)}setRotation(t){this.rotation=t,this.update()}setVisible(t){for(let t=0;t<this.items.length;t+=1)this.items[t].classList.add("hidden");this.visible=parseInt(t),this.update()}scroll({deltaY:t}){this.y+=t*this.sensitivity,this.y>1?this.increment():this.y<0&&this.decrement(),this.y=(this.y+1)%1,this.update()}increment(){0==this.options.loop&&this.currentIndex==this.items.length-this.visible||(this.items[this.currentIndex].classList.add("hidden"),this.currentIndex=(this.currentIndex+1)%this.items.length)}decrement(){if(0==this.options.loop&&0==this.currentIndex)return;const t=(this.currentIndex+this.visible-1)%this.items.length;this.items[t].classList.add("hidden"),this.currentIndex=(this.currentIndex-1+this.items.length)%this.items.length}update(){for(let t=-1;t<this.visible+1;t+=1){const e=(t+this.currentIndex+this.items.length)%this.items.length,i=this.items[e];t>=0&&t<this.visible&&i.classList.remove("hidden");const s=this.rotation*(.5*(this.visible-1))-this.rotation*(t-this.y+.5);i.style.setProperty("--rotation",s+"deg");const n=100/(this.visible+1)*(t+1.5-this.y)*.01*this.list.offsetHeight;i.style.setProperty("--top",n+"px");const r=this.list.offsetWidth/2+this.list.offsetWidth/2*Math.cos(s*Math.PI/180+Math.PI);i.style.setProperty("--left",r+"px");const o=1-Math.abs(t-.5*(this.visible-1))*this.options.opacity;i.style.setProperty("--opacity",o)}}}})(),module.exports=s})();
 
 /***/ }),
 
@@ -55214,534 +55228,6 @@ var LuminosityHighPassShader = {
 };
 
 
-
-
-/***/ }),
-
-/***/ "./node_modules/vanilla-tilt/lib/vanilla-tilt.js":
-/*!*******************************************************!*\
-  !*** ./node_modules/vanilla-tilt/lib/vanilla-tilt.js ***!
-  \*******************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var classCallCheck = function (instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-};
-
-/**
- * Created by Sergiu Șandor (micku7zu) on 1/27/2017.
- * Original idea: https://github.com/gijsroge/tilt.js
- * MIT License.
- * Version 1.7.0
- */
-
-var VanillaTilt = function () {
-  function VanillaTilt(element) {
-    var settings = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-    classCallCheck(this, VanillaTilt);
-
-    if (!(element instanceof Node)) {
-      throw "Can't initialize VanillaTilt because " + element + " is not a Node.";
-    }
-
-    this.width = null;
-    this.height = null;
-    this.clientWidth = null;
-    this.clientHeight = null;
-    this.left = null;
-    this.top = null;
-
-    // for Gyroscope sampling
-    this.gammazero = null;
-    this.betazero = null;
-    this.lastgammazero = null;
-    this.lastbetazero = null;
-
-    this.transitionTimeout = null;
-    this.updateCall = null;
-    this.event = null;
-
-    this.updateBind = this.update.bind(this);
-    this.resetBind = this.reset.bind(this);
-
-    this.element = element;
-    this.settings = this.extendSettings(settings);
-
-    this.reverse = this.settings.reverse ? -1 : 1;
-    this.glare = VanillaTilt.isSettingTrue(this.settings.glare);
-    this.glarePrerender = VanillaTilt.isSettingTrue(this.settings["glare-prerender"]);
-    this.fullPageListening = VanillaTilt.isSettingTrue(this.settings["full-page-listening"]);
-    this.gyroscope = VanillaTilt.isSettingTrue(this.settings.gyroscope);
-    this.gyroscopeSamples = this.settings.gyroscopeSamples;
-
-    this.elementListener = this.getElementListener();
-
-    if (this.glare) {
-      this.prepareGlare();
-    }
-
-    if (this.fullPageListening) {
-      this.updateClientSize();
-    }
-
-    this.addEventListeners();
-    this.updateInitialPosition();
-  }
-
-  VanillaTilt.isSettingTrue = function isSettingTrue(setting) {
-    return setting === "" || setting === true || setting === 1;
-  };
-
-  /**
-   * Method returns element what will be listen mouse events
-   * @return {Node}
-   */
-
-
-  VanillaTilt.prototype.getElementListener = function getElementListener() {
-    if (this.fullPageListening) {
-      return window.document;
-    }
-
-    if (typeof this.settings["mouse-event-element"] === "string") {
-      var mouseEventElement = document.querySelector(this.settings["mouse-event-element"]);
-
-      if (mouseEventElement) {
-        return mouseEventElement;
-      }
-    }
-
-    if (this.settings["mouse-event-element"] instanceof Node) {
-      return this.settings["mouse-event-element"];
-    }
-
-    return this.element;
-  };
-
-  /**
-   * Method set listen methods for this.elementListener
-   * @return {Node}
-   */
-
-
-  VanillaTilt.prototype.addEventListeners = function addEventListeners() {
-    this.onMouseEnterBind = this.onMouseEnter.bind(this);
-    this.onMouseMoveBind = this.onMouseMove.bind(this);
-    this.onMouseLeaveBind = this.onMouseLeave.bind(this);
-    this.onWindowResizeBind = this.onWindowResize.bind(this);
-    this.onDeviceOrientationBind = this.onDeviceOrientation.bind(this);
-
-    this.elementListener.addEventListener("mouseenter", this.onMouseEnterBind);
-    this.elementListener.addEventListener("mouseleave", this.onMouseLeaveBind);
-    this.elementListener.addEventListener("mousemove", this.onMouseMoveBind);
-
-    if (this.glare || this.fullPageListening) {
-      window.addEventListener("resize", this.onWindowResizeBind);
-    }
-
-    if (this.gyroscope) {
-      window.addEventListener("deviceorientation", this.onDeviceOrientationBind);
-    }
-  };
-
-  /**
-   * Method remove event listeners from current this.elementListener
-   */
-
-
-  VanillaTilt.prototype.removeEventListeners = function removeEventListeners() {
-    this.elementListener.removeEventListener("mouseenter", this.onMouseEnterBind);
-    this.elementListener.removeEventListener("mouseleave", this.onMouseLeaveBind);
-    this.elementListener.removeEventListener("mousemove", this.onMouseMoveBind);
-
-    if (this.gyroscope) {
-      window.removeEventListener("deviceorientation", this.onDeviceOrientationBind);
-    }
-
-    if (this.glare || this.fullPageListening) {
-      window.removeEventListener("resize", this.onWindowResizeBind);
-    }
-  };
-
-  VanillaTilt.prototype.destroy = function destroy() {
-    clearTimeout(this.transitionTimeout);
-    if (this.updateCall !== null) {
-      cancelAnimationFrame(this.updateCall);
-    }
-
-    this.reset();
-
-    this.removeEventListeners();
-    this.element.vanillaTilt = null;
-    delete this.element.vanillaTilt;
-
-    this.element = null;
-  };
-
-  VanillaTilt.prototype.onDeviceOrientation = function onDeviceOrientation(event) {
-    if (event.gamma === null || event.beta === null) {
-      return;
-    }
-
-    this.updateElementPosition();
-
-    if (this.gyroscopeSamples > 0) {
-      this.lastgammazero = this.gammazero;
-      this.lastbetazero = this.betazero;
-
-      if (this.gammazero === null) {
-        this.gammazero = event.gamma;
-        this.betazero = event.beta;
-      } else {
-        this.gammazero = (event.gamma + this.lastgammazero) / 2;
-        this.betazero = (event.beta + this.lastbetazero) / 2;
-      }
-
-      this.gyroscopeSamples -= 1;
-    }
-
-    var totalAngleX = this.settings.gyroscopeMaxAngleX - this.settings.gyroscopeMinAngleX;
-    var totalAngleY = this.settings.gyroscopeMaxAngleY - this.settings.gyroscopeMinAngleY;
-
-    var degreesPerPixelX = totalAngleX / this.width;
-    var degreesPerPixelY = totalAngleY / this.height;
-
-    var angleX = event.gamma - (this.settings.gyroscopeMinAngleX + this.gammazero);
-    var angleY = event.beta - (this.settings.gyroscopeMinAngleY + this.betazero);
-
-    var posX = angleX / degreesPerPixelX;
-    var posY = angleY / degreesPerPixelY;
-
-    if (this.updateCall !== null) {
-      cancelAnimationFrame(this.updateCall);
-    }
-
-    this.event = {
-      clientX: posX + this.left,
-      clientY: posY + this.top
-    };
-
-    this.updateCall = requestAnimationFrame(this.updateBind);
-  };
-
-  VanillaTilt.prototype.onMouseEnter = function onMouseEnter() {
-    this.updateElementPosition();
-    this.element.style.willChange = "transform";
-    this.setTransition();
-  };
-
-  VanillaTilt.prototype.onMouseMove = function onMouseMove(event) {
-    if (this.updateCall !== null) {
-      cancelAnimationFrame(this.updateCall);
-    }
-
-    this.event = event;
-    this.updateCall = requestAnimationFrame(this.updateBind);
-  };
-
-  VanillaTilt.prototype.onMouseLeave = function onMouseLeave() {
-    this.setTransition();
-
-    if (this.settings.reset) {
-      requestAnimationFrame(this.resetBind);
-    }
-  };
-
-  VanillaTilt.prototype.reset = function reset() {
-    this.event = {
-      clientX: this.left + this.width / 2,
-      clientY: this.top + this.height / 2
-    };
-
-    if (this.element && this.element.style) {
-      this.element.style.transform = "perspective(" + this.settings.perspective + "px) " + "rotateX(0deg) " + "rotateY(0deg) " + "scale3d(1, 1, 1)";
-    }
-
-    this.resetGlare();
-  };
-
-  VanillaTilt.prototype.resetGlare = function resetGlare() {
-    if (this.glare) {
-      this.glareElement.style.transform = "rotate(180deg) translate(-50%, -50%)";
-      this.glareElement.style.opacity = "0";
-    }
-  };
-
-  VanillaTilt.prototype.updateInitialPosition = function updateInitialPosition() {
-    if (this.settings.startX === 0 && this.settings.startY === 0) {
-      return;
-    }
-
-    this.onMouseEnter();
-
-    if (this.fullPageListening) {
-      this.event = {
-        clientX: (this.settings.startX + this.settings.max) / (2 * this.settings.max) * this.clientWidth,
-        clientY: (this.settings.startY + this.settings.max) / (2 * this.settings.max) * this.clientHeight
-      };
-    } else {
-      this.event = {
-        clientX: this.left + (this.settings.startX + this.settings.max) / (2 * this.settings.max) * this.width,
-        clientY: this.top + (this.settings.startY + this.settings.max) / (2 * this.settings.max) * this.height
-      };
-    }
-
-    var backupScale = this.settings.scale;
-    this.settings.scale = 1;
-    this.update();
-    this.settings.scale = backupScale;
-    this.resetGlare();
-  };
-
-  VanillaTilt.prototype.getValues = function getValues() {
-    var x = void 0,
-        y = void 0;
-
-    if (this.fullPageListening) {
-      x = this.event.clientX / this.clientWidth;
-      y = this.event.clientY / this.clientHeight;
-    } else {
-      x = (this.event.clientX - this.left) / this.width;
-      y = (this.event.clientY - this.top) / this.height;
-    }
-
-    x = Math.min(Math.max(x, 0), 1);
-    y = Math.min(Math.max(y, 0), 1);
-
-    var tiltX = (this.reverse * (this.settings.max - x * this.settings.max * 2)).toFixed(2);
-    var tiltY = (this.reverse * (y * this.settings.max * 2 - this.settings.max)).toFixed(2);
-    var angle = Math.atan2(this.event.clientX - (this.left + this.width / 2), -(this.event.clientY - (this.top + this.height / 2))) * (180 / Math.PI);
-
-    return {
-      tiltX: tiltX,
-      tiltY: tiltY,
-      percentageX: x * 100,
-      percentageY: y * 100,
-      angle: angle
-    };
-  };
-
-  VanillaTilt.prototype.updateElementPosition = function updateElementPosition() {
-    var rect = this.element.getBoundingClientRect();
-
-    this.width = this.element.offsetWidth;
-    this.height = this.element.offsetHeight;
-    this.left = rect.left;
-    this.top = rect.top;
-  };
-
-  VanillaTilt.prototype.update = function update() {
-    var values = this.getValues();
-
-    this.element.style.transform = "perspective(" + this.settings.perspective + "px) " + "rotateX(" + (this.settings.axis === "x" ? 0 : values.tiltY) + "deg) " + "rotateY(" + (this.settings.axis === "y" ? 0 : values.tiltX) + "deg) " + "scale3d(" + this.settings.scale + ", " + this.settings.scale + ", " + this.settings.scale + ")";
-
-    if (this.glare) {
-      this.glareElement.style.transform = "rotate(" + values.angle + "deg) translate(-50%, -50%)";
-      this.glareElement.style.opacity = "" + values.percentageY * this.settings["max-glare"] / 100;
-    }
-
-    this.element.dispatchEvent(new CustomEvent("tiltChange", {
-      "detail": values
-    }));
-
-    this.updateCall = null;
-  };
-
-  /**
-   * Appends the glare element (if glarePrerender equals false)
-   * and sets the default style
-   */
-
-
-  VanillaTilt.prototype.prepareGlare = function prepareGlare() {
-    // If option pre-render is enabled we assume all html/css is present for an optimal glare effect.
-    if (!this.glarePrerender) {
-      // Create glare element
-      var jsTiltGlare = document.createElement("div");
-      jsTiltGlare.classList.add("js-tilt-glare");
-
-      var jsTiltGlareInner = document.createElement("div");
-      jsTiltGlareInner.classList.add("js-tilt-glare-inner");
-
-      jsTiltGlare.appendChild(jsTiltGlareInner);
-      this.element.appendChild(jsTiltGlare);
-    }
-
-    this.glareElementWrapper = this.element.querySelector(".js-tilt-glare");
-    this.glareElement = this.element.querySelector(".js-tilt-glare-inner");
-
-    if (this.glarePrerender) {
-      return;
-    }
-
-    Object.assign(this.glareElementWrapper.style, {
-      "position": "absolute",
-      "top": "0",
-      "left": "0",
-      "width": "100%",
-      "height": "100%",
-      "overflow": "hidden",
-      "pointer-events": "none"
-    });
-
-    Object.assign(this.glareElement.style, {
-      "position": "absolute",
-      "top": "50%",
-      "left": "50%",
-      "pointer-events": "none",
-      "background-image": "linear-gradient(0deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%)",
-      "width": this.element.offsetWidth * 2 + "px",
-      "height": this.element.offsetWidth * 2 + "px",
-      "transform": "rotate(180deg) translate(-50%, -50%)",
-      "transform-origin": "0% 0%",
-      "opacity": "0"
-    });
-  };
-
-  VanillaTilt.prototype.updateGlareSize = function updateGlareSize() {
-    if (this.glare) {
-      Object.assign(this.glareElement.style, {
-        "width": "" + this.element.offsetWidth * 2,
-        "height": "" + this.element.offsetWidth * 2
-      });
-    }
-  };
-
-  VanillaTilt.prototype.updateClientSize = function updateClientSize() {
-    this.clientWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-
-    this.clientHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
-  };
-
-  VanillaTilt.prototype.onWindowResize = function onWindowResize() {
-    this.updateGlareSize();
-    this.updateClientSize();
-  };
-
-  VanillaTilt.prototype.setTransition = function setTransition() {
-    var _this = this;
-
-    clearTimeout(this.transitionTimeout);
-    this.element.style.transition = this.settings.speed + "ms " + this.settings.easing;
-    if (this.glare) this.glareElement.style.transition = "opacity " + this.settings.speed + "ms " + this.settings.easing;
-
-    this.transitionTimeout = setTimeout(function () {
-      _this.element.style.transition = "";
-      if (_this.glare) {
-        _this.glareElement.style.transition = "";
-      }
-    }, this.settings.speed);
-  };
-
-  /**
-   * Method return patched settings of instance
-   * @param {boolean} settings.reverse - reverse the tilt direction
-   * @param {number} settings.max - max tilt rotation (degrees)
-   * @param {startX} settings.startX - the starting tilt on the X axis, in degrees. Default: 0
-   * @param {startY} settings.startY - the starting tilt on the Y axis, in degrees. Default: 0
-   * @param {number} settings.perspective - Transform perspective, the lower the more extreme the tilt gets
-   * @param {string} settings.easing - Easing on enter/exit
-   * @param {number} settings.scale - 2 = 200%, 1.5 = 150%, etc..
-   * @param {number} settings.speed - Speed of the enter/exit transition
-   * @param {boolean} settings.transition - Set a transition on enter/exit
-   * @param {string|null} settings.axis - What axis should be disabled. Can be X or Y
-   * @param {boolean} settings.glare - What axis should be disabled. Can be X or Y
-   * @param {number} settings.max-glare - the maximum "glare" opacity (1 = 100%, 0.5 = 50%)
-   * @param {boolean} settings.glare-prerender - false = VanillaTilt creates the glare elements for you, otherwise
-   * @param {boolean} settings.full-page-listening - If true, parallax effect will listen to mouse move events on the whole document, not only the selected element
-   * @param {string|object} settings.mouse-event-element - String selector or link to HTML-element what will be listen mouse events
-   * @param {boolean} settings.reset - false = If the tilt effect has to be reset on exit
-   * @param {gyroscope} settings.gyroscope - Enable tilting by deviceorientation events
-   * @param {gyroscopeSensitivity} settings.gyroscopeSensitivity - Between 0 and 1 - The angle at which max tilt position is reached. 1 = 90deg, 0.5 = 45deg, etc..
-   * @param {gyroscopeSamples} settings.gyroscopeSamples - How many gyroscope moves to decide the starting position.
-   */
-
-
-  VanillaTilt.prototype.extendSettings = function extendSettings(settings) {
-    var defaultSettings = {
-      reverse: false,
-      max: 15,
-      startX: 0,
-      startY: 0,
-      perspective: 1000,
-      easing: "cubic-bezier(.03,.98,.52,.99)",
-      scale: 1,
-      speed: 300,
-      transition: true,
-      axis: null,
-      glare: false,
-      "max-glare": 1,
-      "glare-prerender": false,
-      "full-page-listening": false,
-      "mouse-event-element": null,
-      reset: true,
-      gyroscope: true,
-      gyroscopeMinAngleX: -45,
-      gyroscopeMaxAngleX: 45,
-      gyroscopeMinAngleY: -45,
-      gyroscopeMaxAngleY: 45,
-      gyroscopeSamples: 10
-    };
-
-    var newSettings = {};
-    for (var property in defaultSettings) {
-      if (property in settings) {
-        newSettings[property] = settings[property];
-      } else if (this.element.hasAttribute("data-tilt-" + property)) {
-        var attribute = this.element.getAttribute("data-tilt-" + property);
-        try {
-          newSettings[property] = JSON.parse(attribute);
-        } catch (e) {
-          newSettings[property] = attribute;
-        }
-      } else {
-        newSettings[property] = defaultSettings[property];
-      }
-    }
-
-    return newSettings;
-  };
-
-  VanillaTilt.init = function init(elements, settings) {
-    if (elements instanceof Node) {
-      elements = [elements];
-    }
-
-    if (elements instanceof NodeList) {
-      elements = [].slice.call(elements);
-    }
-
-    if (!(elements instanceof Array)) {
-      return;
-    }
-
-    elements.forEach(function (element) {
-      if (!("vanillaTilt" in element)) {
-        element.vanillaTilt = new VanillaTilt(element, settings);
-      }
-    });
-  };
-
-  return VanillaTilt;
-}();
-
-if (typeof document !== "undefined") {
-  /* expose the class to window */
-  window.VanillaTilt = VanillaTilt;
-
-  /**
-   * Auto load
-   */
-  VanillaTilt.init(document.querySelectorAll("[data-tilt]"));
-}
-
-module.exports = VanillaTilt;
 
 
 /***/ })

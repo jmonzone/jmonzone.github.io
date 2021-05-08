@@ -4,12 +4,32 @@
             "label" : "VR Earthbending",
             "video" : "earthbending"
         },
+        "decksmash" : {
+            "label" : "Koala Deck Smash",
+            "gif" : "https://media.giphy.com/media/m9O7xtj7CgTcd8skE2/giphy.gif"
+        },
+        "speararena" : {
+            "label" : "Spear Arena",
+            "gif" : "https://media.giphy.com/media/WT9RM1TgOOkJiM3hwH/giphy.gif"
+        },
+        "werewolf" : {
+            "label" : "One Night Werewolf",
+            "gif" : "https://media.giphy.com/media/dqzRf8K7IAeil1G4FG/giphy.gif"
+        },
         "pewtersite" : {
-            "label" : "Pewter 3D Interactive Site",
-            "image" : "pewter-statues"
+            "label" : "Pewter 3D Site",
+            "image" : "pewter-statues.png",
+            "url" : "assets/websites/pewter/index.html"
+        },
+        "prettylist" : {
+            "label" : "Pretty List NPM Package",
+            "image" : "npm-icon.png",
+            "url" : "https://www.npmjs.com/package/prettylist"
+        },
+        "sevenwonders" : {
+            "label" : "7 Wonders AR Calculator",
+            "image" : "seven-wonders.jpeg"
         }
-        
-
 
     }
 }

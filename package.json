@@ -19,6 +19,7 @@
     "auto-bind": "^4.0.0",
     "lmnt": "0.0.8",
     "on-change": "^2.2.0",
+    "prettylist": "^1.2.3",
     "shifty": "^2.8.0",
     "three": "^0.127.0",
     "vanilla-tilt": "^1.7.0"
