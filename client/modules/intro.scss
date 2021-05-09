@@ -10,7 +10,7 @@
     display: flex;
     flex-direction: column;
     
-    white-space: nowrap;
+    // white-space: nowrap;
     
     
     &-title {
@@ -22,14 +22,12 @@
     &-subtitle {
       pointer-events: all;
       font-size: 2rem;
-      width: 40vw;
     }
   
     &-description {
       pointer-events: all;
       font-size: 1rem;
       margin-top: 50px;
-      width: 50vw;
     }
   
     &-contact, &-resume {
@@ -65,4 +63,26 @@
       }
     }
    
+  }
+
+  @media only screen and (max-width: 700px) {
+    .intro {
+      top: 15%;
+      width: 80%;
+      &-title {
+        font-size: 2rem;
+      }
+    
+      &-subtitle {
+        font-size: 1.5rem;
+      }
+
+      &-contact, &-resume {
+        align-self: center;
+      }
+
+      &-resume {
+        margin-top: 50px;
+      }
+    }
   }

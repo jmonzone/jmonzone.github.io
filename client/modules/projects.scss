@@ -7,23 +7,6 @@
   max-width: 800px;
   height: 100%;
 
-  &-arrow {
-    position: absolute;
-    left: 50%;
-    width: 40px;
-    filter: invert(1);
-
-    &.up {
-      top: 50px;
-      transform: translateX(-50%) rotate(-90deg) ;
-    }
-
-    &.down {
-      bottom: 50px;
-      transform: translateX(-50%) rotate(90deg) ;
-    }
-  }
-
   &-slider {
     pointer-events: visible;
     position: absolute;
@@ -32,11 +15,10 @@
 
     &-project {
       text-align: center;
-      width: 200px;
+      width: 60%;
      
       &-video {
         width: 100%;
-        // transform: inherit;
         transition: opacity 1s;
         box-shadow: 5px 5px 20px rgba($color: #000000, $alpha: 1);
         border: 1px solid black;
@@ -46,7 +28,6 @@
 
       &-label {
         pointer-events: none;
-
         text-shadow: 0 0 20px black;
         white-space: nowrap;
       }
@@ -55,113 +36,51 @@
   }
 }
 
+@media only screen and (min-width: 701px) {
+  .projects {
+    &-arrow {
+      position: absolute;
+      left: 50%;
+      width: 40px;
+      filter: invert(1);
+  
+      &.up {
+        top: 50px;
+        transform: translateX(-50%) rotate(-90deg) ;
+      }
+  
+      &.down {
+        bottom: 50px;
+        transform: translateX(-50%) rotate(90deg) ;
+      }
+    }
+  }
+}
 
-// @media only screen and (min-width: 321px) and (max-width: $breakpoint) {
-//   .projects {
-//     pointer-events: none;
-//     position: absolute;
-//     bottom: 10%;
-//     left: 10%;
-//     width: 100%;
-//     height: 40%;
+@media only screen and (max-width: 700px) {
+  .projects {
+    position: absolute;
+    bottom: 50px;
+    width: 100%;
+    height: 30%; 
+    
+    &-arrow {
+      pointer-events: all;
+      position: absolute;
+      top: 40%;
+      width: 40px;
+      filter: invert(1);
 
-//     &-arrow {
-//       opacity: 0;
-//     }
   
-//     &-slider {
-//       position: absolute;
-//       top: 25%;
-//       pointer-events: all;
-//       width: 80%;
-//       height: 80%;
-//       overflow-x: scroll;
-//       display: flex;
-
-//       &-project {
-//         height: 100%;
-//         transform-style: preserve-3d;
-//         transform: perspective(1000px);
-//         margin-right: 10%;
-//         text-align: center;
-       
-//         &-video {
-//           height: 70%;
-//           width: auto;
+      &.up {
+        left: 10px;
+        transform: translateY(-50%) rotate(180deg);
+      }
   
-//           opacity: 0.5;
-//           transition: opacity 0.5s ease-in-out;
-//           box-shadow: 5px 5px 20px rgba($color: #000000, $alpha: 1);
-//           border: 1px solid black;
-  
-//           &:hover {
-//               opacity: 1;
-//               transition: opacity 0.5s ease-in-out;
-//           }
-//         }
-  
-//         &-label {
-//           pointer-events: none;
-//           transform: translateZ(50px);
-  
-//           text-shadow: 0 0 20px black;
-//           white-space: nowrap;
-//         }
-  
-//       }
-//     }
-//   }
-// }
-
-// @media only screen and (max-width: 320px) {
-//   .projects {
-//     pointer-events: none;
-//     position: absolute;
-//     bottom: 0%;
-//     left: 10%;
-//     width: 100%;
-//     height: 30%;
-  
-//     &-slider {
-//       position: absolute;
-//       top: 25%;
-//       pointer-events: all;
-//       width: 80%;
-//       height: 80%;
-//       overflow-x: scroll;
-//       display: flex;
-
-//       &-project {
-//         height: 100%;
-//         transform-style: preserve-3d;
-//         transform: perspective(1000px);
-//         margin-right: 10%;
-//         text-align: center;
-       
-//         &-video {
-//           height: 70%;
-//           width: auto;
-  
-//           opacity: 0.5;
-//           transition: opacity 0.5s ease-in-out;
-//           box-shadow: 5px 5px 20px rgba($color: #000000, $alpha: 1);
-//           border: 1px solid black;
-  
-//           &:hover {
-//               opacity: 1;
-//               transition: opacity 0.5s ease-in-out;
-//           }
-//         }
-  
-//         &-label {
-//           pointer-events: none;
-//           transform: translateZ(50px);
-  
-//           text-shadow: 0 0 20px black;
-//           white-space: nowrap;
-//         }
-  
-//       }
-//     }
-//   }
-// }
+      &.down {
+        right: 10px;
+        transform: translateY(-50%);
+      }
+    }
+  }
+}

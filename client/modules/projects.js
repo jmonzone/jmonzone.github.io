@@ -1,3 +1,4 @@
+import autoBind from 'auto-bind';
 import { addEl, createEl } from 'lmnt';
 import PrettyList from 'prettylist';
 import { projects } from './content.json';
@@ -5,6 +6,8 @@ import { projects } from './content.json';
 
 export default class Projects {
   constructor() {
+    autoBind(this);
+
     this.el = createEl('div', { className: 'projects' });
     this.slider = createEl('div', { className: 'projects-slider' });
     this.uparrow = createEl('img', { className: 'projects-arrow up', src: 'assets/images/arrow.png' });
@@ -35,10 +38,26 @@ export default class Projects {
       items.push(project);
     });
 
-    const list = new PrettyList(items, this.slider, {
+    this.list = new PrettyList(items, this.slider, {
       visible: 3,
       rotation: 5,
       loop: true,
     });
+
+    window.addEventListener('resize', this.onResize);
+    this.onResize();
+  }
+
+  onResize() {
+    if (window.innerWidth < 700) {
+      this.list.setDirection('horizontal');
+
+      if (window.innerWidth <= 375) this.list.setVisible(1);
+    } else {
+      this.list.setDirection('vertical');
+      if (window.innerHeight < 400) this.list.setVisible(1);
+      else if (window.innerHeight < 650) this.list.setVisible(2);
+      else this.list.setVisible(3);
+    }
   }
 }
