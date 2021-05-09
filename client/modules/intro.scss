@@ -67,7 +67,7 @@
 
   @media only screen and (max-width: 700px) {
     .intro {
-      top: 15%;
+      top: 10%;
       width: 80%;
       &-title {
         font-size: 2rem;
@@ -77,12 +77,16 @@
         font-size: 1.5rem;
       }
 
+      &-description {
+        margin-top: 10px;
+      }
       &-contact, &-resume {
         align-self: center;
+        margin-top: 10px;
       }
 
       &-resume {
-        margin-top: 50px;
+        margin-top: 20px;
       }
     }
   }
