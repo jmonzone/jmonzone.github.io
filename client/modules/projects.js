@@ -46,15 +46,21 @@ export default class Projects {
 
     window.addEventListener('resize', this.onResize);
     this.onResize();
+
+    this.uparrow.addEventListener('click', this.list.prev);
+    this.downarrow.addEventListener('click', this.list.next);
+    // this.uparrow.click = this.list.prev();
   }
 
   onResize() {
     if (window.innerWidth < 700) {
       this.list.setDirection('horizontal');
+      this.list.setRotation(0);
 
       if (window.innerWidth <= 375) this.list.setVisible(1);
     } else {
       this.list.setDirection('vertical');
+      this.list.setRotation(5);
       if (window.innerHeight < 400) this.list.setVisible(1);
       else if (window.innerHeight < 650) this.list.setVisible(2);
       else this.list.setVisible(3);
