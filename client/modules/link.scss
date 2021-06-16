@@ -1,0 +1,24 @@
+.link {
+  cursor: pointer;
+  transition: transform 0.5s;
+
+  &:hover {
+    transform: scale(125%);
+    transition: transform 0.5s;
+  }
+
+  &-image {
+    // width: 50px;
+    height: 50px;
+  }
+
+  &-label {
+    margin-top: 10px;
+    font-size: 1rem;
+  }
+
+  &-sublabel {
+    font-size: 0.75rem;
+    color: cyan;
+  }
+}

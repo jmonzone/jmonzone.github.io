@@ -7,9 +7,9 @@ import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 export default class SceneManager {
-  constructor() {
+  constructor(el) {
     autoBind(this);
-    this.el = createEl('div', { className: 'scene' });
+    this.el = el;
     this.scene = new Scene();
     this.scene.fog = new Fog(new Color(0x555555), 1, 4);
 
@@ -17,7 +17,7 @@ export default class SceneManager {
     this.camera.position.set(0, 0, 1);
 
     this.renderer = new WebGLRenderer({ alpha: true });
-    this.renderer.setSize(window.innerWidth, window.innerHeight);
+    // this.renderer.setSize(window.innerWidth, window.innerHeight);
     addEl(this.el, this.renderer.domElement);
 
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
@@ -43,6 +43,7 @@ export default class SceneManager {
     this.clock = new Clock();
     window.addEventListener('mousemove', this.onMouseMove);
     window.addEventListener('resize', this.onResize);
+    window.addEventListener('DOMContentLoaded', this.onResize);
 
     this.update();
   }
@@ -53,11 +54,14 @@ export default class SceneManager {
   }
 
   onResize() {
-    this.camera.aspect = window.innerWidth / window.innerHeight;
+    const width = this.el.offsetWidth - 1;
+    const height = this.el.offsetHeight;
+
+    this.camera.aspect = width / height;
     this.camera.updateProjectionMatrix();
 
-    this.renderer.setSize(window.innerWidth, window.innerHeight);
-    this.composer.setSize(window.innerWidth, window.innerHeight);
+    this.renderer.setSize(width, height);
+    this.composer.setSize(width, height);
   }
 
   update() {

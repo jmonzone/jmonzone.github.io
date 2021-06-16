@@ -1,0 +1,33 @@
+.showcase {
+    pointer-events: none;
+    position: relative;
+    width: 100%;
+
+    
+}
+
+
+@media only screen and (min-width: 1367px) {
+    .showcase {
+        padding-top: min(56.25%, 500px);
+    }
+}
+
+
+@media only screen and (max-width: 1366px) {
+    .showcase {
+        padding-top: min(56.25%, 500px);
+    }
+}
+
+@media only screen and (max-width: 1024px) {
+    .showcase {
+        padding-top: min(56.25%, 800px);
+    }
+}
+
+@media only screen and (max-width: 375px) {
+    .showcase {
+        padding-top: min(56.25%, 300px);
+    }
+}

@@ -1,15 +1,42 @@
 import { addEl, createEl } from 'lmnt';
+import Link from './link';
 
 export default class Intro {
   constructor() {
     this.el = createEl('div', { className: 'intro' });
-    this.title = createEl('div', { className: 'intro-title', innerText: 'Johnnan Monzon' });
-    this.subtitle = createEl('div', { className: 'intro-subtitle', innerText: 'XR Developer' });
-    this.description = createEl('div', { className: 'intro-description', innerText: 'Currently making games, websites, and AR/VR stuff' });
+    this.title = createEl('div', { className: 'intro-title', innerText: 'Game Developer' });
+    this.name = createEl('div', { className: 'intro-name', innerText: 'Johnnan Monzon' });
 
-    this.resumeButton = createEl('div', { className: 'intro-resume', innerHTML: '<a href=\'assets/resume.pdf\' target="_blank">Resume/CV</a>' });
-    this.contactButton = createEl('div', { className: 'intro-contact', innerHTML: '<a href="mailto:jjsalomonzon@gmail.com">Contact</a>' });
+    this.wrapper = createEl('div', { className: 'intro-wrapper' });
+    this.links = createEl('div', { className: 'intro-links' });
 
-    addEl(this.el, this.title, this.subtitle, this.description, this.resumeButton, this.contactButton);
+    const linkInfo = [
+      {
+        label: 'LinkedIn',
+        sublabel: 'jmonzone',
+        url: 'https://www.linkedin.com/in/jmonzone/',
+      },
+      {
+        label: 'Email',
+        sublabel: 'jjsalomonzon@gmail.com',
+        url: 'mailto:jjsalomonzon@gmail.com',
+      },
+      {
+        label: 'Resume',
+        sublabel: 'Open as PDF',
+        url: 'assets/resume.pdf',
+      },
+    ];
+
+    linkInfo.forEach((info) => {
+      const link = new Link(info);
+      addEl(this.links, link.el);
+    });
+
+    this.about = createEl('div', { className: 'intro-about', innerText: 'A developer with a background in designing games, websites, and AR/VR experiences. I am always on the lookout for innovative projects to work on and people to work with.' });
+    this.divider = createEl('div', { className: 'intro-divider' });
+
+    addEl(this.wrapper, this.links, this.divider, this.about);
+    addEl(this.el, this.title, this.name, this.wrapper);
   }
 }

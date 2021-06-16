@@ -1,3 +1,4 @@
+$background-color: rgb(31, 31, 31);
 
 @font-face {
   font-family: 'Poppins';
@@ -11,22 +12,17 @@ body {
   padding: 0;
   width: 100%;
   height: 100%;
-  overflow: hidden;
+  background: $background-color;
 
   
   font-family: 'Poppins';
   color: white;
-
-  &::-webkit-scrollbar {
-    -webkit-appearance: none;
-    width: 0;
-  }
 }
 
-::-webkit-scrollbar {
-  width: 0;  /* Remove scrollbar space */
-  background: transparent;  /* Optional: just make scrollbar invisible */
-}
+// ::-webkit-scrollbar {
+//   width: 0;  /* Remove scrollbar space */
+//   background: transparent;  /* Optional: just make scrollbar invisible */
+// }
 
 // global classes
 .hidden {
@@ -44,3 +40,5 @@ $header-height: 7.5vh;
 @import 'modules/scene.scss';
 @import 'modules/intro.scss';
 @import 'modules/projects.scss';
+@import 'modules/showcase.css';
+@import 'modules/link.scss';
