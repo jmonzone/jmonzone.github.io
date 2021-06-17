@@ -4,7 +4,7 @@ import Link from './link';
 export default class Intro {
   constructor() {
     this.el = createEl('div', { className: 'intro' });
-    this.title = createEl('div', { className: 'intro-title', innerText: 'Game Developer' });
+    this.title = createEl('div', { className: 'intro-title', innerText: 'XR Developer' });
     this.name = createEl('div', { className: 'intro-name', innerText: 'Johnnan Monzon' });
 
     this.wrapper = createEl('div', { className: 'intro-wrapper' });

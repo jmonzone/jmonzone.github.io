@@ -1,30 +1,73 @@
+
+
 .projects {
   position: relative;
   width: 100%;
   height: 100%;
-  padding-top: 100px;
+
+  $margin-left: 100px;
+  margin-top: $margin-left;
+
 
   &-header {
     font-size: 3rem;
-    padding: 100px;
+    width: 100%;
+    text-align: center;
+  }
+
+  &-filters {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 50px 0;
+    color: $cyan;
+
+    &-filter {
+      padding: 0 25px;
+      cursor: pointer;
+      font-size: 1rem;
+
+      &.selected {
+        color: gray;
+      }
+
+      &:hover {
+        transform: scale(150%);
+        transition: transform 0.1s;
+      }
+    }
   }
 
   &-gallery {
     display: grid;
     grid-template-columns: repeat(auto-fit, 300px);
-    justify-content: space-between;
     grid-gap: 50px;
-    padding: 0 100px;
-
+    justify-content: space-around;
+    width: 90%;
+    padding: 0 5%;
+    text-align: center;
+    
     &-project {
       width: 100%;
+      cursor: pointer;
+      filter: saturate(75%);
 
-      &-video {
-        width: 300px;
+      $transition: transform 0.1s ease-in-out, filter 0.25s ease-in-out;
+      transition: $transition;
+
+      &.hidden {
+        visibility: hidden;
       }
 
-      &-label {
-        text-align: center;
+      &:hover {
+        transform: scale(110%);
+        transition: $transition;
+        filter: saturate(100%);
+      }
+
+      &-card {
+        width: 100%;
+        border-radius: 10px;
       }
     }
   }
