@@ -1,0 +1,51 @@
+@import '../styles/colors.scss';
+@import '../index.scss';
+
+.link {
+    height: 100%;
+    width: 75px;
+    margin: 0 10px;
+
+    @include Link();
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    // &:hover {
+    //     color: $off-white;
+    // }
+
+    &-overlay {
+        position: absolute;
+        height: 100%;
+        width: 75px;
+
+        opacity: 0;
+        background: linear-gradient($transparent, $low-white);
+
+        transition: opacity 1s;
+
+
+        &.active {
+            opacity: 100%;
+
+            &::after {
+                content: "";
+    
+                position: absolute;
+                bottom: 15px;
+                transform: translateX(-50%);
+    
+                width: 50px;
+                height: 1px;
+                
+                background: $high-white;
+            }
+        }
+    }
+    
+    &-label {
+        width: 100%;
+    }
+}

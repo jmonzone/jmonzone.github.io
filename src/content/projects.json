@@ -1,0 +1,21 @@
+{
+    "earthbending" : {
+        "label" : "VR Handtracking Prototype",
+        "gif" : "https://media.giphy.com/media/RXdZvR2oriSvaGFjCX/giphy.gif",
+        "tags" : ["Game", "VR"],
+        "description" : [
+            "This is a prototype of using the Handtracking features on the Oculus Quest with Unity. The goal of this project is to create an intuitive input system using only hand detection",
+            "In this experience, the user can perform different telekinetic actions by moving their hands in different directions, speeds, gestures, and amount of hands"
+        ]
+    },
+    "sevenwonders" : {
+        "label" : "7 Wonders AR Calculator",
+        "gif" : "/assets/gifs/sevenwonders.gif",
+        "tags" : ["AR"],
+        "description" : [
+            "7 Wonder is a board game where players must calculate their points based on the combination of cards they have collected. The calculation can be tricky to do with a lot of cards, so this calculator was built to make it easier.",
+            "This calculator uses image recognition to detect the type of card and places an indicator in augmented reality to show that it has been detected. The project was built as an iOS application using ARKit and SwiftUI."
+        ]
+    }
+    
+}

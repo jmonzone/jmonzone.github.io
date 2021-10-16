@@ -1,0 +1,53 @@
+@import '../styles/colors.scss';
+@import '../index.scss';
+
+.projects {
+    position: absolute;
+    top: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    width: 100%;
+    height: calc(100% - 100px);
+
+    transition: opacity .25s;
+
+    &-navigation {
+        height: 25px;
+        display: flex;
+        justify-content: center;
+
+        &-tag {
+            @include Link();
+            margin: 0 10px;
+
+            &.active {
+                opacity: 100%;
+                border-bottom: white 1px solid;
+            }
+        }
+    }
+
+    &-gallery {
+        position: absolute;
+        top: 50px;
+        left: 50%;
+        transform: translateX(-50%);
+
+        width: 70%;
+
+        transition: opacity .25s;
+
+        &-header {
+            @include Header();
+        }
+        
+        &-projects {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, 250px);
+            justify-content: center;
+            grid-gap: 50px;
+        }
+
+    }
+}

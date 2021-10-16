@@ -1,0 +1,56 @@
+@import '../styles/colors.scss';
+
+.text {
+    position: relative;
+    width: 100%;
+
+    color: $off-white;
+    font-size: .9rem;
+    line-height: 1.25rem;
+
+    margin-bottom: 50px;
+
+    p {
+        padding: 10px;
+        background: linear-gradient(to right, $transparent, $low-black 25%, $low-black 75%, $transparent);
+    }
+    
+
+    &-border {
+        $width: 100%;
+        width: $width;
+        height: 1px;
+
+        background-color: white;
+
+        display: flex;
+        align-items: center;
+
+        transition: opacity 1s, width 1s;
+
+        &.hidden {
+            width: 0;
+            animation: animate 1s ease-in reverse;
+        }
+
+        &.slide {
+            animation: animate 1s ease-in;
+        }
+
+        &::before {
+            content: "▶";
+            transform: translateX(-150%);
+        }
+
+        
+        @keyframes animate {
+            0% {
+                width: 0;
+            }
+            100% {
+                width: $width;
+            }
+        }
+    }
+
+}

@@ -1,0 +1,12 @@
+{
+    "about" : {
+        "label": "About"
+    },
+
+    "projects" : {
+        "label": "Projects"
+    },
+    "resume" : {
+        "label": "Resume"
+    }
+}   

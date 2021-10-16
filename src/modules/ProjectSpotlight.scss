@@ -1,0 +1,35 @@
+@import '../index.scss';
+
+.projects {
+    &-spotlight {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+
+        margin-top: 50px;
+
+        width: 70%;
+        height: calc(100% - 300px);
+
+        transition: opacity .25s;
+
+        display: flex;
+        justify-content: space-between;
+
+    
+        &-header {
+            @include Header();
+        }
+
+        &-text {
+            width: 50%;
+        }
+
+        &-project {
+            width: 40%;
+            max-width: 400px;
+
+            margin-top: 50px;
+        }
+    }
+}

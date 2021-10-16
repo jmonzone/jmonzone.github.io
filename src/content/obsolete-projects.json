@@ -1,0 +1,23 @@
+{
+    "decksmash" : {
+        "label" : "Koala Deck Smash",
+        "gif" : "https://media.giphy.com/media/m9O7xtj7CgTcd8skE2/giphy.gif",
+        "tags" : ["AR"],
+        "description" : [
+            "Koala Deck Smash is a game prototype with the core game mechanic being combining a deck building game and a real time fighting game.",
+            "The challenge of making this game mechanic work is pacing, deck building games are typically slower and more strategic, while fighting games are a lot faster"
+        ]
+    },
+    "speararena" : {
+        "label" : "Spear Arena",
+        "gif" : "https://media.giphy.com/media/WT9RM1TgOOkJiM3hwH/giphy.gif",
+        "tags" : ["Game"],
+        "description" : ["hi"]
+    },
+    "werewolf" : {
+        "label" : "One Night Werewolf",
+        "gif" : "https://media.giphy.com/media/dqzRf8K7IAeil1G4FG/giphy.gif",
+        "tags" : ["Game"],
+        "description" : ["hi"]
+    }
+}
