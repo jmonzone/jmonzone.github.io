@@ -13,7 +13,7 @@ export default function Logo({setView, setTag, setProject}) {
     return(
         <div className="logo" onClick={onLogoClicked}>
             <div className="logo-name">JOHNNAN MONZON</div>
-            <div className="logo-title">Digital Designer and Developer</div>
+            <div className="logo-title">XR Developer</div>
         </div>
     )
 }
