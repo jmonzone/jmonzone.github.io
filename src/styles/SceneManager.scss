@@ -1,0 +1,9 @@
+.scene {
+    @include Full;
+
+    &-overlay {
+        pointer-events: none;
+        @include Full;
+        background: linear-gradient(rgba(0,0,0,0), $background-color 99%);
+    }
+}

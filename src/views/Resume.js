@@ -1,7 +1,4 @@
 import React from "react";
-import './Resume.scss';
-import TextBlock from "./TextBlock";
-// import content from '../content/about.json'
 
 export default function Resume({view}) {
 

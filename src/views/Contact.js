@@ -1,5 +1,4 @@
 import React from "react";
-import './Contact.scss';
 import contacts from '../content/contact.json'
 import ContactIcon from "./ContactIcon";
 

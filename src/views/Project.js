@@ -1,6 +1,5 @@
 import React from "react";
 import projects from '../content/projects.json'
-import './Project.scss';
 
 export default function Project({project, onClick, opacity=true, includeLabel=true}) {
 

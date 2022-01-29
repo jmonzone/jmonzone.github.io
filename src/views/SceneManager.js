@@ -1,11 +1,10 @@
 import React, { useEffect, useRef } from "react";
 import { AdditiveBlending, BufferAttribute, BufferGeometry, Color, Fog, Mesh, MeshBasicMaterial, PerspectiveCamera, Points, PointsMaterial, Scene, SphereBufferGeometry, TextureLoader, WebGLRenderer } from "three";
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import './SceneManager.scss'
 
 export default function SceneManager() {
 
-    const ref = useRef(null)
+    const canvas = useRef(null)
 
     useEffect(() => {
         const scene = new Scene()
@@ -17,7 +16,7 @@ export default function SceneManager() {
         
         const renderer = new WebGLRenderer({ alpha: true })
         renderer.setSize(window.innerWidth, window.innerHeight)
-        ref.current.appendChild(renderer.domElement)
+        canvas.current.appendChild(renderer.domElement)
 
         //adding orbit controls
         const controls = new OrbitControls(camera, renderer.domElement);
@@ -90,12 +89,12 @@ export default function SceneManager() {
         window.addEventListener("resize", onWindowResize, false);
 
 
-        return () => ref.current.removeChild( renderer.domElement);
+        return () => canvas.current.removeChild( renderer.domElement);
     }, [])
 
     return(
         <div className="scene">
-            <div className="scene-canvas" ref={ref}/>
+            <div className="scene-canvas" ref={canvas}/>
             <div className="scene-overlay"/>
         </div>
     )

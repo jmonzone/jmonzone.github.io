@@ -1,6 +1,5 @@
 import React from "react";
 import contacts from '../content/contact.json';
-import './ContactIcon.scss';
 
 export default function ContactIcon({contact}) {
 

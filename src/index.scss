@@ -1,7 +1,18 @@
-@import './styles/colors.scss';
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
+
+
+$transparent: rgba(0,0,0, 0);
+$low-black: rgba(0,0,0,.25);
+$off-black: rgba(30,30,30, 0.5);
+
+$low-white: rgba(255,255,255,.25);
+$high-white: rgba(255,255,255,.75);
+$off-white: rgb(225,225,225);
 
 $background-color: rgba(30,30,30,1);
 $menu-width: 450px;
+
+$mobile-breakpoint: 600px;
 
 body {
     margin: 0;
@@ -18,6 +29,13 @@ body {
 .hidden {
     pointer-events: none;
     opacity: 0;
+}
+
+@mixin Full {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
 }
 
 @mixin Header {
@@ -41,3 +59,13 @@ body {
         opacity: 100%;
     }
 }
+
+@import './styles/About.scss';
+@import './styles/Header.scss';
+@import './styles/Project.scss';
+@import './styles/ProjectGallery.scss';
+@import './styles/ProjectSpotlight.scss';
+@import './styles/Resume.scss';
+@import './styles/SceneManager.scss';
+@import './styles/TextBlock.scss';
+

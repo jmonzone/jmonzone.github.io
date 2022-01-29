@@ -2,9 +2,8 @@ import React from "react";
 import projects from '../content/projects.json';
 import TextBlock from "./TextBlock";
 import Project from "./Project";
-import './ProjectSpotlight.scss';
 
-export default function ProjectSpotlight({project, view}) {
+export default function ProjectSpotlight({project}) {
 
     const header = project ? projects[project].label : '';
     const description = project ? projects[project].description : [];
@@ -13,12 +12,10 @@ export default function ProjectSpotlight({project, view}) {
 
     return(
         <div className={`projects-spotlight ${project ? 'active' : 'hidden'}`}>
+                <div className="projects-spotlight-project">{spotlight}</div>
                 <div className="projects-spotlight-text">
                     <div className="projects-spotlight-header">{header}</div>
-                    {description.map((description, index) => <TextBlock key={index} text={description} show={view == 'projects'}/>)}
-                </div>
-                <div className="projects-spotlight-project">
-                    {spotlight}
+                    {description.map((description, index) => <TextBlock key={index} text={description}/>)}
                 </div>
         </div>
     )

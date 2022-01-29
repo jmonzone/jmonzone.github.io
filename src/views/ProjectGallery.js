@@ -2,10 +2,9 @@ import React from "react";
 import projects from '../content/projects.json'
 import Project from "./Project";
 import ProjectSpotlight from "./ProjectSpotlight";
-import './ProjectGallery.scss';
 import tags from '../content/tags.json';
 
-export default function ProjectGallery({view, currentTag, currentProject, setTag, setProject}) {
+export default function ProjectGallery({currentTag, currentProject, setTag, setProject}) {
 
     let projectsToShow = [];
 
@@ -26,11 +25,11 @@ export default function ProjectGallery({view, currentTag, currentProject, setTag
     const navigation = currentProject ?  backToGallery : Object.keys(tags).map(tag => <div className={`projects-navigation-tag ${tag == currentTag ? 'active' : 'inactive'}`} key={tag} onClick={() => onNavigationTagClicked(tag)}>{tags[tag]}</div>)
    
     return(
-        <div className={`projects ${view == 'projects' ? 'active' : 'hidden'}`}>
+        <div className={`projects`}>
             <div className="projects-navigation">
                 {navigation}
             </div>
-            <ProjectSpotlight project={currentProject} view={view}/>
+            <ProjectSpotlight project={currentProject}/>
             <div className={`projects-gallery ${currentProject ? 'hidden' : 'active'}`}>
                 <div className="projects-gallery-header">{tags[currentTag]} Projects</div>
                 <div className="projects-gallery-projects">
