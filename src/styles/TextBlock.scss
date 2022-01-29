@@ -9,8 +9,8 @@
     margin-bottom: 50px;
 
     p {
-        padding: 10px;
-        background: linear-gradient(to right, $transparent, $low-black 25%, $low-black 75%, $transparent);
+        padding: 10px 30px; 
+        background: linear-gradient(to right, $transparent, $low-black 10%, $low-black 90%, $transparent);
     }
     
 
@@ -36,7 +36,14 @@
         }
 
         &::before {
-            content: "▶";
+            content: " ";
+            // content: "O";
+            width: 0; 
+            height: 0; 
+            border-top: 7px solid transparent;
+            border-bottom: 7px solid transparent;
+            
+            border-left: 10px solid $off-white;
             transform: translateX(-150%);
         }
 

@@ -22,7 +22,7 @@
     &-headshot {
         width: 40%;
         max-width: 300px;
-        height: fit-content;
+        // height: fit-content;
         padding: 10px;
         // margin-top: 50px;
         border-radius: 500px;
@@ -43,6 +43,8 @@
             top: -30px;
             left: 50%;
             transform: translateX(-50%);
+            width: 60%;
+
         }
     }
 }
