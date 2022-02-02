@@ -59,3 +59,12 @@
     }
 
 }
+
+a, a:visited, a:hover, a:active {
+    color: inherit;
+  }
+
+  .last {
+      width: calc(100% - 20px);
+      text-align: center;
+  }

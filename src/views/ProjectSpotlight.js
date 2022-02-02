@@ -9,13 +9,15 @@ export default function ProjectSpotlight({project}) {
     const description = project ? projects[project].description : [];
     const spotlight = project ? <Project project={project} opacity={false} includeLabel={false}/> : '';
 
+    const url = project ? <div className="last">Try it out <a href={projects[project].url}>here</a></div> : null;
+    console.log(url);
 
     return(
         <div className={`projects-spotlight ${project ? 'active' : 'hidden'}`}>
                 <div className="projects-spotlight-project">{spotlight}</div>
                 <div className="projects-spotlight-text">
                     <div className="projects-spotlight-header">{header}</div>
-                    {description.map((description, index) => <TextBlock key={index} text={description}/>)}
+                    {description.map((description, index) => <TextBlock key={index} text={description} url={index === 1 ? url : null}/>)}
                 </div>
         </div>
     )

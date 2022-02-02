@@ -6,7 +6,8 @@ export default function Project({project, onClick, opacity=true, includeLabel=tr
     let preview = null;
 
     const className = `project-preview ${opacity ? 'low-opacity' : ''}`;
-    if(projects[project].gif) preview = <img className={className} src={projects[project].gif}/>
+    if (projects[project].gif) preview = <img className={className} src={projects[project].gif}/>
+    else if (projects[project].img) preview = <img className={className} src={projects[project].img}/>
     else preview = <div></div>
 
     const label = includeLabel ? <div className='project-label'>{projects[project].label}</div> : null;

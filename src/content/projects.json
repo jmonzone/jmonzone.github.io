@@ -16,6 +16,16 @@
             "7 Wonder is a board game where players must calculate their points based on the combination of cards they have collected. The calculation can be tricky to do with a lot of cards, so this calculator was built to make it easier.",
             "This calculator uses image recognition to detect the type of card and places an indicator in augmented reality to show that it has been detected. The project was built as an iOS application using ARKit and SwiftUI."
         ]
+    },
+    "terraforming-mars" : {
+        "label" : "Terraforming Mars 3D Assistant",
+        "img" : "/assets/images/terraforming-mars.jpeg",
+        "tags" : [],
+        "url" : "assets/builds/terraforming-mars/index.html",
+        "description" : [
+            "Terraforming Mars is a strategy board game, and I highly reccommend picking it up. This game requires keeping track of your resource and production levels on a player mat. This project is an online version of the player mat, just for fun.",
+            "This project is a one page React app showcasing some simple 3D physics with Three.js and Cannon.js."
+        ]
     }
     
 }
