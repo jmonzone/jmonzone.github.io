@@ -21,7 +21,7 @@
         "label" : "Terraforming Mars 3D Assistant",
         "img" : "/assets/images/terraforming-mars.jpeg",
         "tags" : [],
-        "url" : "assets/builds/terraforming-mars/index.html",
+        "url" : "https://jmonzone.github.io/terraforming-mars-assistant/",
         "description" : [
             "Terraforming Mars is a strategy board game, and I highly reccommend picking it up. This game requires keeping track of your resource and production levels on a player mat. This project is an online version of the player mat, just for fun.",
             "This project is a one page React app showcasing some simple 3D physics with Three.js and Cannon.js."
