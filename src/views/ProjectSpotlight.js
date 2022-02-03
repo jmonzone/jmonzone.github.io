@@ -9,8 +9,7 @@ export default function ProjectSpotlight({project}) {
     const description = project ? projects[project].description : [];
     const spotlight = project ? <Project project={project} opacity={false} includeLabel={false}/> : '';
 
-    const url = project ? <div className="last">Try it out <a href={projects[project].url}>here</a></div> : null;
-    console.log(url);
+    const url = project && projects[project].url ? <div className="last">Try it out <a href={projects[project].url}>here</a></div> : null;
 
     return(
         <div className={`projects-spotlight ${project ? 'active' : 'hidden'}`}>
