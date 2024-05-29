@@ -1,30 +1,29 @@
 {
-    "earthbending" : {
-        "label" : "VR Handtracking Earthbending",
-        "gif" : "https://media.giphy.com/media/RXdZvR2oriSvaGFjCX/giphy.gif",
-        "tags" : ["Game", "VR"],
-        "description" : [
-            "This is a prototype game featuring a Handtracking input system for the Oculus Quest using Unity. It is based off of earthbending from Avatar: The Last Airbender. I allowed activation of different telekinetic actions by detecting different combinations of the user moving one or two hands in different directions, speeds, and gestures. The end result is a unique interaction in virtual reality and it captures the feeling of how I think earthbending should feel."
-        ]
-    },
-    "sevenwonders" : {
-        "label" : "7 Wonders AR Calculator",
-        "gif" : "/assets/gifs/sevenwonders.gif",
-        "tags" : ["AR"],
-        "description" : [
-            "7 Wonder is a board game where players must calculate their points based on the combination of cards they have collected. The calculation can be tricky to do with a lot of cards, so I thought it would be fun to make an image recognition calculator to make it easier.",
-            "Augmented Reality in this case is primarily used as an intuitive feedback visual to show that a card has successfully been scanned and recognized. The project was built as an iOS application using ARKit and SwiftUI."
-        ]
-    },
-    "terraforming-mars" : {
-        "label" : "Terraforming Mars 3D Assistant",
-        "img" : "/assets/images/terraforming-mars.jpeg",
-        "tags" : ["WebGL"],
-        "url" : "https://jmonzone.github.io/terraforming-mars-assistant/",
-        "description" : [
-            "Terraforming Mars is a strategy board game where the players are required to frequently keep track of resource and production levels on a player mat using different types of cubes. This project is an online version of the player mat, just for fun.",
-            "This project utilizes the DOM as the enviroment for physics colliders in a 3D scene using React, Three.js and Cannon.js."
-        ]
-    }
-    
+  "earthbending": {
+    "label": "VR Handtracking Earthbending",
+    "gif": "https://media.giphy.com/media/RXdZvR2oriSvaGFjCX/giphy.gif",
+    "tags": ["Game", "VR"],
+    "description": [
+      "This is a prototype game featuring a Handtracking input system for the Oculus Quest using Unity. It is based off of earthbending from Avatar: The Last Airbender. I allowed activation of different telekinetic actions by detecting different combinations of the user moving one or two hands in different directions, speeds, and gestures. The end result is a unique interaction in virtual reality and it captures the feeling of how I think earthbending should feel."
+    ]
+  },
+  "sevenwonders": {
+    "label": "7 Wonders AR Calculator",
+    "gif": "/src/assets/gifs/sevenwonders.gif",
+    "tags": ["AR"],
+    "description": [
+      "7 Wonder is a board game where players must calculate their points based on the combination of cards they have collected. The calculation can be tricky to do with a lot of cards, so I thought it would be fun to make an image recognition calculator to make it easier.",
+      "Augmented Reality in this case is primarily used as an intuitive feedback visual to show that a card has successfully been scanned and recognized. The project was built as an iOS application using ARKit and SwiftUI."
+    ]
+  },
+  "terraforming-mars": {
+    "label": "Terraforming Mars 3D Assistant",
+    "img": "/src/assets/images/terraforming-mars.jpeg",
+    "tags": ["WebGL"],
+    "url": "https://jmonzone.github.io/terraforming-mars-assistant/",
+    "description": [
+      "Terraforming Mars is a strategy board game where the players are required to frequently keep track of resource and production levels on a player mat using different types of cubes. This project is an online version of the player mat, just for fun.",
+      "This project utilizes the DOM as the enviroment for physics colliders in a 3D scene using React, Three.js and Cannon.js."
+    ]
+  }
 }
